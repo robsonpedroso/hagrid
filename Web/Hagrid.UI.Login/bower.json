@@ -1,0 +1,26 @@
+{
+  "name": "hagrid",
+  "main": "app/app.js",
+  "version": "1.0.0",
+  "description": "",
+  "moduleType": [],
+  "authors": [
+    "Hagrid"
+  ],
+  "license": "Hagrid",
+  "homepage": "https://accounts.hagrid.com.br",
+  "private": true,
+  "devDependencies": {
+    "angular": "~1.4.7",
+    "angular-messages": "~1.4.7",
+    "angular-route": "~1.4.7",
+    "ngstorage": "~0.3.9",
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.5",
+    "font-awesome": "fontawesome#~4.4.0",
+    "ngMask": "angular-mask#^3.1.1"
+  },
+  "resolutions": {
+    "angular": "~1.4.7"
+  }
+}

@@ -1,0 +1,34 @@
+<div class="box" *ngIf="isLoad">
+  <div class="box__header">
+    <span class="box__header__title">Perfil</span>
+  </div>
+
+  <div class="box__cont box__profile" *ngIf="account.customer != null">
+    <img class="box__profile__img" src="./assets/img/ico-user-add.png" alt="">
+    <div class="box__profile__info">
+      <span class="box__profile__name">
+        {{ account.customer.name }}
+      </span>
+      <span class="box__profile__since">
+        Cliente do GenSafeID desde {{ account.save_date | date:'yyyy'}}
+      </span>
+    </div>
+  </div>
+
+  <div class="box__cont box__profile" *ngIf="account.customer == null">
+      <div class="box__profile__info">
+          <span class="box__profile__name">
+            {{ account.email }}
+          </span>
+          <span class="box__profile__since">
+            Cliente do GenSafeID desde {{ account.save_date | date:'yyyy'}}
+          </span>
+        </div>
+  </div>
+
+  <div class="box__footer">
+    <div class="box__footer__action" *ngIf="account.customer != null">
+      <a  class="box__footer__button" [routerLink]="['profile-edit', account.code]" >Editar</a>
+    </div>
+  </div>
+</div>

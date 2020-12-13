@@ -1,0 +1,51 @@
+﻿<div ng-show="isLoaded" ng-init="init()">
+
+    <div class="col-md-6 col-xs-12">
+        <div class="row center-row ">
+            <div class="box-login">
+                <div class="text-center alert" role="alert" ng-class="messageClass" ng-show="visibleMessage">
+                    {{message}}
+                </div>
+                <div class="logo-hagrid" ng-controller="appInfoController" ng-init="init()">
+                    <img src="{{ infoApp.Logo || '/content/images/logo/logo-hagrid.gif' }}" />
+                </div>
+                <div class="panel panel-default panel-login">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Fazer login usando o Hagrid</h3>
+                    </div>
+                    <div class="panel-body login">
+                        <form novalidate name="loginForm" role="form" ng-submit="loginForm.$valid && doLogin()">
+
+                            <div class="form-group" ng-class="{ 'has-error' : loginForm.user.$touched && loginForm.user.$invalid }">
+                                <input type="text" name="user" class="form-control" placeholder="E-mail, login, CPF ou CNPJ" autocomplete="off"
+                                       ng-model="user"
+                                       ng-required="true">
+
+                                <div ng-show="loginForm.user.$touched" ng-messages="loginForm.user.$error" role="alert">
+                                    <p ng-message="required" class="help-block">Seu usuário não pode estar em branco.</p>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error' : loginForm.password.$touched && loginForm.password.$invalid }">
+                                <input type="password" name="password" class="form-control" placeholder="Senha" autocomplete="off"
+                                       ng-model="password"
+                                       ng-required="true">
+
+                                <div ng-show="loginForm.password.$touched" ng-messages="loginForm.password.$error" role="alert">
+                                    <p ng-message="required" class="help-block">Sua senha não pode estar em branco.</p>
+                                </div>
+                            </div>
+                            <div>
+                                <button class="btn btn-lg btn-primary pull-right" ng-loading-button ng-submit-validation="loginForm" type="submit" title="Preencha os campos para fazer o login">Fazer login</button>
+                            </div>
+                            <button id="login_lost_btn" ng-click="lostPassword()" type="button" class="btn btn-link pull-right mt-10 md--15">Esqueceu sua senha?</button>
+                        </form>
+                    </div>
+                    <div class="panel-footer">
+                        <p class="copyright">Hagrid. {{ '' | currentyear }} © Todos os direitos reservados.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-info></app-info>
+</div>

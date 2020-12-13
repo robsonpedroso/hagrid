@@ -1,0 +1,32 @@
+<div class="box" *ngIf="isLoad">
+  <div class="box__header">
+    <span class="box__header__title">Dados de cadastro</span>
+  </div>
+  <div class="box__cont box__register" *ngIf="account.customer != null">
+    <div class="box__register__info">
+      <span class="box__register__text">Pais</span>
+      <span class="box__register__result">{{ addressContact.country }}</span>
+    </div>
+    <div class="box__register__info">
+      <span class="box__register__text">Localização</span>
+      <span class="box__register__result">{{ addressContact.city }}</span>
+    </div>
+    <div class="box__register__info">
+      <span class="box__register__text">CPF/CNPJ</span>
+      <span class="box__register__result">{{ account.document | document }}</span>
+    </div>
+
+  </div>
+
+  <div class="box__cont box__register" *ngIf="account.customer == null">
+      <div class="box__register__info">
+        <span>Sem informações de consumidor</span>
+      </div>
+  </div>
+
+  <div class="box__footer" *ngIf="account.customer != null">
+    <div class="box__footer__action">
+      <a [routerLink]="['profile-edit', account.code]" class="box__footer__button">Atualizar</a>
+    </div>
+  </div>
+</div>

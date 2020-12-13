@@ -1,0 +1,17 @@
+<div class="dash__box">
+  <div class="dash__box__title">
+    <h3 class="dash__title">Meus Cartões</h3>
+    <a class="dash__details" routerLink="/meus-cartoes">Detalhes</a>
+  </div>
+  <div class="dash__box__content">
+    <ul class="cards" [hidden]="!is_loaded">
+      <li class="cards__item" *ngFor="let card of cards">
+          <i [ngClass]="card.brand_icon"></i>
+          <span class="cards__item__text"> x-{{card.card_last_digits}}</span>
+      </li>
+    </ul>
+    <div [hidden]="is_loaded">
+      <span>Nenhum cartão cadastrado</span>
+    </div>
+  </div>
+</div>

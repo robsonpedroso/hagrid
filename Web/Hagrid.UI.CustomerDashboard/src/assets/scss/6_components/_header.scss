@@ -1,0 +1,29 @@
+.header{
+    width: 100%;  
+
+    .row{
+        @include flexbox(row, wrap, space-between, center, center);
+        min-height: 35px;
+    }
+
+    @include e('info'){
+       background-color: $color-gray-light; 
+    }
+
+    @include e('social'){
+        @include e('link'){
+            @include transition;
+            @include box-sizing;
+            margin-left: 10px;
+            color: $color-gray;
+            &:hover{
+                color: $color-red;
+            }
+        }
+    }
+
+    @include e('nav'){
+        
+    }
+    
+}

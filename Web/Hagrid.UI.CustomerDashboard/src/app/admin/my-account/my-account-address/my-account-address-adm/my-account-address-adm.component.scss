@@ -1,0 +1,86 @@
+
+@import "src/assets/scss/import.scss";
+
+.adm{
+    @include flexbox(column, nowrap, flex-start, center, center);
+    @include box-sizing;
+    @include transition;
+    text-align: center;
+    margin: 10px auto;
+
+    @media #{$res-xs}, #{$res-sm}{
+        margin: 20px auto;
+    }
+
+    @include e('add'){
+        @include flexbox(row, nowrap, space-between, center, center);
+        @include border-radius(50px);
+        @include transition();
+        &:before{
+            @include set-icon($fa-var-plus-circle, 25px, 900, #FFF);
+            margin-right: 10px;
+        }
+        background-color: $color-red;
+        color: #FFF;
+        padding: 5px 10px;
+        &:hover{
+            text-decoration: none;
+            background-color: $color-red-dark;
+        }
+    }
+
+    @include e('box'){
+        @include flexbox(column, nowrap, flex-start, center, center);
+        width: 100%;
+        padding: 20px 0px;
+
+        @include e('sep'){
+            width: 100%;
+            border-top: 1px dashed $color-gray;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        @include e('info'){
+            @include fonte($second-font, bold, 14px, #000);
+            text-align: left;
+            display: block;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        @include e('type'){
+            @include fonte($second-font, 400, 14px, $color-gray);
+            text-align: left;
+            display: block;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        @include e('action'){
+            text-align: left;
+            display: block;
+            width: 100%;
+        }
+
+        @include e('link'){
+            @include fonte($second-font, bold, 14px, $color-red-dark);
+        }
+    }
+
+    @include e('title'){
+        margin-bottom: 0px;
+    }
+
+    @include e('small'){
+        margin: 10px 0px;
+    }
+
+    @include e('text'){
+        @include fonte($second-font, normal, 14px, $color-gray-dark);
+    }
+
+    @include e('img'){
+        margin: 20px 0px;
+    }
+}

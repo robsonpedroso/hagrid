@@ -1,0 +1,89 @@
+﻿<div ng-init="init()">
+    <div class="col-md-6 col-xs-12">
+        <div class="row center-row ">
+            <div class="box-login">
+                <div class="text-center alert" role="alert" ng-class="messageClass" ng-show="visibleMessage">
+                    {{message}}
+                </div>
+                <div ng-show="showFormRecovery">
+                    <div class="logo-hagrid" ng-controller="appInfoController" ng-init="init()">
+                        <img src="{{ infoApp.Logo || '/content/images/logo/logo-hagrid.gif' }}" />
+                    </div>
+                    <div class="panel panel-default panel-request-recovery">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Recuperar sua senha do Hagrid</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form name="smsChangeForm" role="form" ng-submit="smsChangeForm.$valid && submit()">
+                                <div class="form-group" ng-class="{ 'has-error' : smsChangeForm.email.$touched && smsChangeForm.email.$invalid }">
+                                    <input type="email" name="email" class="form-control" placeholder="Informe seu email" autocomplete="off"
+                                           ng-model="email"
+                                           ng-required="true">
+                                    <div ng-messages="smsChangeForm.email.$error" ng-show="smsChangeForm.email.$touched && smsChangeForm.email.$invalid" role="alert">
+                                        <p ng-message="required" class="help-block">{{ systemMessages["required"].text }}</p>
+                                        <p ng-message="email" class="help-block">{{ systemMessages["email_invalid"].text }}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{ 'has-error' : smsChangeForm.emailnew.$touched && smsChangeForm.emailnew.$invalid }">
+                                    <input type="email" name="emailnew" class="form-control" placeholder="Informe seu email novamente" autocomplete="off"
+                                           ng-model="emailnew"
+                                           ng-required="true">
+                                    <div ng-messages="smsChangeForm.emailnew.$error" ng-show="smsChangeForm.emailnew.$touched && smsChangeForm.emailnew.$invalid" role="alert">
+                                        <p ng-message="required" class="help-block">{{ systemMessages["required"].text }}</p>
+                                        <p ng-message="email" class="help-block">{{ systemMessages["email_invalid"].text }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" ng-class="{ 'has-error' : smsChangeForm.password.$touched && smsChangeForm.password.$invalid }">
+                                    <input type="password" name="password" class="form-control" placeholder="Informe sua senha" autocomplete="off"
+                                           ng-model="password"
+                                           ng-minlength="8"
+                                           ng-maxlength="50"
+                                           ng-required="true">
+
+                                    <div ng-messages="smsChangeForm.password.$error" ng-show="smsChangeForm.password.$touched && smsChangeForm.password.$invalid" role="alert">
+                                        <p ng-message="required" class="help-block">{{ systemMessages["required"].text }}</p>
+                                        <p ng-message="minlength" class="help-block">{{ systemMessages["minlength"].text }}</p>
+                                        <p ng-message="maxlength" class="help-block">{{ systemMessages["maxlength"].text }}</p>
+                                        <p ng-message="Empty" class="help-block">{{ systemMessages["Empty"].text }}</p>
+                                        <p ng-message="EqualsToEmail" class="help-block">{{ systemMessages["EqualsToEmail"].text }}</p>
+                                        <p ng-message="OnlyAsterisk" class="help-block">{{ systemMessages["OnlyAsterisk"].text }}</p>
+                                        <p ng-message="Length" class="help-block">{{ systemMessages["minlength"].text }}</p>
+                                        <p ng-message="WhiteSpace" class="help-block">{{ systemMessages["WhiteSpace"].text }}</p>
+                                        <p ng-message="InvalidChar" class="help-block">{{ systemMessages["InvalidChar"].text }}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{ 'has-error' : smsChangeForm.passwordnew.$touched && smsChangeForm.passwordnew.$invalid }">
+                                    <input type="password" name="passwordnew" class="form-control" placeholder="Informe sua senha novamente" autocomplete="off"
+                                           ng-model="passwordnew"
+                                           ng-model-options="{ updateOn: 'blur' }"
+                                           ng-minlength="8"
+                                           ng-password-confirmation="password"
+                                           ng-required="true">
+                                    <div ng-messages="smsChangeForm.passwordnew.$error" ng-show="smsChangeForm.passwordnew.$touched && smsChangeForm.passwordnew.$invalid">
+                                        <p ng-message="required" class="help-block">{{ systemMessages["required"].text }}</p>
+                                        <p ng-message="minlength" class="help-block">{{ systemMessages["minlength"].text }}</p>
+                                        <p ng-message="different" class="help-block">{{ systemMessages["different"].text }}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="btn btn-lg btn-primary pull-right"
+                                            ng-loading-button
+                                            ng-submit-validation="smsChangeForm"
+                                            type="submit">
+                                        Alterar E-mail e Senha
+                                    </button>
+                                </div>
+                                <button id="login_lost_btn" ng-click="login()" type="button" class="btn btn-link pull-right mt-10 md--15">Voltar para login</button>
+                            </form>
+                        </div>
+                        <div class="panel-footer">
+                            <p class="copyright">Hagrid. {{ '' | currentyear }} © Todos os direitos reservados.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-info></app-info>
+</div>

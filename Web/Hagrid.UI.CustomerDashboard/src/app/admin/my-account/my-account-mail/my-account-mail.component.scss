@@ -1,0 +1,21 @@
+@import "src/assets/scss/import.scss";
+
+.box {
+    @include e("mail") {
+        @include e("info") {
+            @include flexbox(column, nowrap, flex-start, flex-start, center);
+
+            margin-left: 10px;
+        }
+
+
+        @include e("address") {
+            @include fonte($second-font, normal, 18px, $color-gray-dark);
+        }
+
+
+        @include e("type") {
+            @include fonte($second-font, normal, 14px, $color-gray);
+        }
+    }
+}

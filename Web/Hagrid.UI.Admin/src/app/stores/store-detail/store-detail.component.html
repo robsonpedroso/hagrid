@@ -1,0 +1,134 @@
+<div [hidden]="!is_loaded">
+    <section class="content-header">
+        <h1>
+            Detalhe da loja
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a routerLink="/stores">
+                    <i class="fa fa-shopping-cart"></i> Lojas</a>
+            </li>
+            <li class="active">Detalhe</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row invoice-info">
+            <div [ngClass]="{'col-lg-6': store.applications, 'col-lg-10': !store.applications}">
+                <form #f="ngForm" (ngSubmit)="update()">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">
+                                <i class="fa fa-shopping-cart"></i> Loja #{{ store.code }}</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label>Nome*</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-shopping-cart"></i>
+                                    </div>
+									<input type="text" class="form-control" name="name" [(ngModel)]="store.name" [required]="true" title="nome da loja" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>CNPJ*</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-file-o"></i>
+                                    </div>
+									<input type="text" mask="00.000.000/0000-00" class="form-control" name="cnpj" [(ngModel)]="store.cnpj" [required]="true"
+									 title="CNPJ" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 ng-scope">
+                                    <div class="form-group">
+                                        <label>Logo</label>
+                                        <div class="logo-store text-center">
+                                            <img class="store-logo" [src]="store.logo || ''" onError="this.src='assets/img/default-logo.png'" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8" *ngIf="currentStoreDetailPermission?.Edit">
+                                    <div class="form-group">
+                                        <label>Upload</label>
+                                        <i class="fa fa-fw fa-question-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="" data-original-title=" As extensões aceitas devem ser : .png"></i>
+
+                                        <!-- Drag and drop image logo here-->
+                                        <div (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" onclick="file_upload.click();" (drop)="onDrop($event)"
+                                            class="box-dragdrop-logo">
+                                            <input style="display:none" type="file" id="file_upload" (change)="onDrop($event)" accept=".png" />
+                                            <span>Arraste sua imagem ou clique para carregar</span>
+                                        </div>
+
+                                        <div class="box-info-logo">Extensões aceitas: .png</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box box-primary" *ngIf="currentStoreDetailPermission?.Edit">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label>Frase secreta:</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-user-secret"></i>
+                                    </div>
+                                    <input type="text" class="form-control" name="frase secreta" title="frase secreta" [(ngModel)]="secretPhrase" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Url criptografada da Loja:</label>
+                                <div class="input-group">
+                                    <div class="input-group-btn">
+										<button type="button" class="btn btn-default" [ngxClipboard]="encripted" [class.btn-success]="isCopied" (cbOnSuccess)="isCopied = true">copiar</button>
+                                    </div>
+									<input type="text" class="form-control form-readonly" name="url criptografada" title="url criptografada" [(ngModel)]="storeCodeEncripted"
+									 #encripted />
+                                </div>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary" type="button" (click)="getLinkEncripted()">Gerar link</button>
+                            </div>
+						</div>
+					</div>
+					<div class="box box-primary" *ngIf="store.metadata_fields?.length && currentStoreDetailPermission?.Edit">
+						<div class="box-body">
+							<metadata #metadata [value]="store.metadata_fields"></metadata>
+                        </div>
+                    </div>
+                    <div *ngIf="currentStoreDetailPermission?.Edit">
+                        <button type="submit" [disabled]="!f.valid" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-6" *ngIf="store.applications">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            <i class="fa fa-unlock-alt"></i> Aplicações</h3>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered table-striped f-s-12 tableResp">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Aplicação</th>
+                                    <th class="text-center">Confidential Client</th>
+                                    <th class="text-center">Confidential Secret</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+								<tr *ngFor="let item of store.applications | orderBy:'application_name'">
+									<td data-title="Aplicação" class="text-center v-align-center text-green">{{ item.application_name }}</td>
+                                    <td data-title="Conf. Client" class="text-center v-align-center text-blue">{{ item.confidential_client }}</td>
+                                    <td data-title="Conf. Secret" class="text-center v-align-center text-red">{{ item.confidential_secret }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

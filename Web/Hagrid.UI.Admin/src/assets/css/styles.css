@@ -1,0 +1,530 @@
+/* You can add global styles to this file, and also import other style files */
+
+.box.box-info {
+	border-top-color: #3c8dbc !important;
+}
+
+.invoice {
+	margin: 10px 15px !important;
+}
+
+.truncate {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/*notification and confirm overridden =)*/
+
+.simple-notification-wrapper {
+	width: 350px !important;
+	z-index: 9999 !important;
+}
+
+.jaspero__dialog-actions button.default {
+	color: #444 !important;
+	background-color: #f4f4f4 !important;
+	border-color: #ddd !important;
+}
+
+.jaspero__dialog-actions button.primary {
+	color: #fff !important;
+	background-color: #3c8dbc !important;
+	border-color: #367fa9 !important;
+}
+
+.item-inserted {
+	background-color: #fffaca !important;
+}
+
+.simple-notification .sn-content {
+	width: 260px !important;
+}
+
+/*ngx-pagination overridden =)*/
+
+.ngx-pagination li {
+	margin-right: 0 !important;
+	border: 1px solid #ddd !important;
+}
+
+.ngx-pagination .current {
+	background-color: #337ab7 !important;
+	border-color: #337ab7 !important;
+}
+
+.ngx-pagination a, .ngx-pagination button, .ngx-pagination .current, .ngx-pagination .disabled {
+	padding: 0.6rem 1.4rem !important;
+}
+
+.ngx-pagination li.pagination-previous {
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+	margin-right: -4px !important;
+}
+
+.ngx-pagination li.pagination-next {
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	margin-left: -4px !important;
+}
+
+.ngx-pagination .pagination-previous a::before, .ngx-pagination .pagination-previous.disabled::before, .ngx-pagination .pagination-next a::after, .ngx-pagination .pagination-next.disabled::after {
+	margin: 0 !important;
+}
+
+/*select 2 overridden =)*/
+
+.ui-select-match .btn {
+	border-radius: 0px !important;
+}
+
+/*bootstrap utilities overridden =) margin*/
+
+.m-0 {
+	margin: 0 !important;
+}
+
+.m-t-0 {
+	margin-top: 0 !important;
+}
+
+.m-t-5 {
+	margin-top: 5px !important;
+}
+
+.m-t-8 {
+	margin-top: 8px !important;
+}
+
+.m-t-10 {
+	margin-top: 10px !important;
+}
+
+.m-t-20 {
+	margin-top: 20px !important;
+}
+
+.m-l-5 {
+	margin-left: 5px !important;
+}
+
+.m-l-10 {
+	margin-left: 10px !important;
+}
+
+.m-l-15 {
+	margin-left: 15px !important;
+}
+
+.m-l-20 {
+	margin-left: 20px !important;
+}
+
+.m-r-5 {
+	margin-right: 5px !important;
+}
+
+.m-r-10 {
+	margin-right: 10px !important;
+}
+
+.m-r-15 {
+	margin-right: 15px !important;
+}
+
+.m-r-20 {
+	margin-right: 20px !important;
+}
+
+.m-b-0 {
+	margin-bottom: 0 !important;
+}
+
+.m-b-5 {
+	margin-bottom: 5px !important;
+}
+
+.m-b-10 {
+	margin-bottom: 10px !important;
+}
+
+.m-b-20 {
+	margin-bottom: 20px !important;
+}
+
+/*bootstrap utilities overridden =) padding*/
+
+.p-0 {
+	padding-top: 0 !important;
+}
+
+.p-t-0 {
+	padding-top: 0 !important;
+}
+
+.p-t-5 {
+	padding-top: 5px !important;
+}
+
+.p-t-10 {
+	padding-top: 10px !important;
+}
+
+.p-t-20 {
+	padding-top: 20px !important;
+}
+
+.p-l-0 {
+	padding-right: 0 !important;
+}
+
+.p-l-10 {
+	padding-left: 10px !important;
+}
+
+.p-l-20 {
+	padding-left: 20px !important;
+}
+
+.p-r-0 {
+	padding-right: 0 !important;
+}
+
+.p-r-10 {
+	padding-right: 10px !important;
+}
+
+.p-r-20 {
+	padding-right: 20px !important;
+}
+
+.p-b-0 {
+	padding-bottom: 0 !important;
+}
+
+.p-b-5 {
+	padding-bottom: 5px !important;
+}
+
+.p-b-10 {
+	padding-bottom: 10px !important;
+}
+
+.p-b-20 {
+	padding-bottom: 20px !important;
+}
+
+.fa-2 {
+	font-size: 2em !important;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+	-webkit-appearance: searchfield-cancel-button;
+}
+
+.f-s-5 {
+	font-size: 5px;
+}
+
+.f-s-8 {
+	font-size: 8px;
+}
+
+.f-s-10 {
+	font-size: 10px;
+}
+
+.f-s-12 {
+	font-size: 12px;
+}
+
+.f-s-14 {
+	font-size: 14px;
+}
+
+.f-s-16 {
+	font-size: 16px;
+}
+
+.f-s-50 {
+	font-size: 50px;
+}
+
+.store-logo {
+	max-height: 100px;
+	width: 130px;
+}
+
+.div-store-logo {
+	height: 100px;
+}
+
+.v-align-center {
+	vertical-align: middle;
+}
+
+.add-ellipsis {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.loading-splash {
+	position: absolute;
+	left: 50%;
+	top: 50%
+}
+
+.box-dragdrop-logo {
+	height: 80px;
+	width: 300px;
+	border-style: dashed;
+	border-color: rgb(216, 71, 71);
+	display: table-cell;
+	vertical-align: -webkit-baseline-middle;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.box-info-logo {
+	width: 300px;
+	line-height: 35px;
+	border-color: gray;
+	border: 1px dotted #d4d4d4;
+	margin-top: 10px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.box-dragdrop-dotted {
+	line-height: 80px;
+	border-style: dashed;
+	border-color: rgb(216, 71, 71);
+	vertical-align: middle;
+	text-align: center;
+	background-color: #e4e4e4c2;
+}
+
+.box-dragdrop-dotted:hover {
+	background-color: #e4e4e486;
+}
+
+.box-info-dotted {
+	border-color: gray;
+	border: 1px dotted #d4d4d4;
+	margin-top: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.label-sucesso {
+	background-color: #5cb85c;
+}
+
+.label-sucesso[href]:hover, .label-sucesso[href]:focus {
+	background-color: #449d44;
+}
+
+.label-pendente {
+	background-color: #f0ad4e;
+}
+
+.label-pendente[href]:hover, .label-pendente[href]:focus {
+	background-color: #ec971f;
+}
+
+.label-processando {
+	background-color: #367fa9;
+}
+
+.label-processando[href]:hover, .label-processando[href]:focus {
+	background-color: #367fa9;
+}
+
+.label-falha {
+	background-color: #d9534f;
+}
+
+.label-falha[href]:hover, .label-falha[href]:focus {
+	background-color: #c9302c;
+}
+
+.label-importinternalaccounts[href]:hover, .label-importinternalaccounts[href]:focus, .label-importinternalaccounts {
+	background-color: #449d44;
+}
+
+.label-importexternalaccounts[href]:hover, .label-importexternalaccounts[href]:focus, .label-importexternalaccounts {
+	background-color: #367fa9;
+}
+
+.enabled_scroll {
+	max-height: 400px;
+	overflow: auto;
+}
+
+/*jsoneditor overridden =)*/
+
+div.jsoneditor-menu {
+	height: 30px;
+	padding: 0px;
+	background-color: #777;
+	border-bottom: 1px solid #777;
+}
+
+div.jsoneditor-menu>button.jsoneditor-repair {
+	display: none;
+}
+
+div.jsoneditor-menu>button:focus {
+	border: 1px solid rgba(255, 255, 255, .4);
+	outline-color: rgba(255, 255, 255, .4);
+}
+
+div.jsoneditor-menu a.jsoneditor-poweredBy {
+	display: none;
+}
+
+div.jsoneditor {
+	border: 1px solid #ccc;
+}
+
+.ace-jsoneditor, textarea.jsoneditor-text {
+	min-height: 250px;
+}
+
+/*tag overridden =)*/
+
+.ng2-tag-input {
+	padding-top: 0 !important;
+}
+
+.bootstrap tag {
+	background: #3c8dbc !important;
+}
+
+.bootstrap.ng2-tag-input.ng2-tag-input--focused {
+	border-bottom: 2px solid #3c8dbc !important;
+}
+
+.bootstrap tag.tag--editing {
+	background-color: #fff !important;
+	color: #444 !important;
+}
+
+.ng2-tag-input__text-input {
+	width: 330px;
+}
+
+.main-header .logo .logo-lg-sub {
+	display: none !important;
+}
+
+.main-header .logo-manager .logo-lg {
+	line-height: 38px;
+}
+
+.main-header .logo-manager .logo-lg-sub {
+	line-height: 0px;
+	font-size: 16px !important;
+	display: block !important;
+}
+
+.reason-block-user {
+	width: 100%;
+    height: 33px;
+}
+
+
+.reason-unlock-user {
+	width: 552px;
+	height: 167px;
+}
+
+.no-shadow {
+	box-shadow: 0 0 0;
+}
+
+.operations_opacity {
+	opacity: .5;
+}
+
+.list_module {
+	padding: 10px;
+}
+
+/* table's readjustment for mobile */
+@media only screen and (max-width: 800px) {
+    .tableResp {
+        width: 100%;
+        border: 0px;
+    }
+
+        .tableResp thead {
+            position: absolute;
+            z-index: 0;
+            visibility: hidden;
+        }
+
+        .tableResp tbody {
+            display: flex;
+            flex-flow: row wrap;
+        }
+
+        .tableResp tr {
+            box-sizing: border-box;
+            display: block;
+            background-color: #FFF;
+            border: 1px solid #CCC;
+            margin: 10px;
+        }
+
+        .tableResp td {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-between;
+            padding: 15px;
+            font-size: 12px;
+            width: 100%;
+        }
+
+            .tableResp td:before {
+                content: attr(data-title);
+                padding-right: 15px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+            }
+}
+
+@media only screen and (max-width: 400px) {
+    .tableResp tr {
+        width: calc(100%);
+    }
+}
+
+
+@media screen and (min-width: 401px) and (max-width: 600px) {
+    .tableResp tr {
+        width: calc(100% / 2 - 20px);
+    }
+}
+
+@media only screen and (min-width: 601px) {
+    .tableResp tr {
+        width: calc(100% / 3 - 20px);
+    }
+}
+
+/* overriding modal */
+.modal {
+	overflow: auto;
+}
+
+@media only screen and (min-width: 768px) {
+	.modal-dialog {
+		width: 699px;
+	}
+}

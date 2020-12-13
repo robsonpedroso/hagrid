@@ -1,0 +1,69 @@
+@import "src/assets/scss/import.scss";
+
+.footer{
+
+    @media #{$res-xs}, #{$res-sm}, #{$res-md} {
+        .rk-col{
+            width: 100%;
+            @include flexbox(row, wrap, center, center, center);
+        }
+    }
+    
+    .wrapper{
+        @include flexbox(row, wrap, space-between, center, center);
+        @include box-sizing;
+        padding: 0px 20px;
+        @media #{$res-xs}, #{$res-sm}, #{$res-md} {
+            @include flexbox(column, wrap, center, center, center);
+        }
+    }
+
+    background: #FFF;
+    padding: 15px 0px;
+
+
+    @include e('logos'){
+        @media #{$res-xs}, #{$res-sm}, #{$res-md} {
+            text-align: center;
+        }
+
+    }
+
+    @include e('copy'){
+        @include fonte($second-font, 400, 12px, #54515e);
+        @media #{$res-xs}, #{$res-sm}, #{$res-md} {
+            text-align: center;
+        }
+        @include e('link'){
+            @include fonte($second-font, 400, 12px, #54515e);
+            @include transition;
+            &:hover{
+                text-decoration: none;
+                color: #000;
+            }
+        }
+    }
+
+    @include e('link'){
+        @include fonte($second-font, 400, 12px, #54515e);
+        @include transition;
+        text-decoration: none;
+        &:hover{
+            text-decoration: none;
+            color: #000;
+        }
+    }
+
+    @include e('privacy'){
+        @include flexbox(row, nowrap, space-between, center, center);
+    }
+
+    @include e('pipe'){
+        display: block;
+        width: 1px;
+        height: 10px;
+        background-color: #54515e;
+        margin: 0px 15px;
+    }
+
+}

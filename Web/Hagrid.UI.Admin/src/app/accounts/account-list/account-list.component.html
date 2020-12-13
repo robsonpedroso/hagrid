@@ -1,0 +1,104 @@
+<div [hidden]="!is_loaded">
+    <section class="content-header">
+        <h1>
+            Consulta de usuários
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active">
+                <i class="fa fa-group"></i> Usuários</li>
+        </ol>
+    </section>
+
+    <section class="content">
+
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <div class="row">
+                    <form #f="ngForm" (ngSubmit)="filter()">
+                        <div class="col-lg-12">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label>Account ID</label>
+                                    <input type="search" placeholder="Account ID do usuário" class="form-control" name="code" [(ngModel)]="filters.code" [required]="!filters.email && !filters.document ? true : null"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label>E-mail</label>
+                                    <input type="search" placeholder="E-mail do usuário" class="form-control" name="email" [(ngModel)]="filters.email" [required]="!filters.code && !filters.document ? true : null"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label>Documento</label>
+                                    <input type="search" placeholder="Documento do usuário" class="form-control" name="document" [(ngModel)]="filters.document" [required]="!filters.code && !filters.email ? true : null"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label class="hidden-xs show">&nbsp;</label>
+                                    <button type="submit" [disabled]="!f.valid" class="btn btn-primary m-t-23">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                        <span class="hidden-xs">Filtrar</span>
+									</button>
+								</div>
+                            </div>
+                        </div>
+                    </form>
+				</div>
+			</div>
+        </div>
+
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <div class="row" *ngIf="accounts">
+                    <div class="col-lg-4 col-md-6" *ngFor="let account of accounts">
+                        <div class="box box-widget widget-user-2">
+                            <div class="widget-user-header bg-gray">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-user fa-4x"></i>
+                                </div>
+                                <div class="widget-user-desc">
+                                    <b>ID:</b>
+                                    <span>{{ account.code }}</span>
+                                </div>
+                                <div class="widget-user-desc">
+                                    <b>E-mail:</b>
+                                    <span>{{ account.email }}</span>
+                                </div>
+                                <div class="widget-user-desc">
+                                    <b>Documento:</b>
+                                        <span>{{ account.document || '---' | document }}</span>
+                                </div>
+                            </div>
+                            <div class="box-footer no-padding" style="border: solid 1px #dcdcdc;">
+                                <ul class="nav nav-stacked">
+                                    <li class="p-t-10 p-r-10 p-b-10">
+                                        <div class="form-group">
+                                            <div class="pull-right">
+                                                <a [routerLink]="['/accounts', account.code]">
+                                                    <span>Detalhes</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="accounts?.length == 0">
+                    <div class="col-sm-12">
+                        <p class="text-center">
+                            Nenhum usuário encontrado.
+                            <br>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,536 @@
+<div [hidden]="!is_loaded">
+	<section class="content-header">
+		<h1>
+			Detalhe do usuário
+		</h1>
+		<ol class="breadcrumb">
+			<li>
+				<a routerLink="/accounts">
+					<i class="fa fa-group"></i> Usuários</a>
+			</li>
+			<li class="active">Detalhe</li>
+		</ol>
+	</section>
+
+	<section class="invoice">
+		<div class="row">
+			<legend>
+				<i class="fa fa-user"></i> Account # {{ account.code }}</legend>
+
+			<div class="nav-tabs-custom no-shadow">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#user" data-toggle="tab" aria-expanded="false">Usuário</a></li>
+					<li class="" *ngIf="currentAppPermission?.View"><a href="#permission" data-toggle="tab" aria-expanded="false">Permissões</a></li>
+					<li *ngIf="account.customer" class=""><a href="#customer" data-toggle="tab"
+							aria-expanded="false">Consumidor</a></li>
+				</ul>
+				<div class="tab-content">
+					<br>
+					<!-- Start - User Data -->
+					<div class="tab-pane active" id="user">
+						<div class="col-lg-12">
+							<div class="text-muted well well-sm no-shadow well-container" style="min-height: 200px;">
+								<b>E-mail:</b>
+								<code>{{ account.email }}</code>
+								<br />
+								<b>Login:</b> {{ account.email }}
+								<br />
+								<b>Documento:</b>
+								<span *ngIf="!edit.document">{{ account.document || "---" | document }}
+									<i class="fa fa-edit" (click)="editDocument()" *ngIf="currentUserPermission?.Edit"></i>
+								</span>
+								<span *ngIf="edit.document">
+									<input type="text" mask="{{edit.mask}}" [(ngModel)]="edit.document_new" />
+									<button class="btn btn-primary btn-xs" (click)="saveDocument()">
+										<i class="fa fa-save"></i> Salvar</button>
+									<button class="btn btn-warning btn-xs" (click)="cancelEditDocument()">
+										<i class="fa fa-close"></i> Cancelar</button>
+								</span>
+								<br />
+								<b>Data de cadastro:</b> {{ account.save_date | date:'dd/MM/yyyy HH:mm' }}
+								<br />
+								<b>DFP:</b> {{ account.data_fingerprint }}
+								<br />
+								<br />
+								<h4>
+									<span class="label label-danger"
+										*ngIf="account.locked_up; else titleBlockedTemplate">
+										Usuário bloqueado
+									</span>
+								</h4>
+								<div class="pull-right">
+									<button class="btn btn-primary" (click)="sendPasswordEmail()">
+										<i class="fa fa-envelope"></i> Esqueceu a senha
+									</button>
+								</div>
+								<ng-template #titleBlockedTemplate>
+									<span class="label label-success">Usuário desbloqueado</span>
+								</ng-template>
+								<b>Erros de senha:</b> {{ account.qty_wrongs_password || 0 }}
+								<span *ngIf="account.locked_up">
+									<br />
+									<b>Bloqueado até:</b>{{ account.locked_up | date:'dd/MM/yyyy HH:mm' || "---" }}
+								</span>
+								<br />
+								<br />
+								<div class="input-group-btn" *ngIf="account.locked_up">
+									<button type="button" class="btn btn-success" (click)="unlockUser()">Desbloquear
+										Usuário</button>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-12 m-b-10" [hidden]="!currentUserPermission?.Edit">
+							<div>
+								<div>
+									<legend>
+										<i class="fa fa-envelope"></i>
+										Alterar e-mail
+									</legend>
+								</div>
+								<div class="col-lg-4">
+									<div class="form-group">
+										<label>Novo e-mail</label>
+										<div class="input-group">
+											<div class="input-group-addon">
+												<i class="fa fa-envelope"></i>
+											</div>
+											<input type="email" autocomplete="off" class="form-control"
+												[(ngModel)]="account.email_new" [required]="true">
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-5">
+									<div class="form-group">
+										<label>Loja para e-mail de "Esqueci a senha"</label>
+										<ng-select #selectStoreChangeEmail [allowClear]="true"
+											(typed)="getStoresChangeEmail($event)" (data)="setStoreChangeEmail($event)"
+											placeholder="Procurar a Loja...">
+										</ng-select>
+									</div>
+								</div>
+								<div class="col-lg-3 text-right">
+									<div class="form-group">
+										<label class="hidden-xs show">&nbsp;</label>
+										<button type="submit" [disabled]="!account.email_new"
+											class="btn btn-success m-t-23 m-l-20" (click)="changeEmail()">
+											<i class="fa fa-pencil"></i> Alterar e-mail</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-12 callout callout-info" style="margin-top: 15px;">
+								<h4>Importante!</h4>
+
+								<p>Ao alterar o e-mail de um usuário será enviado um e-mail de recuperação de senha para
+									o
+									novo endereço. Este e-mail pode possuir a identidade de uma loja ou da Hagrid. Para
+									enviar com a identidade da Hagrid deixe o campo de loja em branco ou selecione o
+									nome
+									da loja para enviar o e-mail com sua identidade.</p>
+							</div>
+						</div>
+						<div class="col-lg-12 m-b-10" *ngIf="account.metadata_fields?.length && currentUserPermission?.Edit">
+							<div class="box-content">
+								<div class="col-xl-6">
+									<metadata [value]="account.metadata_fields"></metadata>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4" *ngIf="currentUserPermission?.Remove">
+							<div>
+								<div>
+									<legend>
+										<i class="fa fa-ban"></i>
+										Excluir conta
+									</legend>
+								</div>
+								<div>
+									<div class="form-group text-center">
+										<label class="hidden-xs show">&nbsp;</label>
+										<button class="btn btn-danger m-t-23" (click)="delete()">
+											<i class="fa fa-ban"></i> Excluir</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- End - User Data -->
+
+					<!-- Start - Customer Data -->
+					<div class="row tab-pane" id="customer">
+						<div class="col-lg-6 col-md-12" *ngIf="account.customer">
+							<legend>
+								<i class="fa fa-shopping-cart"></i> Dados de consumidor</legend>
+							<div class="text-muted well well-sm no-shadow well-container" style="min-height: 200px;">
+								<strong>{{ account.customer.name }}</strong>
+								<br />
+								<span *ngIf="account.customer.type == 'Person'">
+									<b>RG:</b> {{ account.customer.rg }}
+									<br />
+									<b>Data nascimento:</b>
+									<span
+										*ngIf="!edit.birth_date">{{ account.customer.birth_date | date:'dd/MM/yyyy' || "---" }}
+										<i class="fa fa-edit" (click)="editBirthdate()" *ngIf="currentUserPermission?.Edit"></i>
+									</span>
+									<span *ngIf="edit.birth_date">
+										<input type="date" [ngModel]="edit.birth_date_new | date:'yyyy-MM-dd'"
+											(ngModelChange)="edit.birth_date_new = $event" />
+										<button class="btn btn-primary btn-xs" (click)="saveBirthdate()">
+											<i class="fa fa-save"></i> Salvar</button>
+										<button class="btn btn-warning btn-xs" (click)="cancelEditBirthdate()">
+											<i class="fa fa-close"></i> Cancelar</button>
+									</span>
+									<br />
+									<b>Sexo:</b> {{ account.customer.gender }}
+									<br />
+								</span>
+								<span *ngIf="account.customer.type == 'Company'">
+									<b>IE:</b> {{ account.customer.ie }}
+									<br />
+									<b>IM:</b> {{ account.customer.im }}
+									<br />
+								</span>
+								<b>Loja de origem:</b>
+								<code>{{ account.customer.origin_store }}</code>
+								<br />
+								<br />
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-primary" (click)="openRegistry()">
+										<span class="glyphicon glyphicon-search"></span>
+										<span class="hidden-xs"> Exibir consulta de documento</span>
+									</button>
+									<button type="button" class="btn btn-primary m-l-10" (click)="openModalSms()">
+										<span class="glyphicon glyphicon-phone"></span>
+										<span class="hidden-xs"> Exibir Recuperações por SMS</span>
+									</button>
+								</div>
+							</div>
+						</div>
+						<br><br>
+						<div class="col-lg-12 col-md-12" *ngIf="account.customer">
+							<legend>
+								<i class="fa fa-globe"></i> Endereços</legend>
+							<div class="row">
+								<div class="col-lg-3 col-md-12" *ngFor="let address of account.customer.addresses">
+									<div class="text-muted well well-sm no-shadow well-container">
+										<div class="box-header with-border"
+											[attr.account-id]="address.address_customer_code">
+											<i class="fa fa-user"></i>
+											<b *ngIf="address.purpose=='Contact'; else titleAddresTemplate">Endereço
+												principal</b>
+											<ng-template #titleAddresTemplate>
+												<b>Endereço de entrega</b>
+											</ng-template>
+										</div>
+										{{ address.street }}
+										<br /> {{ address.number }}, {{ address.district }}
+										<br /> {{ address.city }} - {{ address.state }}
+										<br /> CEP: {{ address.zip_code | zipcode }}
+										<br />
+										<span *ngFor="let phone of address.phones">
+											<br /> {{ phone.phone_type }}: {{ phone.ddd }}
+											{{ phone.number || "---" | phone }} {{ phone.extension }}
+										</span>
+										<br />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- End - Customer Data -->
+					<!-- Start - Permission Data -->
+					<div class="row tab-pane" id="permission">
+						<div class="col-lg-12">
+							<legend>
+								<i class="fa fa-unlock-alt"></i> Grupos de permissões
+							</legend>
+							<div>
+								<div class="col-lg-4">
+									<div class="form-group">
+										<label>Filtro</label>
+										<input class="form-control ng-untouched ng-pristine ng-valid"
+											   placeholder="Filtrar...."
+											   type="search"
+											   name="module"
+											   [(ngModel)]="searchText" />
+									</div>
+								</div>
+							</div>
+							<div>
+								<div class="col-lg-12" *ngIf="roles?.length > 0">
+									<div>
+										<table class="table table-striped tableResp">
+											<thead>
+												<tr>
+													<th [class.active]="order === 'store.name'" (click)="setOrder('store.name')">
+														Loja
+														<span [hidden]="reverse">▼</span>
+														<span [hidden]="!reverse">▲</span>
+													</th>
+													<th [class.active]="order === 'name'" (click)="setOrder('name')">
+														Grupo
+														<span class="test" [hidden]="reverse">▼</span>
+														<span class="test" [hidden]="!reverse">▲</span>
+													</th>
+													<th class="no-pointer"></th>
+													<th class="no-pointer"></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr *ngFor="let role of roles | orderBy: order:reverse:'case-insensitive' |  groupPermission : searchText | paginate: {
+															id: 'roles_pagination',
+															itemsPerPage: 5,
+															currentPage: per
+														}">
+													<td data-title="Loja">{{ role.store.name }}</td>
+													<td data-title="Grupo">{{ role.name }}</td>
+													<td data-title="" *ngIf="currentAppPermission?.Remove">
+														<button class="btn btn-sm btn-danger"
+															(click)="unLinkRole(role.code)">
+															<i class="fa fa-times"></i> Remover
+														</button>
+													</td>
+													<td data-title="">
+														<a  class="btn btn-sm btn-success" [routerLink]="['/permissions/groups', role.code]">
+															<i class="fa fa-link"></i>	Visualizar Grupo
+														</a>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="data-tables-paginate text-center" *ngIf="roles?.length > 5">
+										<pagination-controls id="roles_pagination" (pageChange)="per = $event" previousLabel="" nextLabel=""></pagination-controls>
+									</div>
+								</div>
+								<div class="col-sm-12" *ngIf="!roles">
+									<p class="text-center m-t-20 m-b-20">
+										Nenhum grupo encontrado.
+									</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-12" [hidden]="!currentUserBlockedPermission?.View">
+							<legend>
+								<i class="fa fa-lock"></i> Bloquear conta
+							</legend>
+							<div>
+								<div class="col-lg-4">
+									<div class="form-group">
+										<label>Motivo do bloqueio</label>
+										<textarea aria-multiline="true" autocomplete="off" class="form-control reason-block-user"
+											[(ngModel)]="block.reason" placeholder="Informe o motivo do bloqueio"
+											[required]="true"></textarea>
+									</div>
+								</div>
+								<div class="col-lg-3">
+									<div class="form-group">
+										<label>Bloquear na loja</label>
+										<ng-select #selectStoreBlocked [allowClear]="true"
+											(typed)="getStoresBlocked($event)" (data)="setStoreBlocked($event)"
+											placeholder="Procurar a Loja...">
+										</ng-select>
+									</div>
+								</div>
+								<div class="col-lg-2 text-right" *ngIf="currentUserBlockedPermission?.Insert">
+									<div class="form-group">
+										<label class="hidden-xs show">&nbsp;</label>
+										<button type="submit" [disabled]="!block.reason"
+											class="btn btn-danger m-t-23 m-l-20" (click)="blockAccount()">
+											<i class="fa fa-ban"></i> Bloquear</button>
+									</div>
+								</div>
+							</div>
+							<div>
+								<div class="col-xs-12">
+									<div *ngIf="account.blacklist?.length > 0">
+										<table class="table table-striped tableResp">
+											<thead>
+												<tr>
+													<th>Loja</th>
+													<th>Motivo do bloqueio</th>
+													<th>Data</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr *ngFor="let item of account.blacklist | paginate: {
+														id: 'blocks_pagination',
+														itemsPerPage: 5,
+														currentPage: block
+													}"
+													 [class.item-inserted]="item.is_new == true">
+														<td data-title="Loja">{{ item.store_name }}</td>
+														<td data-title="Motivo do bloqueio" *ngIf="item.events">{{ item.events[0].reason }}</td>
+														<td data-title="Motivo do bloqueio" *ngIf="!item.events">---</td>
+														<td data-title="Data">{{ item.update_date | date:'dd/MM/yyyy HH:mm' }}</td>
+														<td *ngIf="currentUserBlockedPermission?.Remove">
+															<button class="btn btn-sm btn-success" (click)="openUnlockModal(item.store_code)">
+																<i class="fa fa-times"></i> Desbloquear</button>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<div class="data-tables-paginate text-center" *ngIf="account.blacklist?.length >= 5">
+												<pagination-controls id="blocks_pagination" (pageChange)="block = $event" previousLabel="" nextLabel=""></pagination-controls>
+											</div>
+										</div>
+										<div class="col-sm-12" *ngIf="account.blacklist?.length == 0">
+											<p class="text-center m-t-20 m-b-20">
+												Nenhum bloqueio encontrado
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-12">
+								<legend>
+									<i class="fa fa-sign-out"></i>
+									Logs de acesso
+								</legend>
+								<div>
+									<div class="col-lg-4">
+										<div class="form-group">
+											<label>Aplicação</label>
+											<ng-select [multiple]="true" [allowClear]="true" #selectApplication (data)="addApplications($event)"
+											 placeholder="Escolha a aplicação..."></ng-select>
+										</div>
+									</div>
+									<div class="col-lg-3">
+										<div class="form-group">
+											<label>Loja</label>
+											<ng-select #selectStore (typed)="getStores($event)" (data)="setStore($event)" placeholder="Procurar a Loja..."></ng-select>
+										</div>
+									</div>
+									<div class="col-lg-2 text-right">
+										<div class="form-group">
+											<label class="hidden-xs show">&nbsp;</label>
+											<button class="btn btn-primary" (click)="filterApplication()">
+												<i class="fa fa-search"></i>Filtrar</button>
+										</div>
+									</div>
+								</div>
+								<div>
+									<div class="col-xs-12">
+										<div *ngIf="applications_store.length > 0">
+											<table class="table table-striped tableResp">
+												<thead>
+													<tr>
+														<th>Aplicação</th>
+														<th>Loja</th>
+														<th>Primeiro acesso</th>
+														<th>Último acesso</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr *ngFor="let app of applications_store | paginate: {
+																id: 'apps_pagination',
+																itemsPerPage: 5,
+																currentPage: log
+															}"
+													 [class.item-inserted]="app.is_new == true">
+														<td data-title="Aplicação">{{ app.name }}</td>
+														<td data-title="Loja">{{ app.store_name }}</td>
+														<td data-title="Primeiro acesso">{{ app.save_date | date:'dd/MM/yyyy HH:mm' }}</td>
+														<td data-title="Último acesso">{{ app.update_date | date:'dd/MM/yyyy HH:mm' }}</td>
+													</tr>
+												</tbody>
+											</table>
+											<div class="data-tables-paginate text-center" *ngIf="applications_store.length > 5">
+												<pagination-controls id="apps_pagination" (pageChange)="log = $event" previousLabel="" nextLabel=""></pagination-controls>
+											</div>
+										</div>
+										<div class="col-sm-12" *ngIf="applications_store.length == 0">
+											<p class="text-center m-t-20 m-b-20">
+												Nenhuma aplicação encontrada.
+											</p>
+										</div>
+									</div>
+								</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End - Permission Data -->
+	</section>
+	<section>
+		<bs-modal #viewUnlock>
+			<bs-modal-header [showDismiss]="true">
+				<h4 class="modal-title">Desbloqueio de conta</h4>
+			</bs-modal-header>
+			<bs-modal-body>
+				<div>
+					<p>
+						<strong>Motivo do desbloqueio:</strong>
+					</p>
+					<p>
+						<textarea aria-multiline="true" class="reason-unlock-user" autocomplete="off"
+							[(ngModel)]="unlock.reason" placeholder="Informe o motivo do desbloqueio"
+							[required]="true"></textarea>
+					</p>
+				</div>
+			</bs-modal-body>
+			<bs-modal-footer>
+				<button type="button" class="btn btn-sm" (click)="modal.close()">Fechar</button>
+				<button type="submit" class="btn btn-success" (click)="unlockAccount()" [disabled]="!unlock.reason">
+					<i class="fa fa-times"></i> Desbloquear</button>
+			</bs-modal-footer>
+		</bs-modal>
+	</section>
+
+	<section>
+		<bs-modal #viewRegistry>
+			<bs-modal-header [showDismiss]="true">
+				<h4 class="modal-title">Consulta de documento</h4>
+			</bs-modal-header>
+			<bs-modal-body>
+				<div>
+					<p>
+						<strong>Dados do registro:</strong>
+					</p>
+					<pre class="wrap-content"><code>{{ registry | json }}</code></pre>
+				</div>
+			</bs-modal-body>
+			<bs-modal-footer>
+				<button type="button" class="btn btn-sm" (click)="closeRegistry()">Fechar</button>
+			</bs-modal-footer>
+		</bs-modal>
+	</section>
+
+	<section>
+		<bs-modal #viewModalSms>
+			<bs-modal-header [showDismiss]="true">
+				<h4 class="modal-title">Consulta de requisições de recuperação de senha por SMS</h4>
+			</bs-modal-header>
+			<bs-modal-body>
+				<table class="table table-striped tableResp">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Data recebida</th>
+							<th>ShortCode</th>
+							<th>Nome da operadora</th>
+							<th>Status do envio</th>
+							<th>Descrição do detalhe</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let item of sms">
+							<td data-title="Id"><code>{{ item.code  || '---' }}</code></td>
+							<td data-title="Data recebida">{{ item.receive_date | date:'dd/MM/yyyy HH:mm' || '---' }}</td>
+							<td data-title="ShortCode"><code>{{ item.short_code || '---' }}</code></td>
+							<td data-title="Nome da operadora">{{ item.mobile_operator_name || '---' }}</td>
+							<td data-title="Status do envio"><code>{{ item.status_code  || '---' }}</code></td>
+							<td data-title="Descrição do detalhe">{{ item.description || '---' }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</bs-modal-body>
+			<bs-modal-footer>
+				<button type="button" class="btn btn-sm" (click)="closeModalSms()">Fechar</button>
+			</bs-modal-footer>
+		</bs-modal>
+	</section>
+	<div class="clearfix"></div>
+</div>

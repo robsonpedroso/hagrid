@@ -1,0 +1,504 @@
+<div [hidden]="!is_loaded">
+	<section class="content-header">
+		<h1>
+			Criação de grupos
+		</h1>
+		<ol class="breadcrumb">
+			<li class="active">
+				<i class="fa fa-lock"></i> Permissões</li>
+		</ol>
+	</section>
+	<section class="content">
+		<form #r="ngForm" (ngSubmit)="save()" class="ng-untouched ng-valid ng-dirty">
+			<div novalidate="" class="ng-untouched ng-pristine ng-invalid box">
+				<div class="row">
+					<div class="col-lg-12">
+						<br>
+						<br>
+						<div class="box-header">
+							<legend style="border-bottom: 2px solid #3c8dbc;">
+								<i class="fa fa-fw fa-database"></i>
+								Dados cadastrais
+							</legend>
+						</div>
+						<!-- Registration data -->
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3">
+									<div class="form-group">
+										<label>Loja</label>
+										<ng-select name="selectStore" #selectStore (typed)="getStores($event)"
+											(data)="setStore($event)" [multiple]="false" [allowClear]="true"
+											placeholder="Procurar a Loja...">
+										</ng-select>
+									</div>
+								</div>
+								<div class="col-lg-3">
+									<div class="form-group">
+										<label>Nome</label>
+										<input type="text" class="form-control" name="name" placeholder="Nome do grupo"
+											type="text" [(ngModel)]="role.name" required />
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="form-group">
+										<label>Descrição</label>
+										<input class="form-control ng-untouched ng-pristine ng-valid" name="description"
+											placeholder="Nome do grupo" type="text" [(ngModel)]="role.description"
+											required />
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end Registration data -->
+						<br>
+						<!-- Group Accounts -->
+						<div class="box-body">
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="box-header">
+										<legend style="border-bottom: 2px solid #3c8dbc;">
+											<i class="fa fa-user"></i>
+											Contas no grupo
+										</legend>
+									</div>
+									<div class="row">
+										<div *ngIf="viewAccount">
+											<div class="col-lg-3">
+												<div class="form-group">
+													<label>Filtro</label>
+													<input class="form-control ng-untouched ng-pristine ng-valid"
+														name="permission" placeholder="Filtrar..." type="search"
+														[(ngModel)]="searchText" />
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-3 pull-right text-right">
+											<div class="form-group">
+												<label class="hidden-xs show">&nbsp;</label>
+												<a class="btn btn-primary m-l-20" (click)="openModalAccount()">
+													<i class="fa fa-plus"></i> Adicionar Usuário
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">
+									<table class="table table-striped tableResp" *ngIf="viewAccount; else notFindAccount">
+										<thead>
+											<tr>
+												<th>Account ID</th>
+												<th>E-mail</th>
+												<th>Documento</th>
+												<th></th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr *ngFor="let item of role?.account_roles | accountSearch : searchText | paginate: {
+													id: 'account_pagination',
+													itemsPerPage: 5,
+													currentPage: acc
+												}">
+												<td data-title="Acc. ID">{{ item.account.code }}</td>
+												<td data-title="E-mail">{{ item.account.email }}</td>
+												<td data-title="Documento" *ngIf="item.account.document">{{ item.account.document }}</td>
+												<td data-title="Documento" *ngIf="!item.account.document">---</td>
+												<td data-title="">
+													<button class="btn btn-sm btn-danger" (click)="removeAccount(item)">
+														<i class="fa fa-times"></i>
+														<span class="hidden-xs"> Remover</span>
+													</button>
+												</td>
+												<td data-title="">
+													<a  class="btn btn-sm btn-primary" [routerLink]="['/accounts/', item.account.code]">
+														<i class="fa fa-link"></i> 
+														<span class="hidden-xs"> Dados de Usuário</span>
+													</a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<div class="data-tables-paginate text-center" *ngIf="role.account_roles?.length > 5">
+										<pagination-controls id="account_pagination" (pageChange)="acc = $event"
+											previousLabel="" nextLabel=""></pagination-controls>
+									</div>
+									<ng-template #notFindAccount>
+										<div class="box-header with-border">
+											<div class="col-sm-12">
+												<p class="text-center">
+													Nenhum usuário atrelado a esse grupo!
+												</p>
+											</div>
+										</div>
+									</ng-template>
+								</div>
+							</div>
+
+							<div class="modal fade in p-r-15" id="modal-account-list"
+								[ngClass]="{ 'in' : showModalAccount }"
+								[ngStyle]="{ 'display': showModalAccount ? 'block' : 'none' }">
+								<div class="modal-dialog modal-lg">
+									<div class="modal-content">
+										<form #fs="ngForm" (ngSubmit)="searchAccount()">
+											<div class="modal-header">
+												<button type="button" class="close" (click)="closeModalAccount()"
+													data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">×</span>
+												</button>
+												<h4 class="modal-title">
+													<i class="fa fa-edit"></i>
+													<span>Buscar Usuário</span>
+												</h4>
+											</div>
+											<div class="modal-body">
+												<div class="box-body">
+													<div class="row">
+														<div class="col-lg-4">
+															<div class="form-group">
+																<label>Account ID</label>
+																<input
+																	class="form-control ng-untouched ng-pristine ng-valid"
+																	name="code" placeholder="Account ID do usuário"
+																	type="search"
+																	[required]="!roleFilter.email && !roleFilter.document ? true : null"
+																	[(ngModel)]="roleFilter.code">
+															</div>
+														</div>
+														<div class="col-lg-4">
+															<div class="form-group">
+																<label>E-mail</label>
+																<input
+																	class="form-control ng-untouched ng-pristine ng-valid"
+																	name="email" placeholder="E-mail do usuário"
+																	type="search"
+																	[required]="!roleFilter.code && !roleFilter.document ? true : null"
+																	[(ngModel)]="roleFilter.email">
+															</div>
+														</div>
+														<div class="col-lg-2">
+															<div class="form-group">
+																<label>Documento</label>
+																<input
+																	class="form-control ng-untouched ng-pristine ng-valid"
+																	name="document" placeholder="Documento do usuário"
+																	type="search"
+																	[required]="!roleFilter.email && !roleFilter.code ? true : null"
+																	[(ngModel)]="roleFilter.document">
+															</div>
+														</div>
+														<div class="col-lg-1">
+															<div class="form-group">
+																<label class="hidden-xs show">&nbsp;</label>
+																<button type="submit" class="btn btn-primary"
+																	[disabled]="!fs.valid">
+																	<i class="fa fa-search"></i>
+																	Buscar
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</form>
+
+										<div class="row">
+											<div class="col-xs-12">
+												<table class="table table-striped tableResp"
+													*ngIf="accounts_list?.length > 0, else notFindAccount">
+													<thead>
+														<tr>
+															<th>Account ID</th>
+															<th>E-mail</th>
+															<th>Documento</th>
+															<th></th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr *ngFor="let account of accounts_list">
+															<td data-title="Acc. ID">{{ account.code }}</td>
+															<td data-title="E-mail">{{ account.email }}</td>
+															<td data-title="Documento" *ngIf="account.document">{{ account.document }}</td>
+															<td data-title="Documento" *ngIf="!account.document">---</td>
+															<td data-title="">
+																<button type="button" class="btn btn-success"
+																	title="Atrelar usuário ao grupo"
+																	(click)="insertAccount(account)">
+																	<i class="fa fa-plus"></i>
+																	Adicionar
+																</button>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+												<ng-template #notFindAccount>
+													<div class="box-header with-border">
+														<div class="col-sm-12">
+															<p class="text-center">
+																Nenhum usuário encontrado!
+															</p>
+														</div>
+													</div>
+												</ng-template>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end Group Accounts -->
+						<br>
+						<!-- Resources by modules -->
+						<div class="box-body" [hidden]="!Permission?.View">
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="box-header">
+										<legend style="border-bottom: 2px solid #3c8dbc;">
+											<i class="fa fa-unlock-alt"></i>
+											Permissões por módulos
+										</legend>
+									</div>
+									<div class="row">
+										<div *ngIf="viewResource">
+											<div class="col-lg-3">
+												<div class="form-group">
+													<label>Filtro</label>
+													<input class="form-control ng-untouched ng-pristine ng-valid"
+														placeholder="Filtrar...." type="search" name="module"
+														[(ngModel)]="permissionText" />
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-3 pull-right text-right">
+											<div class="form-group" *ngIf="Permission?.Insert">
+												<label class="hidden-xs show">&nbsp;</label>
+												<a class="btn btn-primary m-l-20" (click)="openModalResource()">
+													<i class="fa fa-plus"></i> Adicionar Recurso
+												</a>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xs-12">
+											<div *ngIf="viewResource, else notFind">
+												<table class="table table-striped tableResp">
+													<thead>
+														<tr>
+															<th>Aplicação</th>
+															<th>Módulo</th>
+															<th class="text-center">Consultar</th>
+															<th class="text-center">Adicionar</th>
+															<th class="text-center">Editar</th>
+															<th class="text-center">Excluir</th>
+															<th class="text-center">Aprovar</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr *ngFor="let item of role.permissions | permissionSearch : permissionText |
+																paginate: {
+																	id: 'resource_pagination',
+																	itemsPerPage: 5,
+																	currentPage: res
+															}">
+															<td data-title="Aplicação">{{ item.resource.application.name }}</td>
+															<td data-title="Módulo">{{ item.resource.name }}</td>
+															<ng-container *ngFor="let op of operations">
+															<td [attr.data-title]="op" class="text-center">
+																<input
+																	type="checkbox"
+																	[checked]="operationsPermission(item, op)"
+																	(change)="changeOperations(item, op, $event)"
+																	*ngIf="item?.resource.operations[op.toLowerCase()]"
+																	[disabled]="isDisabled" />
+																<span
+																	*ngIf="!item?.resource.operations[op.toLowerCase()]">---</span>
+															</td>
+															</ng-container>
+															<td data-title="">
+																<button class="btn btn-sm btn-danger"
+																	(click)="removePermission(item)" *ngIf="Permission?.Remove">
+																	<i class="fa fa-times"></i>
+																	Remover
+																</button>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+												<div class="data-tables-paginate text-center" *ngIf="role.permissions?.length > 5">
+													<pagination-controls id="resource_pagination"
+														(pageChange)="res = $event" previousLabel=""
+														nextLabel="">
+													</pagination-controls>
+												</div>
+											</div>
+											<ng-template #notFind>
+												<div class="box-header with-border">
+													<div class="col-sm-12">
+														<p class="text-center">
+															Nenhuma permissão atrelada a esse grupo!
+														</p>
+													</div>
+												</div>
+											</ng-template>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal fade in p-r-15" id="modal-resource-list"
+								[ngClass]="{ 'in' : showModalResource }"
+								[ngStyle]="{ 'display': showModalResource ? 'block' : 'none' }">
+								<div class="modal-dialog modal-lg">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" (click)="closeModalResource()"
+												data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">×</span>
+											</button>
+											<h4 class="modal-title">
+												<i class="fa fa-edit"></i>
+												<span>Buscar Recursos</span>
+											</h4>
+										</div>
+										<div class="modal-body">
+											<div class="box-body">
+												<div class="row">
+													<form #fr="ngForm" (ngSubmit)="searchResources()">
+														<div class="col-lg-4">
+															<div class="form-group">
+																<label>Aplicação</label>
+																<ng-select [multiple]="false" [allowClear]="true"
+																	name="selectApplication" #selectApplication
+																	(data)="addApplication($event)"
+																	placeholder="Escolha a aplicação...">
+																</ng-select>
+															</div>
+														</div>
+														<div class="col-lg-4">
+															<div class="form-group">
+																<label>Módulo</label>
+																<input
+																	class="form-control ng-untouched ng-pristine ng-valid"
+																	placeholder="Nome do módulo" type="search"
+																	[(ngModel)]="roleFilter.name" name="roleFilter.name"
+																	[required]="disableApplication" />
+															</div>
+														</div>
+														<div class="col-lg-3">
+															<div class="form-group">
+																<label class="hidden-xs show">&nbsp;</label>
+																<button class="btn btn-primary" [disabled]="!fr.valid">
+																	<i class="fa fa-search"></i>
+																	Buscar
+																</button>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-12">
+												<div *ngIf="Resources_list?.length > 0">
+													<table class="table table-striped tableResp">
+														<thead>
+															<tr>
+																<th>Aplicação</th>
+																<th>Módulo</th>
+																<th class="text-center">Consultar</th>
+																<th class="text-center">Adicionar</th>
+																<th class="text-center">Editar</th>
+																<th class="text-center">Excluir</th>
+																<th class="text-center">Aprovar</th>
+																<th></th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr *ngFor="let item of Resources_list |
+																		paginate: {
+																			id: 'resource_list_pagination',
+																			itemsPerPage: 5,
+																			currentPage: page,
+																			totalItems: total_result_resource
+																		}">
+																<td data-title="Aplicação">{{ item.resource.application.name }}</td>
+																<td data-title="Módulo">{{ item.resource.name }}</td>
+																<td data-title="Aplicação" class="text-center">
+																	<span data-original-title="Consultar" title="Consultar">
+																		<i aria-hidden="true"
+																			[className]="!item.resource?.operations.view ? 'fa fa-search operations_opacity text-grey ' : 'fa fa-search text-blue'">
+																		</i>
+																	</span>
+																</td>
+																<td data-title="Adicionar" class="text-center">
+																	<span data-original-title="Adicionar" title="Adicionar">
+																			<i aria-hidden="true"
+																			[className]="!item.resource?.operations.insert ? 'fa fa-plus operations_opacity text-grey' : 'fa fa-plus text-blue'"></i>
+																	</span>
+																</td>
+																<td data-title="Editar" class="text-center">
+																	<span data-original-title="Editar" title="Editar">
+																		<i aria-hidden="true"
+																			[className]="!item.resource?.operations.edit ? 'fa fa-edit operations_opacity text-grey' : 'fa fa-edit text-blue'"></i>
+																	</span>
+																</td>
+																<td data-title="Excluir" class="text-center">
+																	<span data-original-title="Excluir" title="Excluir">
+																		<i aria-hidden="true"
+																			[className]="!item.resource?.operations.remove ? 'fa fa-ban operations_opacity text-grey' : 'fa fa-ban text-blue'"></i>
+																	</span>
+																</td>
+																<td data-title="Aprovar" class="text-center">
+																	<span data-original-title="Aprovar" title="Aprovar">
+																		<i aria-hidden="true"
+																			[className]="!item.resource?.operations.approval ? 'fa fa-check operations_opacity text-grey' : 'fa fa-check text-blue'"></i>
+																	</span>
+																</td>
+																<td data-title="">
+																	<button type="button" class="btn btn-primary"
+																		title="Atrelar recurso ao grupo"
+																		(click)="insertResource(item)">
+																		<i class="fa fa-plus"></i>
+																		<span class="hidden-xs"> Adicionar</span>
+																	</button>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+													<div class="data-tables-paginate text-center" *ngIf="total_result_resource > 5">
+														<pagination-controls id="resource_list_pagination" (pageChange)="page = $event; getPage($event)" previousLabel="" nextLabel=""></pagination-controls>
+													</div>
+												</div>
+												<div class="box-header with-border" *ngIf="total_result_resource == 0">
+													<div class="col-sm-12">
+														<p class="text-center">
+															Nenhum recurso encontrado!
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end Permissions by modules -->
+						<div class="box-body">
+							<div class="row">
+								<div class="col-xs-12 text-right">
+									<div class="form-group" *ngIf="Groups?.Edit">
+										<button class="btn btn-primary m-t-23" [disabled]="((!r.valid || !isValid(role)) || disabledSave) || disableButton">
+											<i class="fa fa-plus"></i>
+											Salvar permissões
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</section>
+</div>

@@ -1,0 +1,405 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.mat-input-infix.mat-form-field-infix {
+  width: auto;
+}
+
+.mat-focused .mat-form-field-label {
+  color: #bf0000;
+}
+
+.mat-form-field-ripple{
+  background-color: #bf0000;
+}
+
+.mat-calendar-body-selected{
+  background-color: #bf0000;
+}
+
+.box.box-info {
+  border-top-color: #3c8dbc !important;
+}
+
+.invoice {
+  margin: 10px 15px !important;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*notification and confirm overridden =)*/
+
+.simple-notification-wrapper {
+  width: 350px !important;
+  z-index: 9999 !important;
+}
+
+.jaspero__dialog-actions button.default {
+  color: #444 !important;
+  background-color: #f4f4f4 !important;
+  border-color: #ddd !important;
+}
+
+.jaspero__dialog-actions button.primary {
+  color: #fff !important;
+  background-color: #3c8dbc !important;
+  border-color: #367fa9 !important;
+}
+
+.item-inserted {
+  background-color: #fffaca !important;
+}
+
+/*ngx-pagination overridden =)*/
+
+.ngx-pagination li {
+  margin-right: 0 !important;
+  border: 1px solid #ddd !important;
+}
+
+.ngx-pagination .current {
+  background-color: #bf0000 !important;
+  border-color: #bf0000 !important;
+}
+
+.ngx-pagination a:hover{
+  text-decoration: none;
+}
+
+.ngx-pagination a,
+.ngx-pagination button,
+.ngx-pagination .current,
+.ngx-pagination .disabled {
+  padding: 0.6rem 1.4rem !important;
+}
+
+.ngx-pagination li.pagination-previous {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  margin-right: -4px !important;
+}
+
+.ngx-pagination li.pagination-next {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  margin-left: -4px !important;
+}
+
+.ngx-pagination .pagination-previous a::before,
+.ngx-pagination .pagination-previous.disabled::before,
+.ngx-pagination .pagination-next a::after,
+.ngx-pagination .pagination-next.disabled::after {
+  margin: 0 !important;
+}
+
+/*select 2 overridden =)*/
+
+.ui-select-match .btn {
+  border-radius: 0px !important;
+}
+
+/*bootstrap utilities overridden =) margin*/
+
+.m-0 {
+  margin: 0 !important;
+}
+
+.m-t-0 {
+  margin-top: 0 !important;
+}
+
+.m-t-5 {
+  margin-top: 5px !important;
+}
+
+.m-t-8 {
+  margin-top: 8px !important;
+}
+
+.m-t-10 {
+  margin-top: 10px !important;
+}
+
+.m-t-20 {
+  margin-top: 20px !important;
+}
+
+.m-t-30 {
+  margin-top: 30px !important;
+}
+
+.m-l-5 {
+  margin-left: 5px !important;
+}
+
+.m-l-10 {
+  margin-left: 10px !important;
+}
+
+.m-l-15 {
+  margin-left: 15px !important;
+}
+
+.m-l-20 {
+  margin-left: 20px !important;
+}
+
+.m-r-5 {
+  margin-right: 5px !important;
+}
+
+.m-r-10 {
+  margin-right: 10px !important;
+}
+
+.m-r-15 {
+  margin-right: 15px !important;
+}
+
+.m-r-20 {
+  margin-right: 20px !important;
+}
+
+.m-b-0 {
+  margin-bottom: 0 !important;
+}
+
+.m-b-5 {
+  margin-bottom: 5px !important;
+}
+
+.m-b-10 {
+  margin-bottom: 10px !important;
+}
+
+.m-b-20 {
+  margin-bottom: 20px !important;
+}
+
+/*bootstrap utilities overridden =) padding*/
+
+.p-0 {
+  padding-top: 0 !important;
+}
+
+.p-t-0 {
+  padding-top: 0 !important;
+}
+
+.p-t-5 {
+  padding-top: 5px !important;
+}
+
+.p-t-10 {
+  padding-top: 10px !important;
+}
+
+.p-t-20 {
+  padding-top: 20px !important;
+}
+
+.p-l-0 {
+  padding-left: 0 !important;
+}
+
+.p-l-10 {
+  padding-left: 10px !important;
+}
+
+.p-l-20 {
+  padding-left: 20px !important;
+}
+
+.p-r-0 {
+  padding-right: 0 !important;
+}
+
+.p-r-10 {
+  padding-right: 10px !important;
+}
+
+.p-r-20 {
+  padding-right: 20px !important;
+}
+
+.p-b-0 {
+  padding-bottom: 0 !important;
+}
+
+.p-b-5 {
+  padding-bottom: 5px !important;
+}
+
+.p-b-10 {
+  padding-bottom: 10px !important;
+}
+
+.p-b-20 {
+  padding-bottom: 20px !important;
+}
+
+.fa-2 {
+  font-size: 2em !important;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: searchfield-cancel-button;
+}
+
+.f-s-5 {
+  font-size: 5px;
+}
+
+.f-s-8 {
+  font-size: 8px;
+}
+
+.f-s-10 {
+  font-size: 10px;
+}
+
+.f-s-12 {
+  font-size: 12px;
+}
+
+.f-s-14 {
+  font-size: 14px;
+}
+
+.f-s-16 {
+  font-size: 16px;
+}
+
+.f-s-50 {
+  font-size: 50px;
+}
+
+.v-align-center
+{
+  vertical-align: middle;
+}
+
+.add-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.box-dragdrop-logo {
+  height: 80px; width: 300px;
+  border-style: dashed;
+  border-color:rgb(216, 71, 71);
+  display: table-cell;
+  vertical-align: -webkit-baseline-middle;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.box-dragdrop-dotted {
+  line-height: 80px;
+  border-style: dashed;
+  border-color:rgb(216, 71, 71);
+  vertical-align: middle;
+  text-align: center;
+  background-color: #e4e4e4c2;
+}
+
+.box-dragdrop-dotted:hover {
+  background-color: #e4e4e486;
+}
+
+.box-info-dotted {
+  border-color: gray;
+  border: 1px dotted #d4d4d4;
+  margin-top: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.enabled_scroll {
+max-height: 400px;
+overflow: auto;
+}
+
+/* You can add global styles to this file, and also import other style files */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.container {
+  max-width: 960px;
+}
+
+.pricing-header {
+  max-width: 700px;
+}
+
+.card-deck .card {
+  min-width: 220px;
+}
+
+.border-top { border-top: 1px solid #e5e5e5; }
+.border-bottom { border-bottom: 1px solid #e5e5e5; }
+
+.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+
+
+.mat-tab-body-content{
+  overflow: hidden !important;
+}
+
+.open .dropdown-menu{
+  display: block;
+}
+
+input[type='text'].ng-invalid.ng-touched,
+input[type='password'].ng-invalid.ng-touched{
+  border-color:#dc3545;
+}
+
+
+input[type='text'].ng-invalid.ng-touched:focus,
+input[type='password'].ng-invalid.ng-touched:focus{
+  border-color:#dc3545;
+  /*box-shadow: inset 0 .25rem .75rem rgba(231, 39, 39, 0.6);*/
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(231, 39, 39, 0.6);
+}
+
+.invalid-feedback span {
+  background: #ca4545;
+  color: #fff;
+  padding: 2px;
+  border-radius: 2px;
+  font-size: 1.0em;
+  font-weight: 400;
+  width: 100%;
+  float: left;
+  position: relative;
+  text-align: center;
+}
+.ng-invalid .invalid-feedback span::after {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: -1em;
+  left: 2em;
+  width: 1em;
+  margin: 0;
+  margin-left: -8px;
+  padding: 0;
+  color: #ca4545;
+  font-size: 1em;
+  text-align: center;
+  content: "▲";
+}

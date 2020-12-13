@@ -1,0 +1,161 @@
+<main class="points wrapper">
+  <div class="points_col points_col--first grid xl_3 lg_4 md_4 sm_12 xs_12">
+    <div class="points__box">
+      <div class="points__box__title points__box__title--points">
+        <h3 class="points__title points__title--points">Pontos Disponíveis</h3>
+        <span class="points__details" href="#">{{points?.balance_points}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="points_col points_col--first grid xl_3 lg_4 md_4 sm_12 xs_12">
+    <div class="points__box">
+      <div class="points__box__title points__box__title--points">
+        <h3 class="points__title points__title--points">Pontos Expirados</h3>
+        <span class="points__details" href="#">{{points?.expired_points}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="points_col points_col--first grid xl_3 lg_4 md_4 sm_12 xs_12">
+    <div class="points__box">
+      <div class="points__box__title points__box__title--points">
+        <h3 class="points__title points__title--points">Pontos Bloqueados</h3>
+        <span class="points__details" href="#">{{points?.locked_points}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="points_col points_col--first grid xl_3 lg_4 md_4 sm_12 xs_12">
+    <div class="points__box">
+      <div class="points__box__title points__box__title--points">
+        <h3 class="points__title points__title--points">Pontos Cancelados</h3>
+        <span class="points__details" href="#">{{points?.revoked_points}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="points__col points__col--first grid xl_4 lg_4 md_4 sm_12 xs_12">
+
+    <div class="points__box points__box--col">
+      <div class="points__box__title">
+        <h3 class="points__title">Extrato</h3>
+      </div>
+
+      <form class="m-t-30" #f="ngForm" (ngSubmit)="search(1)">
+        <div class="points__box__content points__box__content--dates">
+
+          <mat-form-field>
+            <input class="form-control" matInput [matDatepicker]="picker1" placeholder="Escolha a data de"
+              [formControl]="startDate">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input class="form-control" matInput [matDatepicker]="picker2" placeholder="Escolha a data até"
+              [formControl]="endDate">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="points__box__content points__box__content--radio">
+          <legend class="col-form-label pt-0 p-l-0">Tipo de relatório</legend>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="extract_type" id="extract" [value]="0" [(ngModel)]="filters.extract_type"
+              checked>
+            <label class="form-check-label" for="extract">
+              Extrato
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="extract_type" id="available" [value]="1" [(ngModel)]="filters.extract_type">
+            <label class="form-check-label" for="available">
+              Pontos pendentes
+            </label>
+          </div>
+        </div>
+
+        <div class="points__box__content  points__box__content--bt">
+          <button type="submit" class="rkbt rkbt--one">Pesquisar</button>
+        </div>
+
+      </form>
+    </div>
+
+    <div class="points__box points__box--col hide">
+      <div class="points__box__title">
+        <h3 class="points__title">Saldo de pontos</h3>
+      </div>
+      <div class="points__box__content">
+        <h4 class="points__box__subtitle">Disponíveis:</h4>
+        <div class="points__box__content">
+          <span class="points__box__text">{{points?.points_available}} Super Points</span>
+        </div>
+        <h4 class="points__box__subtitle">Expirados:</h4>
+        <div class="points__box__content">
+          <span class="points__box__text">{{points?.expired_points}} Super Points</span>
+        </div>
+        <h4 class="points__box__subtitle">Bloqueados:</h4>
+        <div class="points__box__content">
+          <span class="points__box__text">{{points?.locked_points}} Super Points</span>
+        </div>
+        <h4 class="points__box__subtitle">Cancelados:</h4>
+        <div class="points__box__content">
+          <span class="points__box__text">{{points?.revoked_points}} Super Points</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="points__col points__col--second grid xl_8 lg_8 md_8 sm_12 xs_12">
+    <div class="points__box">
+      <div class="points__box__title">
+        <h3 class="points__title">Resultado</h3>
+      </div>
+
+      <div class="points__box__content">
+        <div *ngIf="extract.total_result > -1" class="table-responsive m-t-30">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Data</th>
+                <th scope="col">Crédito</th>
+                <th scope="col">Debito</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Data de expiração</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of extract.items | paginate: {
+                    id: 'apps_pagination',
+                    itemsPerPage: extract.take,
+                    currentPage: extract.current_page,
+                    totalItems: extract.total_result
+                }"
+                [class]="isCredit(item.status) ? 'text-success' : 'text-danger'">
+                <td>{{ item.create_date | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ isCredit(item.status) ? item.points : '' }}</td>
+                <td>{{ isCredit(item.status) ? '' : item.points }}</td>
+                <td>{{ item.description }}</td>
+                <td>{{ item.expire_date | date: 'dd/MM/yyyy' }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="data-tables-paginate text-center" *ngIf="extract.total_result > extract.take">
+            <pagination-controls id="apps_pagination" (pageChange)="search($event)" previousLabel="" nextLabel=""></pagination-controls>
+          </div>
+        </div>
+        <div *ngIf="extract.total_result == 0" class="row">
+          <div class="col-sm-12">
+            <p class="text-center">
+              Você não possui movimentações de Super Points.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

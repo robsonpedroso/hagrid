@@ -1,0 +1,146 @@
+@import "src/assets/scss/import.scss";
+
+
+.dash {
+
+    @include e("box") {
+        @include transition;
+        @include box-sizing;
+        @include border-radius(10px);
+        @include box-shadow(0, 0.25rem, 0.75rem, rgba(0, 0, 0, 0.05));
+
+        padding: 15px;
+        background: #FFF;
+        width: 100%;
+        margin-bottom: 30px;
+
+        @include e("title") {
+            @include flexbox(row, wrap, space-between, flex-start, flex-start);
+
+            margin-bottom: 15px;
+        }
+
+
+        @include e("content") {
+            @include box-sizing;
+
+            width: 100%;
+            padding-left: 15px;
+        }
+
+
+        @include e("subtitle") {
+            @include fonte($second-font, bold, 13px, $color-gray);
+        }
+
+
+        @include e("text") {
+            @include fonte($second-font, normal, 12px, $color-gray-dark);
+            @include box-sizing;
+
+            display: block;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+
+        @include e("link") {
+            @include fonte($second-font, normal, 13px, $color-gray);
+            @include transition;
+
+            display: block;
+            width: 100%;
+            margin-bottom: 5px;
+
+            &:hover {
+                @include fonte($second-font, normal, 13px, $color-gray-dark);
+            }
+        }
+    }
+
+
+    @include e("title") {
+        @include fonte($second-font, bold, 16px, $color-gray);
+    }
+
+
+    @include e("details") {
+        @include transition;
+        @include fonte($second-font, bold, 13px, $color-red);
+        @include flexbox(row, wrap, space-between, center, center);
+
+        &:after {
+            @include set-icon($fa-var-caret-right, 20px, 900, $color-red);
+            @include transition;
+
+            margin-left: 3px;
+            line-height: normal;
+        }
+
+        &:hover {
+            color: $color-red-dark;
+            text-decoration: none;
+
+            &:after {
+                color: $color-red-dark;
+                margin-left: 8px;
+            }
+        }
+    }
+}
+
+
+
+.cards {
+    margin: 0;
+    padding: 0;
+
+    @include e("item") {
+        @include flexbox(row, wrap, flex-start, center, center);
+
+        list-style: none;
+        margin-bottom: 10px;
+
+        @include e("img") {
+            margin-right: 10px;
+        }
+
+        @include e("text") {
+            @include fonte($second-font, bold, 13px, $color-gray);
+        }
+    }
+
+    @include e('icon'){
+
+      @include m('visa'){
+          background-image: url('../../../../assets/img/cards/visa.png');
+      }
+
+      @include m('master'){
+          background-image: url('../../../../assets/img/cards/mastercard.png');
+      }
+
+      @include m('amex'){
+          background-image: url('../../../../assets/img/cards/amex.png');
+      }
+
+      @include m('diners'){
+          background-image: url('../../../../assets/img/cards/diners.png');
+      }
+
+      @include m('hipercard'){
+        background-image: url('../../../../assets/img/cards/hipercard.png');
+      }
+
+      @include m('elo'){
+        background-image: url('../../../../assets/img/cards/elo.png');
+      }
+
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center right;
+      display: block;
+      width: 50px;
+      height: 35px;
+  }
+}

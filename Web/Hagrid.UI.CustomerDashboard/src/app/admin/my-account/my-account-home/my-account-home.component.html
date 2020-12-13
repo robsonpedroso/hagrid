@@ -1,0 +1,27 @@
+<h2 class="mydata__title hide">Conta</h2>
+
+<div class="acc" *ngIf="loaded">
+
+    <div class="grid xl_5 lg_6 md_12 sm_12 xs_12">
+        <my-account-profile [currentAccount]="account"></my-account-profile>
+    </div>
+
+    <div class="grid xl_35 lg_6 md_12 sm_12 xs_12">
+        <my-account-mail [currentAccount]="account"></my-account-mail>
+    </div>
+
+    <div class="grid xl_35 lg_6 md_12 sm_12 xs_12">
+        <my-account-password></my-account-password>
+    </div>
+
+    <div class="grid xl_5 lg_6 md_12 sm_12 xs_12">
+        <my-account-address [currentAccount]="account"></my-account-address>
+    </div>
+
+
+    <div class="grid xl_7 lg_6 md_12 sm_12 xs_12">
+        <my-account-register [currentAccount]="account"></my-account-register>
+    </div>
+
+</div>
+

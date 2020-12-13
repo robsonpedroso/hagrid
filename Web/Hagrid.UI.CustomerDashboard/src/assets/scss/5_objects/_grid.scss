@@ -1,0 +1,19 @@
+.grid{
+    @include box-sizing;
+    @include transition;
+    padding: 10px;
+    @media #{$res-xs}, #{$res-sm} {
+        padding: 10px 0px;
+    }
+}
+
+// .grid xs_1 ~ 12
+@include createGrid(xs, $res-xs);
+// .grid sm_1 ~ 12
+@include createGrid(sm, $res-sm);
+// .grid md_1 ~ 12
+@include createGrid(md, $res-md);
+// .grid lg_1 ~ 12
+@include createGrid(lg, $res-lg);
+// .grid xl_1 ~ 12
+@include createGrid(xl, $res-xl);

@@ -1,0 +1,69 @@
+<div>
+    <section class="content-header">
+        <h1>
+          Criação de usuário
+        </h1>
+        <ol class="breadcrumb">
+          <li class="active">
+            <i class="fa fa-group"></i>Usuários</li>
+        </ol>
+      </section>
+      <section class="content">
+        <form #f="ngForm" (ngSubmit)="save()">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h4>Dados cadastrais </h4>
+                        </div>
+                        <div class="box-body">
+							<div class="form-group">
+								<label>Nome</label>
+								<input type="text" placeholder="Nome" class="form-control" name="name" [(ngModel)]="account.name"  />
+							</div>
+							<div class="form-group">
+								<label>Documento</label>
+								<input type="text" placeholder="Documento" (blur)="account.document = format(account.document)" class="form-control" name="document" [(ngModel)]="account.document" />
+							</div>
+							<div class="form-group">
+								<label>E-mail*</label>
+                                    <input type="email" #email="ngModel" placeholder="E-mail" class="form-control" name="email" [(ngModel)]="account.email" required
+                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
+                                    <div class="alert alert-danger" [hidden]="email.valid || email.untouched">
+                                        <div *ngIf="email.errors && email.errors.required">
+                                            Digite um e-mail.
+                                        </div>
+                                        <div *ngIf="email.errors && email.errors.pattern">
+                                            Email inválido.
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Loja</label>
+                                <ng-select #selectStore ng-required="true"  [allowClear]="true" (typed)="getStores($event)" (data)="setStore($event)" placeholder="Procurar a Loja..."></ng-select>
+                            </div>
+                            <div class="form-group">
+                                <label>Aplicação</label>
+                                <ng-select [multiple]="true" [allowClear]="true" #selectApplication (data)="addApplications($event)" placeholder="Escolha as aplicações..."></ng-select>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="new_password" [(ngModel)]="checkboxValue" />
+                                    Enviar nova senha?
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <button type="submit" [disabled]="!f.valid" class="btn btn-primary m-t-23">
+                        <span class="glyphicon glyphicon-plus-sign"></span>
+                        <span class="hidden-xs">Criar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</div>

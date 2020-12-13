@@ -1,0 +1,99 @@
+<div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto hide" [hidden]="!is_loaded" >
+  <div class="inline">Os seguintes meios de pagamento estão atualmente associados à sua conta.
+    <div class="float-right"><a class="btn btn-md btn-outline-primary" routerLink="/meus-cartoes/novo">Adicionar novo
+        cartão</a></div>
+  </div>
+</div>
+
+<div class="card-deck mb-2 text-center hide" [hidden]="!is_loaded">
+  <div class="card mb-4 box-shadow" *ngFor="let card of cards">
+    <div class="card-body">
+      <h2 class="card-title pricing-card-title">
+        {{card.card_number}}
+        <br />
+        <span [ngClass]="card.brand_icon" aria-hidden="true"></span>
+      </h2>
+      <p>Valido até {{card.expiration_month}}/{{card.expiration_year}}</p>
+      <button type="button" class="btn btn-md btn-outline-danger" (click)="delete(card.code)">Excluir</button>
+    </div>
+  </div>
+</div>
+
+<div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto hide">
+  <p>Clique no botão “Excluir” para remover o(s) cartão(ões) que não deseja mais utilizar.</p>
+  <blockquote>* Não se preocupe, os pedidos pendentes não serão afetados por quaisquer alterações.</blockquote>
+</div>
+
+<div class="cards" [hidden]="!is_loaded">
+  <div class="cards__desc">
+    Os seguintes meios de pagamento estão atualmente associados à sua conta.
+  </div>
+
+  <div class="cards__master">
+
+    <div class="grid xl_4 lg_4 md_6 sm_12 xs_12">
+
+      <div class="card card--master">
+        <div class="card__edit">
+          <a routerLink="/meus-cartoes/novo">
+            <i class="fas fa-cog"></i>
+          </a>
+          <a (click)="inactiveCard()">
+            <i class="fas fa-times-circle"></i>
+          </a>
+        </div>
+        <div class="card__number">
+          <span class="card__number__text card__number__text--first">XXXX - XXXX -</span>
+          <span class="card__number__text card__number__text--last">XXXX - {{cardDetail.card_last_digits}}</span>
+        </div>
+        <div class="card__flag">
+          <i [ngClass]="cardDetail.brand_icon"></i>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card__info grid xl_4 lg_4 md_6 sm_12 xs_12">
+      <span class="card__info__title">
+        Endereço de cobrança
+      </span>
+      <span class="card__info__text">
+        {{addressDetail.street}}, {{addressDetail.number}} {{addressDetail.complement ? ' - ' +
+        addressDetail.complement : ''}}<br>
+        {{addressDetail.district}}<br>
+        {{addressDetail.city}} - {{addressDetail.state}}<br>
+        {{addressDetail.zip_code}}
+      </span>
+      <span class="card__info__title">
+        Data de vencimento
+      </span>
+      <span class="card__info__text">
+        {{cardDetail.expiration_month}}/{{cardDetail.expiration_year}}
+      </span>
+    </div>
+  </div>
+
+  <div class="cardcont grid xl_3 lg_4 md_6 sm_6 xs_6" *ngFor="let card of cards">
+    <div class="card">
+      <div class="card__edit">
+        <a (click)="activeCard(card)">
+          <i class="fas fa-search"></i>
+        </a>
+      </div>
+      <div class="card__number">
+        <span class="card__number__text card__number__text--first">XXXX - XXXX -</span>
+        <span class="card__number__text card__number__text--last">XXXX - {{card.card_last_digits}}</span>
+      </div>
+      <div class="card__flag">
+        <i [ngClass]="card.brand_icon"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="cardcont grid xl_3 lg_4 md_6 sm_6 xs_6">
+    <a routerLink="/meus-cartoes/novo" class="card card--add">
+      <i class="fas fa-plus-circle card__icon"></i>
+      <span class="card__add">Adicionar cartão</span>
+    </a>
+  </div>
+</div>

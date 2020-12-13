@@ -1,0 +1,14 @@
+
+<jaspero-confirmations [defaultSettings]="confirmation_options"></jaspero-confirmations>
+
+<simple-notifications [options]="notification_options"></simple-notifications>
+
+<app-master-header></app-master-header>
+
+<div class="rk-container">
+    <router-outlet></router-outlet>
+</div>
+
+<app-master-footer></app-master-footer>
+
+<router-outlet name="modal"></router-outlet>

@@ -1,0 +1,245 @@
+
+<div class="dash__box">
+  <div class="dash__box__title">
+    <h3 class="dash__title">Filtro de Transações</h3>
+  </div>
+
+  <div class="dfilter">
+      <div class="dfilter__from grid xl_6 lg_6 md_6 sm_12 xs_12">
+          <mat-form-field>
+              <input class="form__block__control" matInput [matDatepicker]="picker1" placeholder="Data inicial"
+                [formControl]="startDate">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+      </div>
+      <div class="dfilter__from grid xl_6 lg_6 md_6 sm_12 xs_12">
+          <mat-form-field>
+              <input class="form__block__control" matInput [matDatepicker]="picker2" placeholder="Data final"
+                [formControl]="endDate">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+      </div>
+      <div class="dfilter__from grid xl_4 lg_4 md_6 sm_12 xs_12">
+        <input class="form__block__control" type="text" placeholder="Código do pedido" [(ngModel)]="search.customer_order_number" >
+      </div>
+      <div class="dfilter__from grid xl_4 lg_4 md_6 sm_12 xs_12">
+        <select class="form__block__control" [(ngModel)]="search.take" name="takepages">
+          <option value="10">10 Itens</option>
+          <option value="30">30 Itens</option>
+          <option value="60">60 Itens</option>
+        </select>
+      </div>
+      <div class="dfilter__from grid xl_4 lg_4 md_6 sm_12 xs_12">
+        <button class="rkbt rkbt--one button" (click)="filterOrders()">Filtrar</button>
+      </div>
+  </div>
+
+</div>
+
+<div class="dash__box">
+
+  <div class="dlist" *ngIf="is_loaded">
+
+    <div class="dlist__item" *ngFor="let order of transitions?.items | paginate: { itemsPerPage: transitions?.take, currentPage: p, totalItems: transitions?.total_result } |  slice: 0 : transitions?.take; let i = index; let odd = 'odd'"
+      [class.odd]="odd">
+
+
+      <div class="dlist__item__cont" [class.active]="clicked === order" (click)="clicked = (clicked === order ? null :order)">
+
+
+        <div class="dlist__item__date">{{ order.save_date | date:'dd MMM' || "---" }}</div>
+
+        <div class="dlist__item__desc">
+          <span class="dlist__item__desc__text">{{ order.store.name }}</span>
+          <span class="dlist__item__desc__type">Compra</span>
+        </div>
+
+        <div class="dlist__item__value">{{ order.total_value | currency:'BRL' }}</div>
+      </div>
+
+      <div class="dtail table-responsive-sm">
+
+        <div class="dtail__box grid xs_12 sm_12 md_6 lg_6 xl_6">
+          <span class="dtail__title">
+            Informações do pedido:
+          </span>
+          <div class="dtail__cont">
+            <div class="dtail__cont__item">
+              <span class="dtail__desc">Código do Pedido:</span>
+              <span class="dtail__txt">{{ order.customer_order_number }}</span>
+            </div>
+            <div class="dtail__cont__item">
+              <span class="dtail__desc">Data do Pedido:</span>
+              <span class="dtail__txt">{{ order.save_date | date:'dd/MM/yyyy HH:mm' || "---" }}</span>
+            </div>
+            <div class="dtail__cont__item">
+              <span class="dtail__desc">Status do Pedido:</span>
+              <span class="dtail__txt">{{ getStatusDescription(order.status) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dtail__box grid xs_12 sm_12 md_6 lg_6 xl_6">
+          <span class="dtail__title">
+            Informações do vendedor:
+          </span>
+          <div class="dtail__cont">
+            <div class="dtail__cont__item">
+              <span class="dtail__desc">Nome da Loja:</span>
+              <span class="dtail__txt"><span class="text-primary">{{ order.store.name || "---" }}</span></span>
+            </div>
+            <div class="dtail__cont__item" [hidden]="true">
+              <span class="dtail__desc">Código:</span>
+              <span class="dtail__txt"><code>{{ order.store.code || "---" }}</code></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dtail__box grid xs_12 sm_12 md_6 lg_6 xl_6">
+          <span class="dtail__title">
+            Dados da Compra:
+          </span>
+          <div class="dtail__cont" *ngFor="let payment of order.payments">
+            <div class="dtail__cont__item">
+              <span class="dtail__desc">Pago com:</span>
+              <span class="dtail__txt">{{ getPaymentsMethodDescription(payment.method) }}</span>
+            </div>
+            <div class="dtail__cont__item">
+              <span class="dtail__desc">Valor Total:</span>
+              <span class="dtail__txt">{{ payment.value | currency:'BRL' }}</span>
+            </div>
+            <div class="dtail__cont__item">
+              <span class="dtail__desc">Parcelas:</span>
+              <span class="dtail__txt">{{ payment.installments }}x de {{ payment.installments_value | currency:'BRL'
+                }}</span>
+            </div>
+          </div>
+          <div class="dtail__cont">
+            <div class="dtail__cont__item" *ngIf="order.earned_points.earned > 0">
+              <span class="dtail__desc">Super Points ganhos:</span>
+              <span class="dtail__txt">{{ order.earned_points.earned || "---" }}</span>
+            </div>
+            <div class="dtail__cont__item">
+              <span class="dtail__desc">Serviço de entrega:</span>
+              <span class="dtail__txt">{{ order.shipping_service || '---' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dtail__box grid xs_12 sm_12 md_6 lg_6 xl_6">
+          <span class="dtail__title">
+            Endereço Entrega:
+          </span>
+          <div class="dtail__cont">
+            <div class="dtail__cont__item">
+              <span class="dtail__desc">Endereço: </span>
+              <span class="dtail__txt">{{ order.shipping_address.street }}, {{ order.shipping_address.number }}</span>
+            </div>
+            <div>
+              <span class="dtail__desc">Complemento: </span>
+              <span class="dtail__txt">{{ order.shipping_address.complement || "---" }}</span>
+            </div>
+            <div class="dtail__cont__item">
+              <span class="dtail__desc">Bairro:</span>
+              <span class="dtail__txt">{{ order.shipping_address.district }}</span>
+            </div>
+            <div class="dtail__cont__item">
+              <span class="dtail__desc">CEP:</span>
+              <span class="dtail__txt">{{ order.shipping_address.zip_code | zipcode }}</span>
+            </div>
+            <div class="dtail__cont__item">
+              <span class="dtail__desc">Cidade:</span>
+              <span class="dtail__txt">{{ order.shipping_address.city }}</span>
+            </div>
+            <div class="dtail__cont__item">
+              <span class="dtail__desc">Estado:</span>
+              <span class="dtail__txt">{{ order.shipping_address.state }}</span>
+            </div>
+          </div>
+        </div>
+
+        <table class="dtail__table table">
+
+          <thead>
+
+            <tr>
+              <th scope="col" class="grid xs_12 sm_12 md_6 lg_6 xl_6">Produto</th>
+              <th scope="col" class="grid xs_12 sm_12 md_6 lg_6 xl_2">Qtde.</th>
+              <th scope="col" class="grid xs_12 sm_12 md_6 lg_6 xl_2 tb_r">Valor Unitário</th>
+              <th scope="col" class="grid xs_12 sm_12 md_6 lg_6 xl_2 tb_r">Subtotal</th>
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <tr *ngFor="let product of order.items">
+              <td>{{ product.name }}</td>
+              <td>{{ product.quantity }} </td>
+              <td class="tb_r">{{ product.value | currency:'BRL' }}</td>
+              <td class="tb_r">{{ product.total_value | currency:'BRL' }}</td>
+            </tr>
+
+            <tr class="tb_r">
+              <th colspan="3">Subtotal</th>
+              <td>{{ order.subtotal | currency:'BRL' }}</td>
+            </tr>
+
+            <tr class="tb_r">
+              <th colspan="3">Frete</th>
+              <td *ngIf="order.shipping_value > 0">{{ order.shipping_value | currency:'BRL' }}</td>
+              <td *ngIf="order.shipping_value == 0">Grátis</td>
+            </tr>
+
+            <tr class="tb_r">
+              <th colspan="3">Super Points Utilizados</th>
+              <td>{{ order.earned_points.spent || '---' }}</td>
+            </tr>
+
+            <tr class="tb_r">
+              <th colspan="3">Desconto</th>
+              <td>{{ order.discount | currency:'BRL' }}</td>
+            </tr>
+
+            <tr class="tb_r">
+              <th colspan="3">Total Pago Pedido</th>
+              <td>{{ order.total_value | currency:'BRL' }}</td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+  <div class="dpager row col-lg-12 col-md-12" *ngIf="is_loaded">
+    <pagination-controls (pageChange)="getPage($event)" previousLabel="Anterior" nextLabel="Próxima" autoHide="transitions?.total_result > transitions?.take">
+    </pagination-controls>
+  </div>
+
+  <div class="dlist__options">
+
+    <div *ngIf="is_loaded && transitions?.total_result > 0" class="dlist__options__show">
+      Exibindo
+      <span class="dlist__options__show__number">{{ transitions?.items.length }}</span>
+      de
+      <span class="dlist__options__show__number">{{ transitions?.total_result }}</span>
+      transações
+    </div>
+
+    <div *ngIf="is_loaded && transitions?.total_result == 0" class="dlist__options__show">
+      Você não possuí mais transações
+    </div>
+
+    <div *ngIf="!is_loaded" class="dlist__options__show">
+      Você não possuí transações
+    </div>
+  </div>
+</div>

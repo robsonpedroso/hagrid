@@ -1,0 +1,35 @@
+<header class="main-header">
+
+	<a routerLink="/" class="logo" [class.logo-manager]="is_manager">
+		<span class="logo-mini">
+			<b>HKey</b>
+		</span>
+		<span class="logo-lg">
+			<b>Hagrid</b></span>
+		<span class="logo-lg logo-lg-sub">
+			<small>Manager</small>
+		</span>
+	</a>
+
+	<nav class="navbar navbar-static-top" role="navigation">
+
+		<a href="javascript:;" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+			<span class="sr-only">Toggle navigation</span>
+		</a>
+
+		<div class="navbar-custom-menu">
+			<ul class="nav navbar-nav">
+				<li class="dropdown user user-menu" [attr.account-id]="account?.code">
+					<a href="javascript:;" class="dropdown-toggle">
+						<span class="hidden-xs">{{account?.email}}</span>
+					</a>
+				</li>
+				<li>
+					<a href="javascript:;" (click)="logout()" data-toggle="control-sidebar" title="Sair">
+						<i class="fa fa-power-off"></i> &nbsp;
+					</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+</header>

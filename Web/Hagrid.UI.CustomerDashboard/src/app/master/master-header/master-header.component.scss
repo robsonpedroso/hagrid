@@ -1,0 +1,39 @@
+@import "src/assets/scss/import.scss";
+
+.header{
+    @include flexbox(row, nowrap, center, center, center);
+    @include box-shadow(0, 0.25rem, 0.75rem, rgba(0, 0, 0, .05));
+    @include box-sizing;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: #FFF;
+    height: 90px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 3;
+
+    .wrapper{
+        @include flexbox(row, wrap, space-between, center, center);
+        padding: 0px 20px
+    }
+
+    .logo{
+        margin-right: 40px;
+    }
+
+    @media #{$res-300}, #{$res-350}, #{$res-400}, #{$res-xs}, #{$res-sm}, #{$res-md}{
+        .menu__desk{
+            display: none;
+        }
+    }
+
+    @media #{$res-300}{}
+    @media #{$res-350}{}
+    @media #{$res-400}{}
+    @media #{$res-xs}{}
+    @media #{$res-sm}{}
+    @media #{$res-md}{}
+    @media #{$res-lg}{}
+    @media #{$res-xl}{}
+    
+}

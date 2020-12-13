@@ -1,0 +1,458 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4F599973-ADCF-42C5-89C4-5AC7B0ADE3E8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Hagrid.Core.Domain</RootNamespace>
+    <AssemblyName>Hagrid.Core.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>45d81cab</NuGetPackageImportStamp>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Dev\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Hom|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Hom\</OutputPath>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug.Manager|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug.Manager\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev.Manager|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Dev.Manager\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Hom.Manager|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Hom.Manager\</OutputPath>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.Manager|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Release.Manager\</OutputPath>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Staging|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Staging\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sandbox|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Sandbox\</OutputPath>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Staging.Manager|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Staging.Manager\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sandbox.Manager|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Sandbox.Manager\</OutputPath>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=6.1.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.6.1.0\lib\netstandard2.0\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="jose-jwt, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\jose-jwt.3.0.0\lib\net40\jose-jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Log4Slack, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Log4Slack.1.1.10\lib\net40\Log4Slack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Namotion.Reflection, Version=1.0.14.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Namotion.Reflection.1.0.14\lib\net45\Namotion.Reflection.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NJsonSchema, Version=10.3.1.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NJsonSchema.10.3.1\lib\net45\NJsonSchema.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.ComponentModel.Primitives, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ComponentModel.Primitives.4.3.0\lib\net45\System.ComponentModel.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Diagnostics.DiagnosticSource.5.0.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Contracts\Entities\IResetPasswordTokenOwner.cs" />
+    <Compile Include="Contracts\Factories\IResetPasswordTokenFactory.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IAccountApplicationStoreRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IAccountPermissionRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IAccountRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IAccountRoleRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IApplicationRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IApplicationStoreRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IAuditLogsRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IBlacklistRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\ICustomerImportRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IAccountMetadataRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IMetadataFieldRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IRestrictionRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IPermissionRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IRequisitionRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IPasswordLogRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IResetSMSTokenRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IMarketPlaceRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IResourceRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IRoleRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IStoreAccountRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IStoreAddressRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IStoreCreditCardRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IStoreRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\ITransferTokenRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Services\IMetadataValidatorService.cs" />
+    <Compile Include="Contracts\Infrastructure\Services\IAccountInfraService.cs" />
+    <Compile Include="Contracts\Infrastructure\Services\ICreditCardInfraService.cs" />
+    <Compile Include="Contracts\Infrastructure\Services\ICustomerImportDBInfraService.cs" />
+    <Compile Include="Contracts\Infrastructure\Services\ICustomerImportFileInfraService.cs" />
+    <Compile Include="Contracts\Infrastructure\Services\IBalanceService.cs" />
+    <Compile Include="Contracts\Infrastructure\Services\ISmsInfraService.cs" />
+    <Compile Include="Contracts\Policies\IPasswordPolicy.cs" />
+    <Compile Include="Contracts\Services\IAccountApplicationStoreService.cs" />
+    <Compile Include="Contracts\Services\IAccountPermissionService.cs" />
+    <Compile Include="Contracts\Services\IAccountService.cs" />
+    <Compile Include="Contracts\Services\IApplicationStoreService.cs" />
+    <Compile Include="Contracts\Services\IBlacklistService.cs" />
+    <Compile Include="Contracts\Policies\ILockedUpMemberPolicy.cs" />
+    <Compile Include="Contracts\Policies\ILockMemberPolicy.cs" />
+    <Compile Include="Contracts\Infrastructure\Services\IEmailSender.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\ICustomerRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IResetPasswordTokenRepository.cs" />
+    <Compile Include="Contracts\Infrastructure\Repositories\IRefreshTokenRepository.cs" />
+    <Compile Include="Contracts\Services\ICreditCardService.cs" />
+    <Compile Include="Contracts\Services\ICustomerImportService.cs" />
+    <Compile Include="Contracts\Services\IRequestInfoService.cs" />
+    <Compile Include="Contracts\Services\IRequisitionProcessingService.cs" />
+    <Compile Include="Contracts\Services\IRequisitionService.cs" />
+    <Compile Include="Contracts\Services\ICustomerService.cs" />
+    <Compile Include="Contracts\Services\IRefreshTokenService.cs" />
+    <Compile Include="Contracts\Services\IResetPasswordTokenService.cs" />
+    <Compile Include="Contracts\Services\IMetadataService.cs" />
+    <Compile Include="Contracts\Services\IResetSMSTokenService.cs" />
+    <Compile Include="Contracts\Services\IRoleService.cs" />
+    <Compile Include="Contracts\Services\IStoreService.cs" />
+    <Compile Include="DTO\Account.cs" />
+    <Compile Include="DTO\AccountApplicationStore.cs" />
+    <Compile Include="DTO\AccountInput.cs" />
+    <Compile Include="DTO\AccountInputSave.cs" />
+    <Compile Include="DTO\AccountRole.cs" />
+    <Compile Include="DTO\AccountRoleSaveInput.cs" />
+    <Compile Include="DTO\AccountRoleResult.cs" />
+    <Compile Include="DTO\Application.cs" />
+    <Compile Include="DTO\Blacklist.cs" />
+    <Compile Include="DTO\BlacklistEvents.cs" />
+    <Compile Include="DTO\ChangePassword.cs" />
+    <Compile Include="DTO\ChangePasswordToken.cs" />
+    <Compile Include="DTO\PeriodRestriction.cs" />
+    <Compile Include="DTO\IpAddressRestriction.cs" />
+    <Compile Include="DTO\AccessPeriod.cs" />
+    <Compile Include="DTO\Restriction.cs" />
+    <Compile Include="DTO\Permission.cs" />
+    <Compile Include="DTO\PermissionSaveInput.cs" />
+    <Compile Include="DTO\Resource.cs" />
+    <Compile Include="DTO\ResourceSaveInput.cs" />
+    <Compile Include="DTO\ResourcePermission.cs" />
+    <Compile Include="DTO\AccountPermission.cs" />
+    <Compile Include="DTO\AccountToken.cs" />
+    <Compile Include="DTO\Address.cs" />
+    <Compile Include="DTO\ApplicationStore.cs" />
+    <Compile Include="DTO\CreditCard.cs" />
+    <Compile Include="DTO\Company.cs" />
+    <Compile Include="DTO\ResetSMSToken.cs" />
+    <Compile Include="DTO\SaveAllSystem\Account.cs" />
+    <Compile Include="DTO\SaveAllSystem\Application.cs" />
+    <Compile Include="DTO\SaveAllSystem\MarketPlace.cs" />
+    <Compile Include="DTO\SaveAllSystem\Store.cs" />
+    <Compile Include="DTO\Role.cs" />
+    <Compile Include="DTO\RolePermission.cs" />
+    <Compile Include="DTO\ResourceResult.cs" />
+    <Compile Include="DTO\PermissionResult.cs" />
+    <Compile Include="DTO\RoleResult.cs" />
+    <Compile Include="DTO\StoreAccount.cs" />
+    <Compile Include="DTO\Sms.cs" />
+    <Compile Include="DTO\StoreCreditCard.cs" />
+    <Compile Include="DTO\Customer.cs" />
+    <Compile Include="DTO\DBRequisition.cs" />
+    <Compile Include="DTO\Metadatas\MetadataValidator.cs" />
+    <Compile Include="DTO\Metadatas\MetadataValidatorJSchema.cs" />
+    <Compile Include="DTO\Metadatas\MetadataValidatorOptions.cs" />
+    <Compile Include="DTO\Requisition.cs" />
+    <Compile Include="DTO\FileRequisition.cs" />
+    <Compile Include="DTO\Person.cs" />
+    <Compile Include="DTO\Phone.cs" />
+    <Compile Include="DTO\RequisitionError.cs" />
+    <Compile Include="DTO\SearchFilter.cs" />
+    <Compile Include="DTO\SearchResult.cs" />
+    <Compile Include="DTO\Metadatas\MetadataField.cs" />
+    <Compile Include="DTO\Store.cs" />
+    <Compile Include="DTO\StoreAddress.cs" />
+    <Compile Include="Entities\AccountApplicationStore.cs" />
+    <Compile Include="Entities\AccountRole.cs" />
+    <Compile Include="Entities\AuditLogs.cs" />
+    <Compile Include="Entities\Metadatas\BaseMetadata.cs" />
+    <Compile Include="Entities\Metadatas\MetadataValidator.cs" />
+    <Compile Include="Entities\Metadatas\MetadataValidatorJSchema.cs" />
+    <Compile Include="Entities\Metadatas\MetadataValidatorOptions.cs" />
+    <Compile Include="Entities\Metadatas\MetadataField.cs" />
+    <Compile Include="Entities\Metadatas\StoreMetadata.cs" />
+    <Compile Include="Entities\Address.cs" />
+    <Compile Include="Entities\Metadatas\AccountMetadata.cs" />
+    <Compile Include="Entities\CreditCard.cs" />
+    <Compile Include="Entities\Permission.cs" />
+    <Compile Include="Entities\PointsBalance.cs" />
+    <Compile Include="Entities\Restriction.cs" />
+    <Compile Include="Entities\StoreAccount.cs" />
+    <Compile Include="Entities\Sms.cs" />
+    <Compile Include="Entities\Resource.cs" />
+    <Compile Include="Entities\Role.cs" />
+    <Compile Include="Enums\AuditLogsType.cs" />
+    <Compile Include="Enums\EnumConfig.cs" />
+    <Compile Include="Enums\DayOfWeekFalgs.cs" />
+    <Compile Include="Enums\EnumRoleType.cs" />
+    <Compile Include="Enums\EnumResourceType.cs" />
+    <Compile Include="Enums\RestrictionType.cs" />
+    <Compile Include="ExceptionObjects\AccountExceptions.cs" />
+    <Compile Include="ModelValidation\AuditAttribute.cs" />
+    <Compile Include="Services\AccountApplicationStoreService.cs" />
+    <Compile Include="Services\AccountPermissionService.cs" />
+    <Compile Include="Services\BlacklistService.cs" />
+    <Compile Include="Services\RequestInfoService.cs" />
+    <Compile Include="Services\RoleService.cs" />
+    <Compile Include="Entities\AccessPeriod.cs" />
+    <Compile Include="ValueObjects\ApplicationInformation.cs" />
+    <Compile Include="ValueObjects\BlacklistEvents.cs" />
+    <Compile Include="Entities\IpAddressRestriction.cs" />
+    <Compile Include="Enums\EnumOperations.cs" />
+    <Compile Include="Entities\PeriodRestriction.cs" />
+    <Compile Include="Entities\ResetSMSToken.cs" />
+    <Compile Include="Entities\StoreCreditCard.cs" />
+    <Compile Include="Entities\DBRequisition.cs" />
+    <Compile Include="Entities\FileRequisition.cs" />
+    <Compile Include="Entities\RequisitionError.cs" />
+    <Compile Include="Entities\Requisition.cs" />
+    <Compile Include="Entities\StoreAddress.cs" />
+    <Compile Include="Entities\Account.cs" />
+    <Compile Include="Entities\Application.cs" />
+    <Compile Include="Entities\ApplicationStore.cs" />
+    <Compile Include="Entities\Blacklist.cs" />
+    <Compile Include="Entities\Company.cs" />
+    <Compile Include="Entities\CompanyImport.cs" />
+    <Compile Include="Entities\Customer.cs" />
+    <Compile Include="Entities\CustomerImport.cs" />
+    <Compile Include="Entities\Member.cs" />
+    <Compile Include="Entities\PasswordLog.cs" />
+    <Compile Include="Entities\Person.cs" />
+    <Compile Include="Entities\PersonImport.cs" />
+    <Compile Include="Entities\Store.cs" />
+    <Compile Include="Entities\TransferToken.cs" />
+    <Compile Include="Factories\ResetPasswordTokenFactory.cs" />
+    <Compile Include="Policies\LockMemberPolicy.cs" />
+    <Compile Include="Policies\LockedUpMemberPolicy.cs" />
+    <Compile Include="Policies\PasswordPolicy.cs" />
+    <Compile Include="Properties.cs" />
+    <Compile Include="Services\ApplicationStoreService.cs" />
+    <Compile Include="Services\CreditCardService.cs" />
+    <Compile Include="Services\CustomerImportService.cs" />
+    <Compile Include="Services\RequisitionService.cs" />
+    <Compile Include="Services\CustomerService.cs" />
+    <Compile Include="Services\RefreshTokenService.cs" />
+    <Compile Include="Services\Requisitions\CustomerImportDBService.cs" />
+    <Compile Include="Services\Requisitions\CustomerImportFileService.cs" />
+    <Compile Include="Services\ResetPasswordTokenAccountService.cs" />
+    <Compile Include="Services\ResetPasswordTokenCustomerImportService.cs" />
+    <Compile Include="Services\ResetPasswordTokenService.cs" />
+    <Compile Include="Services\MetadataService.cs" />
+    <Compile Include="Services\ResetSMSTokenService.cs" />
+    <Compile Include="Services\StoreService.cs" />
+    <Compile Include="ValueObjects\Address.cs" />
+    <Compile Include="ValueObjects\AddressCustomer.cs" />
+    <Compile Include="ValueObjects\ConstantsFileImport.cs" />
+    <Compile Include="ValueObjects\Config.cs" />
+    <Compile Include="Enums\EnumStreetTypeEC.cs" />
+    <Compile Include="Enums\RequisitionType.cs" />
+    <Compile Include="Enums\RequisitionStatus.cs" />
+    <Compile Include="Enums\CurrencyType.cs" />
+    <Compile Include="Enums\EnumAccount.cs" />
+    <Compile Include="ValueObjects\ChangePasswordToken.cs" />
+    <Compile Include="Enums\EnumCustomer.cs" />
+    <Compile Include="Enums\MetadataType.cs" />
+    <Compile Include="Enums\StoreType.cs" />
+    <Compile Include="ValueObjects\ForbiddenException.cs" />
+    <Compile Include="ValueObjects\Phone.cs" />
+    <Compile Include="Entities\RefreshToken.cs" />
+    <Compile Include="ValueObjects\ResetPasswordToken.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AccountService.cs" />
+    <Compile Include="ValueObjects\SearchResult.cs" />
+    <Compile Include="ValueObjects\SmallToken.cs" />
+    <Compile Include="ValueObjects\Token.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Hagrid.Tools\Hagrid.Infra.Contracts\Hagrid.Infra.Contracts.csproj">
+      <Project>{543bc91c-2519-441d-b920-eb86113afd55}</Project>
+      <Name>Hagrid.Infra.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Hagrid.Tools\Hagrid.Infra.Logging.Slack\Hagrid.Infra.Logging.Slack.csproj">
+      <Project>{99317eb0-805d-46e2-b921-d6b0ca6e40f3}</Project>
+      <Name>Hagrid.Infra.Logging.Slack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Hagrid.Tools\Hagrid.Infra.Utils\Hagrid.Infra.Utils.csproj">
+      <Project>{ec562740-f616-478e-8e63-3fc1c495c11e}</Project>
+      <Name>Hagrid.Infra.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

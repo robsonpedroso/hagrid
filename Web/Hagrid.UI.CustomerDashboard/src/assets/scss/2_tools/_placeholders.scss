@@ -1,0 +1,296 @@
+%display-flex {
+    -webkit-display: flex;
+    -moz-display: flex;
+    -ms-display: flex;
+    -o-display: flex;
+    display: flex;
+}
+
+%clearfix {
+    &:after,
+    &:before {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+%center-cont {
+    -webkit-display: flex;
+    -moz-display: flex;
+    -ms-display: flex;
+    -o-display: flex;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+%box-sizing {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+%remove-shadow {
+    -webkit-box-shadow: 0 0 0 transparent;
+    -moz-box-shadow: 0 0 0 transparent;
+    box-shadow: 0 0 0 transparent;
+}
+
+%remove-textshadow {
+    -webkit-text-shadow: none;
+    -moz-text-shadow: none;
+    -ms-text-shadow: none;
+    -o-text-shadow: none;
+    text-shadow: none;
+}
+
+.dn {
+    display: none;
+}
+
+.rkbt {
+    @include box-sizing;
+    @include border-radius(50px);
+    @include transition;
+
+    @extend %center-cont;
+
+    padding: 5px 25px;
+    border: 2px solid transparent;
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    @include m("one") {
+        @include fonte($second-font, bold, 14px, $color-red);
+
+        border-color: $color-red;
+
+        &:hover {
+            background-color: $color-red;
+            color: #FFF;
+        }
+    }
+
+
+    @include m("two") {
+        @include fonte($second-font, 400, 14px, #FFF);
+
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#bf0000+0,bf0000+50,da3600+100 */
+        background: rgb(191, 0, 0); /* Old browsers */
+        background: -moz-linear-gradient(left, rgba(191, 0, 0, 1) 0%, rgba(191, 0, 0, 1) 50%, rgba(218, 54, 0, 1) 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(left, rgba(191, 0, 0, 1) 0%, rgba(191, 0, 0, 1) 50%, rgba(218, 54, 0, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to right, rgba(191, 0, 0, 1) 0%, rgba(191, 0, 0, 1) 50%, rgba(218, 54, 0, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bf0000', endColorstr='#da3600',GradientType=1 ); /* IE6-9 */
+        &:hover {
+            @include opacity(0.6);
+        }
+    }
+}
+
+button.rkbt{
+    background-color: #FFF;
+    height: 45px;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    max-width: 350px;
+    align-items: center;
+    &:hover{
+        background-color: $color-red;
+        color: #FFF;
+    }
+}
+
+.box {
+    @include flexbox(column, nowrap, space-between, center, center);
+    @include transition;
+    @include box-sizing;
+    @include border-radius(10px);
+    @include box-shadow(0, 0.25rem, 0.75rem, rgba(0, 0, 0, 0.05));
+    padding: 15px;
+    background: #FFF;
+    width: 100%;
+    margin-bottom: 30px;
+    margin-bottom: 0px;
+    height: 100%;
+
+    @include e("header") {
+        @include flexbox(row, wrap, space-between, center, center);
+
+        border-bottom: 1px solid #e4e4e4;
+        padding-bottom: 5px;
+        width: 100%;
+
+        @include e("title") {
+            @include fonte($second-font, 400, 16px, $color-gray-dark);
+        }
+
+
+        @include e("add") {
+            @include border-radius(100%);
+            @include center-cont;
+            @include transition;
+
+            width: 25px;
+            height: 25px;
+            background-color: $color-gray-dark;
+            text-align: center;
+
+            &:before {
+                @include transition;
+                @include set-icon($fa-var-plus, 12px, 900, $color-gray-light);
+            }
+
+            &:hover {
+                @include animate(rotate, 0s);
+
+                &:before {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+
+
+    @include e("cont") {
+        padding: 10px 0px;
+        width: 100%;
+    }
+
+
+    @include e("footer") {
+        @include flexbox(row, wrap, space-between, center, center);
+        border-top: 1px solid #e4e4e4;
+        padding-top: 10px;
+        width: 100%;
+
+        @include e("info") {
+            @include fonte($second-font, 400, 11px, $color-gray);
+        }
+
+
+        @include e("button") {
+            @include animate(fadeIn, 0s);
+            @include fonte($second-font, normal, 13px, #a4a4a4);
+            @include box-sizing;
+            @include border-radius;
+            @include transition;
+
+            border: 0px;
+            background-color: #f4f4f4;
+            cursor: pointer;
+            padding: 3px 10px;
+
+            &:hover {
+                background-color: #bbbbbb;
+                color: #3f3f3f;
+                text-decoration: none;
+            }
+
+            @media #{$res-xs}, #{$res-sm} {
+                padding: 10px 15px;
+                font-size: 16px;
+                margin: 5px 0px;
+                display: block;
+                width: 100%;
+            }
+
+
+        }
+    }
+}
+
+
+
+.overpanel{
+    @include animate(fadeInUp, 0s);
+    @include box-sizing;
+    width: 100%;
+    height: calc(100% - 90px);
+    background-color: #e4e4e4;
+    position: fixed;
+    left: 0;
+    top: 90px;
+    z-index: 2;
+    overflow-y: scroll;
+
+    .title{
+        margin-bottom: 0px;
+    }
+
+
+    @include e('container'){
+        @include box-sizing;
+        @include transition;
+        position: relative;
+        overflow-y: auto;
+        width: 100%;
+        height: auto;
+        min-height: 100%;
+        max-width: 650px;
+        margin: 0px auto;
+        background-color: #FFF;
+        padding: 10px;
+
+        @media #{$res-xs}, #{$res-sm} {
+            max-width: 100%;
+        }
+    }
+
+    @include e('close'){
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        cursor: pointer;
+        &:before{
+            @include set-icon($fa-var-times-circle, 25px, 900, $color-gray-dark);
+        }
+        &:focus{
+            outline:none;
+        }
+    }
+
+    &.remove{
+        @include animate(fadeOutDown, 0s);
+    }
+
+    .form{
+        width: 100%;
+    }
+
+}
+
+
+.hide{
+    display: none !important;
+}
+
+
+.invalid-feedback{
+    position: absolute;
+    max-width: 200px;
+}
+
+
+.button{
+    &:disabled{
+        @include opacity(.3);
+        background-color: #CCC;
+        border: 1px solid #CCC;
+        color: #3f3f3f;
+        cursor: default;
+        &:hover{
+            background-color: #CCC;
+            border: 1px solid #CCC;
+            color: #3f3f3f;
+        }
+    }
+}
+.invalid-feedback{
+    z-index: 1;
+}

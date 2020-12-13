@@ -1,0 +1,33 @@
+
+//SETTINGS - Config variables
+//======================================
+@import '1_settings/fonts'; 
+@import '1_settings/settings';
+@import '1_settings/icons';
+
+//TOOLS - Functions, mixins and placeholders
+//======================================
+@import '2_tools/mixins';
+
+//GENERIC - Only * selector, Resets and normalizes
+//======================================
+@import '3_generics/normalize';
+
+//ELEMENTS - Only HTML tags without class (headings, lists, Links etc..)
+//======================================
+@import '4_elements/elements';
+@import '4_elements/headings';
+@import '5_objects/animate';
+
+
+//OBJECTS - Only objects that aplly a generic style on the page or little components like a searcharea, mailbox.
+//======================================
+@import '5_objects/fontawesome';
+@import '5_objects/keyframes';
+@import '5_objects/wrapper';
+@import '5_objects/grid';
+
+//COMPONENTS - All specifc stye for objects goes here.
+//======================================
+@import '2_tools/placeholders';
+@import '6_components/forms';

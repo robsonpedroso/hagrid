@@ -1,0 +1,108 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "rakuten.accounts.customer-dashboard"
+  },
+  "apps": [
+    {
+      "name": "customer-dashboard",
+      "root": "src",
+      "outDir": "../../publish/accounts/customer-dashboard",
+      "assets": [
+        {
+          "glob": "**/*",
+          "input": "./assets/img",
+          "output": "./assets/img",
+          "allowOutsideOutDir": false
+        },
+        {
+          "glob": "**/*",
+          "input": "./assets/json",
+          "output": "./assets/json",
+          "allowOutsideOutDir": false
+        },
+        {
+          "glob": "**/*",
+          "input": "./assets/css",
+          "output": "./assets/css",
+          "allowOutsideOutDir": false
+        },
+        "web.config",
+        {
+          "glob": "web.config",
+          "input": "./",
+          "output": ".",
+          "allowOutsideOutDir": false
+        }
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "../node_modules/bootstrap/dist/css/bootstrap.css",
+        "../node_modules/font-awesome/css/font-awesome.css",
+        "../node_modules/icheck/skins/flat/blue.css",
+        "../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css",
+        "../node_modules/bootstrap3-wysihtml5-bower/dist/bootstrap3-wysihtml5.css",
+        "assets/css/styles.css",
+        "assets/css/ng2-select.css",
+        "assets/scss/main.scss"
+      ],
+      "scripts": [
+        "../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.js",
+        "../node_modules/icheck/icheck.js",
+        "../node_modules/daterangepicker/daterangepicker.js",
+        "../node_modules/moment/moment.js",
+        "../node_modules/bootstrap-datepicker/js/bootstrap-datepicker.js",
+        "../node_modules/bootstrap3-wysihtml5-bower/dist/bootstrap3-wysihtml5.all.js",
+        "../node_modules/ng2-select/ng2-select.js",
+        "assets/js/scripts.js"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "desenv": "environments/environment.desenv.ts",
+        "hom": "environments/environment.hom.ts",
+        "staging": "environments/environment.staging.ts",
+        "sandbox": "environments/environment.sandbox.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json",
+      "exclude": "**/node_modules/**"
+    },
+    {
+      "project": "src/tsconfig.spec.json",
+      "exclude": "**/node_modules/**"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json",
+      "exclude": "**/node_modules/**"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "scss",
+    "component": {},
+    "serve": {
+      "port": 666
+    }
+  }
+}

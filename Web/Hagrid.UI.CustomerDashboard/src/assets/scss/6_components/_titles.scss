@@ -1,0 +1,11 @@
+.title{
+    @include box-sizing;
+    @include fonte($second-font, bold, 30px, #212129);
+    width: 100%;
+    text-align: center;
+    background-image: url('../img/bgtitle.png');
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    margin: 0px;
+    padding-bottom: 20px;
+}

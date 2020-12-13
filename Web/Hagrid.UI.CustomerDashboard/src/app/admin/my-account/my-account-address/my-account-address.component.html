@@ -1,0 +1,43 @@
+<div class="box" *ngIf="isLoad">
+  <div class="box__header">
+    <span class="box__header__title">Endereço</span>
+    <a class="box__header__add" [routerLink]="['address-add']"  *ngIf="account.customer != null"></a>
+  </div>
+
+  <div class="box__cont box__address" *ngIf="account.customer != null">
+    <div class="box__address__info">
+      <span class="box__address__info">
+        {{ addressContact.street }},
+        {{ addressContact.number }}
+        {{ addressContact.complement ? ' - ' + addressContact.complement : '' }}
+      </span>
+      <span class="box__address__info">
+        {{ addressContact.district }}
+      </span>
+      <span class="box__address__info">
+        {{ addressContact.city }} - {{ addressContact.state }}
+      </span>
+      <span class="box__address__info">
+        {{ addressContact.zip_code }}
+      </span>
+      <span class="box__address__type">
+        Endereço principal e de cobrança
+      </span>
+    </div>
+  </div>
+
+  <div class="box__cont box__phone" *ngIf="account.customer == null">
+    <div class="box__phone__info">
+      <span>Sem informações de consumidor</span>
+    </div>
+  </div>
+
+  <div class="box__footer" *ngIf="account.customer != null">
+    <span class="box__footer__info">
+      Você tem {{ account.customer.addresses.length }} endereços cadastrados
+    </span>
+    <div class="box__footer__action">
+      <a [routerLink]="['address-adm']" class="box__footer__button">Gerenciar</a>
+    </div>
+  </div>
+</div>

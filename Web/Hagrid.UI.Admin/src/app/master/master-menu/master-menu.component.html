@@ -1,0 +1,67 @@
+<aside class="main-sidebar" *ngIf="isLoad">
+    <section class="sidebar">
+        <ul class="sidebar-menu">
+            <li class="header">Navegação principal</li>
+            <li class="treeview">
+                <a href="#" *ngIf="currentPermission?.User.Insert || currentPermission?.User.View || currentPermission?.Imports.View">
+                    <i class="fa fa-group"></i>
+                    <span>Usuários</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li *ngIf="currentPermission?.User.Insert">
+                        <a routerLink="/accounts/create">Criar Usuário</a>
+                    </li>
+                    <li *ngIf="currentPermission?.User.View">
+                        <a routerLink="/accounts">Consultar</a>
+                    </li>
+                    <li *ngIf="currentPermission?.Imports.View">
+                        <a routerLink="/accounts/import">Importação</a>
+                    </li>
+                </ul>
+			</li>
+			<li class="treeview">
+                <a href="#" *ngIf="currentPermission?.Groups.View || currentPermission?.Modules.View">
+                    <i class="fa fa-lock"></i>
+                    <span>Permissões</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li *ngIf="currentPermission?.Modules.View">
+                        <a [routerLink]="['/permissions/resources']">Gerenciar Módulos</a>
+                    </li>
+                    <li *ngIf="currentPermission?.Groups.View">
+                        <a [routerLink]="['/permissions/groups']">Gerenciar Grupos</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" *ngIf="currentPermission?.Stores.Insert || currentPermission?.Stores.View">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span>Lojas</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li *ngIf="currentPermission?.Stores.Insert">
+                        <a routerLink="/stores/create">Criar Loja</a>
+                    </li>
+                    <li *ngIf="currentPermission?.Stores.View">
+                        <a routerLink="/stores">Consultar</a>
+                    </li>
+                </ul>
+            </li>
+			<li *ngIf="currentPermission?.Metadados.View">
+                <a href="#" routerLink="/metadatas">
+                    <i class="fa fa-edit"></i>
+                    <span>Metadados</span>
+				</a>
+			</li>
+        </ul>
+    </section>
+</aside>

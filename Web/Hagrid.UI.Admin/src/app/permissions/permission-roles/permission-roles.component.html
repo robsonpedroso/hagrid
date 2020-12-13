@@ -1,0 +1,130 @@
+<div>
+	<section class="content-header">
+		<h1>
+			Gerenciar grupos
+		</h1>
+		<ol class="breadcrumb">
+			<li class="active">
+				<i class="fa fa-lock"></i> Permissões</li>
+		</ol>
+	</section>
+
+	<section class="content">
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<div class="row">
+					<form #f="ngForm" (ngSubmit)="search()" class="ng-untouched ng-valid ng-dirty">
+						<div class="col-lg-12">
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label>Loja</label>
+									<ng-select
+										[multiple]="false"
+										[allowClear]="true"
+										name="storeRole"
+										#selectStore (typed)="getStores($event)"
+										(data)="setStore($event)"
+										placeholder="Procurar a Loja...">
+									</ng-select>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label>Nome</label>
+									<input class="form-control ng-untouched ng-pristine ng-valid" name="name"
+										placeholder="Nome do grupo" type="search"
+										[(ngModel)]="filter.name"
+										[required]="disableStore">
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label class="hidden-xs show">&nbsp;</label>
+									<button class="btn btn-primary m-t-23" [disabled]="!f.valid">
+										<span class="glyphicon glyphicon-search"></span>
+										<span class="hidden-xs">Filtrar</span>
+									</button>
+								</div>
+							</div>
+							<div class="col-lg-3 text-right" *ngIf="currentGroupSearchPermission?.View">
+								<div class="form-group">
+									<label class="hidden-xs show">&nbsp;</label>
+									<a [routerLink]="['/permissions/groups/create']" class="btn btn-primary m-b-5">
+										<span class="glyphicon glyphicon-plus"></span>
+										<span class="hidden-xs">Adicionar novo grupo</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="box box-info">
+			<div class="box-header with-border"  *ngIf="roles?.total_result > 0; else notFind">
+				<h3 class="box-title">
+					<i class="fa fa-list"></i> Lista de grupos
+				</h3>
+				<div class="row">
+					<div class="col-lg-12">
+						<table class="table table-bordered table-striped tableResp">
+							<thead>
+								<tr>
+									<th class="text-center">ID</th>
+									<th class="text-center">Loja</th>
+									<th class="text-center">Nome</th>
+									<th class="text-center" colspan="2">Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngFor="let item of roles.items | paginate: {
+									id: 'roles_pagination',
+									itemsPerPage: 10,
+									currentPage: p,
+									totalItems: roles.total_result
+								}">
+									<td data-title="ID" class="text-center v-align-center">
+										<span>{{ item.code }}</span>
+									</td>
+									<td data-title="Loja" class="text-center v-align-center">
+										<span>{{ item.store.name }}</span>
+									</td>
+									<td data-title="Nome" class="text-center v-align-center">
+										<span>{{ item.name }}</span>
+									</td>
+									<td data-title="" class="text-center v-align-center">
+										<button class="btn btn-link" (click)="removeRole(item.code)" *ngIf="item?.type_code == 0 && currentGroupSearchPermission?.Remove">
+											<i aria-hidden="true" class="fa fa-trash text-red"
+												data-original-title="Remover grupo" data-placement="right"
+												 title=""></i>
+										</button>
+									</td>
+									<td data-title="" class="text-center v-align-center">
+										<a class="btn btn-link" [routerLink]="['./', item.code]">
+											<i aria-hidden="true" class="fa fa-edit" data-original-title="Editar grupo"
+												data-placement="right"  title=""></i>
+										</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="data-tables-paginate text-center" *ngIf="roles?.total_result > 10">
+							<pagination-controls id="roles_pagination" (pageChange)="p = $event; getPage($event)"
+								previousLabel="" nextLabel=""></pagination-controls>
+						</div>
+					</div>
+				</div>
+			</div>
+			<ng-template #notFind>
+				<div class="box-header with-border">
+					<div class="col-sm-12">
+						<p class="text-center">
+							Nenhum grupo encontrado!
+							<br>
+						</p>
+					</div>
+				</div>
+			</ng-template>
+		</div>
+	</section>
+</div>

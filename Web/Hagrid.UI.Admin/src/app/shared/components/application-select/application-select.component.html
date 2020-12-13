@@ -1,0 +1,9 @@
+<div class="form-group">
+	<label>Aplicação</label>
+	<ng-select #selectApplication
+			   [multiple]="false"
+			   [allowClear]="true"
+			   (data)="setApplication($event)"
+			   placeholder="Escolha as aplicações...">
+	</ng-select>
+</div>

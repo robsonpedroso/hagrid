@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9A566EAC-671F-4086-8E41-C858563BB6CB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Hagrid.Core.Repositories</RootNamespace>
+    <AssemblyName>Hagrid.Core.Repositories</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Dev\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Hom|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Hom\</OutputPath>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug.Manager|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug.Manager\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev.Manager|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Dev.Manager\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Hom.Manager|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Hom.Manager\</OutputPath>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.Manager|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Release.Manager\</OutputPath>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Staging|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Staging\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sandbox|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Sandbox\</OutputPath>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Staging.Manager|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Staging.Manager\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sandbox.Manager|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Sandbox.Manager\</OutputPath>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=6.1.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.6.1.0\lib\netstandard2.0\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="jose-jwt, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\jose-jwt.3.0.0\lib\net461\jose-jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\RestSharp.106.11.7\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Diagnostics.DiagnosticSource.5.0.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Z.EntityFramework.Extensions, Version=5.1.7.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Z.EntityFramework.Extensions.5.1.7\lib\net45\Z.EntityFramework.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Z.EntityFramework.Plus.EF6, Version=5.1.6.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Z.EntityFramework.Plus.EF6.5.1.6\lib\net45\Z.EntityFramework.Plus.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="Z.Expressions.Eval, Version=4.0.27.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Z.Expressions.Eval.4.0.27\lib\net45\Z.Expressions.Eval.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Repositories\EF\AccountApplicationStoreRepository.cs" />
+    <Compile Include="Repositories\EF\AccountPermissionRepository.cs" />
+    <Compile Include="Repositories\EF\AccountRepository.cs" />
+    <Compile Include="Repositories\EF\AccountRoleRepository.cs" />
+    <Compile Include="Repositories\EF\ApplicationRepository.cs" />
+    <Compile Include="Repositories\EF\ApplicationStoreRepository.cs" />
+    <Compile Include="Repositories\EF\AuditLogsRepository.cs" />
+    <Compile Include="Repositories\EF\BlacklistRepository.cs" />
+    <Compile Include="Repositories\EF\Configuration\AccountApplicationStoreConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\AccountRoleConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\AuditLogsConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\MetadataFieldConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\BaseMetadataConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\BlacklistConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\PermissionConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\RestrictionConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\RequisitionErrorConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\RequisitionConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\CustomerImportConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\PasswordLogConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\ResetSMSTokenConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\ResourceConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\RoleConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\StoreAccountConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\StoreAddressConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\StoreCreditCardConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\AccountMetadataConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\StoreMetadataConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\TransferTokenConfiguration.cs" />
+    <Compile Include="Repositories\EF\Context\BaseRepository.cs" />
+    <Compile Include="Repositories\EF\Context\CustomerConnection.cs" />
+    <Compile Include="Repositories\EF\CustomerImportRepository.cs" />
+    <Compile Include="Repositories\EF\AccountMetadataRepository.cs" />
+    <Compile Include="Repositories\EF\Migrations\Updates\202012132024571_Inicial.cs" />
+    <Compile Include="Repositories\EF\Migrations\Updates\202012132024571_Inicial.designer.cs">
+      <DependentUpon>202012132024571_Inicial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\EF\RestrictionRepository.cs" />
+    <Compile Include="Repositories\EF\PermissionRepository.cs" />
+    <Compile Include="Repositories\EF\ResourceRepository.cs" />
+    <Compile Include="Repositories\EF\RoleRepository.cs" />
+    <Compile Include="Repositories\EF\StoreAccountRepository.cs" />
+    <Compile Include="Repositories\EF\StoreMetadataRepository.cs" />
+    <Compile Include="Repositories\EF\Migrations\LocalhostSeed.cs" />
+    <Compile Include="Repositories\EF\RequisitionRepository.cs" />
+    <Compile Include="Repositories\EF\Migrations\Configuration.cs" />
+    <Compile Include="Repositories\EF\Configuration\AccountConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\ApplicationConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\ApplicationStoreConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\CustomerConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\RefreshTokenConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\ResetPasswordTokenConfiguration.cs" />
+    <Compile Include="Repositories\EF\Configuration\StoreConfiguration.cs" />
+    <Compile Include="Repositories\EF\Context\CustomerContext.cs" />
+    <Compile Include="Repositories\EF\CustomerRepository.cs" />
+    <Compile Include="Repositories\EF\PasswordLogRepository.cs" />
+    <Compile Include="Repositories\EF\RefreshTokenRepository.cs" />
+    <Compile Include="Repositories\EF\ResetPasswordTokenRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\EF\StoreAddressRepository.cs" />
+    <Compile Include="Repositories\EF\StoreCreditCardRepository.cs" />
+    <Compile Include="Repositories\EF\MetadataFieldRepository.cs" />
+    <Compile Include="Repositories\EF\StoreRepository.cs" />
+    <Compile Include="Repositories\EF\TransferTokenRepository.cs" />
+    <Compile Include="Repositories\EF\ResetSMSTokenRepository.cs" />
+    <Compile Include="Services\Accounts\AccountInfraService.cs" />
+    <Compile Include="Services\Customer\CustomerImportDBInfraService.cs" />
+    <Compile Include="Services\Customer\CustomerImportFileInfraService.cs" />
+    <Compile Include="Services\Email\EmailSender.cs" />
+    <Compile Include="Services\SMS\SMSInfraService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Hagrid.Tools\Hagrid.Infra.Contracts\Hagrid.Infra.Contracts.csproj">
+      <Project>{543bc91c-2519-441d-b920-eb86113afd55}</Project>
+      <Name>Hagrid.Infra.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Hagrid.Tools\Hagrid.Infra.Logging.Slack\Hagrid.Infra.Logging.Slack.csproj">
+      <Project>{99317eb0-805d-46e2-b921-d6b0ca6e40f3}</Project>
+      <Name>Hagrid.Infra.Logging.Slack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Hagrid.Tools\Hagrid.Infra.Logging\Hagrid.Infra.Logging.csproj">
+      <Project>{e1a1c616-9f3b-4102-9538-4e18c91c71a9}</Project>
+      <Name>Hagrid.Infra.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Hagrid.Tools\Hagrid.Infra.Providers.EF\Hagrid.Infra.Providers.EF.csproj">
+      <Project>{ba4e2dec-67fd-4c4d-8110-37f21f9efaed}</Project>
+      <Name>Hagrid.Infra.Providers.EF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Hagrid.Tools\Hagrid.Infra.Providers\Hagrid.Infra.Providers.csproj">
+      <Project>{7f639d79-84b7-42a7-8496-343769b00528}</Project>
+      <Name>Hagrid.Infra.Providers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Hagrid.Tools\Hagrid.Infra.Utils\Hagrid.Infra.Utils.csproj">
+      <Project>{ec562740-f616-478e-8e63-3fc1c495c11e}</Project>
+      <Name>Hagrid.Infra.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hagrid.Core.Domain\Hagrid.Core.Domain.csproj">
+      <Project>{4f599973-adcf-42c5-89c4-5ac7b0ade3e8}</Project>
+      <Name>Hagrid.Core.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hagrid.Core.Providers.EF\Hagrid.Core.Providers.csproj">
+      <Project>{fc41b7a3-4053-40ae-a616-5cb2af3082cc}</Project>
+      <Name>Hagrid.Core.Providers</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Repositories\EF\Migrations\Scripts\01 - Create Roles and Resource NEW.sql" />
+    <Content Include="Repositories\EF\Migrations\Scripts\02 - Link Roles and Accounts.sql" />
+    <Content Include="Repositories\EF\Migrations\Scripts\03 - Update MP-Accounts.sql" />
+    <Content Include="Repositories\EF\Migrations\Scripts\Add MP-Accounts-Admin.sql" />
+    <Content Include="Repositories\EF\Migrations\Scripts\Create Role Resource Permission.sql" />
+    <Content Include="Repositories\EF\Migrations\Scripts\Permission-Add-module.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Repositories\EF\Migrations\Updates\202012132024571_Inicial.resx">
+      <DependentUpon>202012132024571_Inicial.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

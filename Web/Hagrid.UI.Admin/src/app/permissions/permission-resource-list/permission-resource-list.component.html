@@ -1,0 +1,264 @@
+<div>
+<ng4-loading-spinner [zIndex]="9999"></ng4-loading-spinner>
+	<section class="content-header">
+		<h1>
+			Gerenciar módulos
+		</h1>
+		<ol class="breadcrumb">
+			<li class="active">
+				<i class="fa fa-lock"></i> Permissões</li>
+		</ol>
+	</section>
+	<section class="content">
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<div class="row">
+					<form #f="ngForm" (ngSubmit)="search()" class="ng-untouched ng-valid ng-dirty">
+						<div class="col-lg-12">
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label>Aplicação</label>
+									<ng-select
+										[multiple]="false"
+										[allowClear]="true"
+										name="applicationCode"
+										#selectApplication (data)="addApplication($event)"
+										placeholder="Escolha a aplicação...">
+									</ng-select>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label>Nome</label>
+									<input class="form-control ng-untouched ng-pristine ng-valid" name="name" placeholder="Nome do módulo" type="search"
+									 [(ngModel)]="filter.name"
+									 [required]="disableApplication">
+								</div>
+							</div>
+
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label class="hidden-xs show">&nbsp;</label>
+									<button class="btn btn-primary m-t-23" type="submit" [disabled]="!f.valid">
+										<span class="glyphicon glyphicon-search"></span>
+										<span class="hidden-xs">Filtrar</span>
+									</button>
+								</div>
+							</div>
+							<div class="col-lg-3 text-right" *ngIf="currentModulePermission?.View">
+								<div class="form-group">
+									<label class="hidden-xs show">&nbsp;</label>
+									<a (click)="openAddModal()" *ngIf="currentModulePermission?.Insert" class="btn btn-primary m-b-5">
+										<span class="glyphicon glyphicon-plus"></span>
+										<span class="hidden-xs">Adicionar novo módulo</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="box box-info">
+			<div class="box-header with-border" *ngIf="resources?.total_result > 0; else notFind">
+				<h3 class="box-title">
+					<i class="fa fa-list"></i> Lista de módulos</h3>
+
+				<div class="row">
+					<div class="col-lg-12">
+						<table class="table table-bordered table-striped tableResp">
+							<thead>
+								<tr>
+									<th class="text-center">ID</th>
+									<th class="text-center">Aplicação</th>
+									<th class="text-center">Código Interno</th>
+									<th class="text-center">Nome</th>
+									<th class="text-center">Operações disponíveis</th>
+									<th class="text-center" colspan="2">Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngFor="let item of resources.items  | paginate: {
+									id: 'permission_pagination',
+									itemsPerPage: 10,
+									currentPage: permission,
+									totalItems: resources.total_result
+									}">
+									<td data-title="ID" class="text-center v-align-center text-red">
+										<span>{{ item.code }}</span>
+									</td>
+									<td data-title="Aplicação" class="text-center v-align-center text-blue">
+										<span>{{ item.application.name }}</span>
+									</td>
+									<td data-title="Cód. Interno" class="text-center v-align-center text-green">
+										<span>{{ item.internal_code }}</span>
+									</td>
+									<td data-title="Nome" class="text-center v-align-center">
+										<span>{{ item.name }}</span>
+									</td>
+									<td data-title="Op. disponíveis" class="text-center v-align-center">
+										<span class="list_module">
+											<i aria-hidden="true" data-original-title="Visualizar" title="Visualizar" [className]="!item.flag_operations.view ? 'fa fa-search operations_opacity text-grey' : 'fa fa-search text-blue'"></i>
+										</span>
+
+										<span class="list_module">
+											<i aria-hidden="true" data-original-title="Inserir" title="Inserir" [className]="!item.flag_operations.insert ? 'fa fa-plus operations_opacity text-grey' : 'fa fa-plus text-blue'"></i>
+										</span>
+
+										<span class="list_module">
+											<i aria-hidden="true" data-original-title="Editar" title="Editar" [className]="!item.flag_operations.edit ? 'fa fa-edit operations_opacity text-grey' : 'fa fa-edit text-blue'"></i>
+										</span>
+
+										<span class="list_module">
+											<i aria-hidden="true" data-original-title="Excluir" title="Excluir" [className]="!item.flag_operations.remove ? 'fa fa-ban operations_opacity text-grey' : 'fa fa-ban text-blue'"></i>
+										</span>
+
+										<span class="list_module">
+											<i aria-hidden="true" data-original-title="Aprovar" title="Aprovar" [className]="!item.flag_operations.approval ? 'fa fa-check operations_opacity text-grey' : 'fa fa-check text-blue'"></i>
+										</span>
+									</td>
+									<td data-title="" class="text-center v-align-center">
+										<button class="btn btn-link" (click)="remove(item.code)"  *ngIf="item?.type_code == 0 && currentModulePermission?.Remove">
+											<i aria-hidden="true" class="fa fa-trash text-red" data-original-title="Remover" data-placement="right"
+											  title="Remover módulo"></i>
+										</button>
+									</td>
+									<td data-title="" class="text-center v-align-center">
+										<button class="btn btn-link" (click)="edit(item)">
+											<i aria-hidden="true" class="fa fa-edit" data-original-title="Editar" data-placement="right"
+											  title="Editar módulo"></i>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="data-tables-paginate text-center" *ngIf="resources?.total_result > 10">
+							<pagination-controls id="permission_pagination" (pageChange)="permission = $event; getPage($event)" previousLabel="" nextLabel=""></pagination-controls>
+						</div>
+					</div>
+				</div>
+			</div>
+				<ng-template #notFind>
+					<div class="box-header with-border">
+						<div class="col-sm-12">
+							<p class="text-center">
+								Nenhum recurso encontrado!
+								<br>
+							</p>
+						</div>
+					</div>
+				</ng-template>
+		</div>
+	</section>
+
+	<div class="modal fade in p-r-15" id="modal-resource-list" [ngClass]="{ 'in' : show_modal }" [ngStyle]="{ 'display': show_modal ? 'block' : 'none' }">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form #fs="ngForm" (ngSubmit)="save(resourceSave)">
+					<div class="modal-header">
+						<button type="button" class="close" (click)="cancel()" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<h4 class="modal-title">
+							<i class="fa fa-edit"> </i>
+							<span>Adicionar Módulo</span>
+						</h4>
+					</div>
+					<div class="modal-body">
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="form-group">
+										<label>Aplicação</label>
+										<ng-select
+											[multiple]="false"
+											[allowClear]="true"
+											(selected)="editSelected($event)"
+											name="selectedApplicationSave"
+											#selectedApplicationSave
+											(data)="addApplication($event)"
+											placeholder="Escolha a aplicação...">
+										</ng-select>
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="form-group">
+										<label>Código Interno</label>
+										<div class="input-group">
+											<div class="input-group-addon">
+												<i class="fa fa-file-text-o"></i>
+											</div>
+											<input autocomplete="off" class="form-control ng-untouched ng-pristine" name="internal_code" placeholder="Código Interno"
+											 type="text" [(ngModel)]="resourceSave.internal_code" maxlength="50">
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-12">
+									<div class="form-group">
+										<label>Nome</label>
+										<div class="input-group">
+											<div class="input-group-addon">
+												<i class="fa fa-file-text-o"></i>
+											</div>
+											<input autocomplete="off" class="form-control ng-untouched ng-pristine ng-invalid" name="name" placeholder="Nome do módulo"
+											 type="text" required="" [(ngModel)]="resourceSave.name">
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-12">
+									<div class="form-group">
+										<label>Descrição</label>
+										<textarea autocomplete="off" class="form-control ng-untouched ng-pristine ng-invalid" name="description" placeholder="Descrição do módulo"
+										 type="text" required="" [(ngModel)]="resourceSave.description"></textarea>
+									</div>
+								</div>
+								<div class="col-lg-12">
+									<label>Operações disponíveis:</label>
+								</div>
+								<div class="col-lg-4">
+									<label>
+										<input name="view" [(ngModel)]="resourceSave?.flag_operations.view" type="checkbox" class="ng-untouched ng-pristine ng-valid" />
+											Visualizar
+									</label>
+								</div>
+								<div class="col-lg-4">
+									<label>
+										<input name="insert" [(ngModel)]="resourceSave?.flag_operations.insert" type="checkbox" class="ng-untouched ng-pristine ng-valid" />
+											Inserir
+									</label>
+								</div>
+								<div class="col-lg-4">
+									<label>
+										<input name="edit" [(ngModel)]="resourceSave?.flag_operations.edit" type="checkbox" class="ng-untouched ng-pristine ng-valid" />
+											Editar
+									</label>
+								</div>
+								<div class="col-lg-4">
+									<label>
+										<input name="remove" [(ngModel)]="resourceSave?.flag_operations.remove" type="checkbox" class="ng-untouched ng-pristine ng-valid" />
+											Excluir
+									</label>
+								</div>
+								<div class="col-lg-4">
+									<label>
+										<input name="approval" [(ngModel)]="resourceSave?.flag_operations.approval" type="checkbox" class="ng-untouched ng-pristine ng-valid" />
+										Aprovar
+									</label>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<button class="btn btn-success" type="submit" [disabled]="(!fs.valid || !isValid(resourceSave))"  *ngIf="currentModulePermission?.Edit">
+							<span><i class="fa fa-plus"></i> Salvar</span>
+						</button>
+						<button class="btn btn-danger" type="button" (click)="cancel()">
+							<span><i class="fa fa-close"></i> Fechar</span>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

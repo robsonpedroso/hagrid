@@ -1,0 +1,21 @@
+<div class="user">
+
+  <nav *ngIf="load()" class="user__nav" role="navigation">
+
+    <div class="user__info" *ngIf="isLoadInfoUser">
+      <span class="user__info__name">Olá, {{ nameAccount }}</span>
+      <img class="user__info__photo" src="./assets/img/ico-user-ft.png" alt="">
+    </div>
+
+    <span class="user__pipe"></span>
+
+    <a routerLink="/meus-dados" routerLinkActive="active" class="user__config"></a>
+    <a href="javascript:;" class="user__logout rkbt rkbt--two" (click)="logout()" title="Sair">Logout</a>
+
+  </nav>
+
+  <a *ngIf="!load()" (click)="login()" class="user__login rkbt rkbt--one" href="javascript:;">Entrar</a>
+
+  <app-master-menu class="menu__mob"></app-master-menu>
+
+</div>

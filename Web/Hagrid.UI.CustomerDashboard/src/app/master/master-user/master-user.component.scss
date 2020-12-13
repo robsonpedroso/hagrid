@@ -1,0 +1,217 @@
+@import "src/assets/scss/import.scss";
+
+.user{
+    @include transition;
+
+    @include e('nav'){
+        @include box-sizing();
+        @include flexbox(row, wrap, space-between, center, center);
+    }
+
+    @include e('notification'){
+        @include transition;
+        background-image: url("../../../assets/img/ico-bell.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        position: relative;
+        width: 30px;
+        height: 30px;
+        margin: 0px 10px;
+        &:hover{
+            background-image: url("../../../assets/img/ico-bell-hover.png"); 
+            @include animate(bell, 0s);
+        }
+        @include e('number'){
+            @include fonte($second-font, 400, 12px, #FFF);
+            @include border-radius(50%);
+            @include center-cont;
+            background-color: $color-red;
+            position: absolute;
+            text-align: center;
+            width: 16px;
+            height: 16px;
+            right: -3px;
+            top: -3px;
+        }
+    }
+
+    @include e('config'){
+        @include transition;
+        background-image: url("../../../assets/img/ico-gear.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 30px;
+        height: 30px;
+        margin: 0px 10px;
+        &:hover{
+            background-image: url("../../../assets/img/ico-gear-hover.png"); 
+            @include animate(rotate, 0s);
+        }
+        &.active{
+            background-image: url("../../../assets/img/ico-gear-hover.png"); 
+        }
+    }
+
+    @include e('info'){
+        @include e('name'){
+            @include fonte($second-font, 400, 16px, #000);
+        }
+        @include e('photo'){
+            max-width: 50px;
+        }
+        @media (min-width: 992px) and (max-width: 1260px){
+            display: none;
+        }
+    }
+
+    @include e('pipe'){
+        display: block;
+        width: 1px;
+        height: 35px;
+        background-color: #54515e;
+        margin: 0px 15px;
+        @media (min-width: 992px) and (max-width: 1260px){
+            display: none;
+        }
+    }
+    
+
+    @media #{$res-lg}, #{$res-xl}{        
+        .menu__mob{
+            display: none;
+        }
+    }
+
+    @media #{$res-300}, #{$res-350}, #{$res-400}, #{$res-xs}, #{$res-sm}, #{$res-md}{
+        position: fixed;
+        right: -180%;
+        top: 0;
+        width: 80%;
+        height: 100%;
+        overflow-x: scroll;
+
+        @include e('nav'){
+            width: 100%;
+            padding: 15px;
+        }
+
+        @include e('notification'){
+            @include order(2);
+        }
+
+        @include e('config'){
+            @include order(3);
+        }
+
+        @include e('login'){
+            width: auto;
+            display: block;
+            margin: 10px 29px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        @include e('logout'){
+            @include order(4);
+        }
+
+        @include e('info'){
+            @include order(1);
+            width: 100%;
+            text-align: center;
+            margin: 15px 0px;
+            @include e('name'){
+                display: block;
+                width: 100%;
+            }
+            @include e('photo'){
+                max-width: inherit;
+            }
+        }
+
+        @include e('pipe'){
+            display: none;
+        }
+    }
+
+}
+
+
+
+
+
+.user__btn{
+    @include center-cont;
+    @include box-sizing;
+    @include transition;
+    @include border-radius(5px);
+    border: 2px solid $color-red;
+    padding: 5px;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+
+    > span {
+        width: 20px;
+        height: 2px;
+        background-color: $color-red;
+        display: block;
+        margin: 5px 0px;
+    }
+
+    &:before,
+    &:after{
+        @include transition;
+        content: "";
+        width: 20px;
+        height: 2px;
+        display: block;
+        background-color: $color-red;
+    }
+
+    @media #{$res-lg}, #{$res-xl}{
+        display: none;
+    }
+
+    &.active{
+        background-color: $color-red;
+        @include animate(bounceInRight, 0s);
+        > span{
+            @include opacity(0);
+        }
+        &:before,
+        &:after{
+            background-color: #FFF;
+            position: absolute;
+            
+        }
+        &:before{
+            @include rotate(45);
+        }
+        &:after{
+            @include rotate(-45);
+        }
+    }
+
+    @media #{$res-300}, #{$res-350}, #{$res-400}, #{$res-xs}, #{$res-sm}, #{$res-md} {
+        &.active {
+            @include radiustr(0);
+            @include radiusbr(0);
+            @include transition;
+            position: fixed;
+            top: 0px;
+            right: 85%;
+    
+            & + .user {
+                background-color: $color-gray-light;
+                right: 0;
+                width: 85%;
+                
+            }
+
+        }  
+    }
+
+}
+
+

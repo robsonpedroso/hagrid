@@ -1,0 +1,14 @@
+
+@import "src/assets/scss/import.scss";
+
+.add{
+    @include flexbox(column, nowrap, flex-start, center, center);
+    @include box-sizing;
+    @include transition;
+    margin: 10px auto;
+
+    @media #{$res-xs}, #{$res-sm}{
+        margin: 20px auto;
+    }
+
+}

@@ -1,0 +1,29 @@
+<div class="overpanel">
+
+  <div class="overpanel__container">
+
+    <span [routerLink]="['/meus-dados']" class="overpanel__close"></span>
+
+    <main class="adm grid xl_8 lg_8 md_10 sm_12 xs_12" *ngIf="isLoad">
+
+      <h1 class="adm__title">Gerenciar endereços</h1>
+      <small class="adm__small">Você tem {{ account.customer.addresses.length }} endereços.</small>
+      <a [routerLink]="['/meus-dados/address-add']" class="adm__add">Adicionar endereços</a>
+
+      <div class="adm__box" *ngFor="let address of account.customer.addresses">
+        <span class="adm__box__sep"></span>
+        <span class="adm__box__info">
+          {{ address.street }}, {{address.number }} {{ address.complement ? ' - ' + address.complement : '' }}
+        </span>
+        <span class="adm__box__info">{{ address.district }}</span>
+        <span class="adm__box__info">{{ address.city }} - {{address.state}}</span>
+        <span class="adm__box__info">{{ address.zip_code }}</span>
+        <span class="adm__box__type">{{ address.purpose.toLowerCase() == 'contact' ? 'Endereço principal' : '' }}</span>
+        <div  class="adm__box__action">
+           <a class="adm__box__link" [routerLink]="['/meus-dados/address-add', address.address_customer_code]">Atualizar</a> |
+           <a class="adm__box__link" (click)="delete(address.address_customer_code)" *ngIf="address.purpose != 'Contact'">Remover</a>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

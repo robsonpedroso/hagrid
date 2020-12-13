@@ -1,0 +1,50 @@
+@import "src/assets/scss/import.scss";
+
+.menu{
+
+    @include e('item'){
+        @include transition;
+        @include fonte($second-font, 400, 14px, #aeaeae);
+        margin-right: 10px;
+        position: relative;
+        &:hover,
+        &.active{
+            color: $color-red;
+            text-decoration: none;
+        }
+
+        &.active{
+            &:before{
+                @include animate(zoomInLeft, 0s);
+                @include box-sizing;
+                @include border-radius(5px);
+                content: "";
+                background-color: $color-red;
+                width: 100%;
+                padding: 3px;
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 48px;
+            }
+        }
+    }
+
+    @media #{$res-300}, #{$res-350}, #{$res-400}, #{$res-xs}, #{$res-sm}, #{$res-md}{
+        @include box-sizing;
+        width: 100%;
+        padding: 10px;
+
+        @include e('item'){
+            @include fonte($second-font, 400, 18px, #4e4e4e);
+            text-transform: uppercase;
+            width: 100%;
+            display: block;
+            padding: 10px 0px;            
+            
+        }
+
+    }
+
+}
+

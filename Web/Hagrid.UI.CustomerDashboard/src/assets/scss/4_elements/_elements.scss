@@ -1,0 +1,17 @@
+body {
+    font-family: $second-font;
+    background-color: #f1f1f1;
+}
+
+a{
+    text-decoration: none;
+}
+
+header{
+    width: 100%;
+}
+
+
+textarea:focus, input:focus{
+    outline: none;
+}

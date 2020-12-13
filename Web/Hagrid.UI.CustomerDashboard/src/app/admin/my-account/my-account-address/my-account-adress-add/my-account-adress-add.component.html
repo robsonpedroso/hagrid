@@ -1,0 +1,122 @@
+<div class="overpanel">
+
+  <div class="overpanel__container">
+
+    <span [routerLink]="['/meus-dados/address-adm']" class="overpanel__close"></span>
+
+
+    <main class="add grid xl_8 lg_8 md_10 sm_12 xs_12">
+      <h1 class="title">Adicionar um endereço</h1>
+      <div class="form">
+        <form #formModal="ngForm" (ngSubmit)="save()">
+          <div class="form__group">
+
+            <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12" *ngIf="address == null || address.purpose != 'Contact'">
+              <span class="form__block__msg">Identificação do local*</span>
+              <input type="text" [(ngModel)]="address.name" [required]="true" name="localname" class="form__block__control" placeholder="Minha casa"
+                autocomplete="off">
+            </div>
+
+            <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12" *ngIf="address == null || address.purpose != 'Contact'">
+                <span class="form__block__msg">Nome do destinatário*</span>
+                <input type="text" [(ngModel)]="address.contact_name" [required]="true" name="contactname" class="form__block__control"
+                  autocomplete="off">
+              </div>
+
+              <div class="form__block grid xl_6 lg_12 md_12 sm_12 xs_12">
+                <span class="form__block__msg">Cep*</span>
+                <input type="text" [(ngModel)]="address.zip_code" class="form-control" [required]="true" name="zipcode" placeholder="00000-000"
+                  (blur)="getAddressByZipCode()" mask="00000-000">
+              </div>
+
+              <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+                <span class="form__block__msg">Endereço*</span>
+                <input class="form__block__control" [(ngModel)]="address.street" name="streetaddress" type="text" placeholder="Endereço"
+                  [required]="true">
+              </div>
+
+              <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+                <span class="form__block__msg">Número*</span>
+                <input class="form__block__control" [(ngModel)]="address.number" name="numberaddress" type="text" placeholder="Número"
+                  [required]="true">
+              </div>
+
+              <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+                <span class="form__block__msg">Complemento</span>
+                <input class="form__block__control" [(ngModel)]="address.complement" name="complementaddress" type="text" placeholder="Complemento">
+              </div>
+
+              <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+                <span class="form__block__msg">Bairro*</span>
+                <input class="form__block__control" [(ngModel)]="address.district" name="districtaddress" type="text" placeholder="Bairro"
+                  [required]="true">
+              </div>
+
+              <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+                <span class="form__block__msg">Cidade*</span>
+                <input class="form__block__control" [(ngModel)]="address.city" name="cityaddress" type="text" placeholder="Cidade"
+                  [required]="true">
+              </div>
+
+              <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+                <span class="form__block__msg">Estado*</span>
+                <select class="form__block__control" [(ngModel)]="address.state" name="stateaddress" [required]="true">
+                  <option value="" selected>Estado</option>
+                  <option value="AC">Acre</option>
+                  <option value="AL">Alagoas</option>
+                  <option value="AP">Amapá</option>
+                  <option value="AM">Amazonas</option>
+                  <option value="BA">Bahia</option>
+                  <option value="CE">Ceará</option>
+                  <option value="DF">Distrito Federal</option>
+                  <option value="ES">Espírito Santo</option>
+                  <option value="GO">Goiás</option>
+                  <option value="MA">Maranhão</option>
+                  <option value="MT">Mato Grosso</option>
+                  <option value="MS">Mato Grosso do Sul</option>
+                  <option value="MG">Minas Gerais</option>
+                  <option value="PA">Pará</option>
+                  <option value="PB">Paraíba</option>
+                  <option value="PR">Paraná</option>
+                  <option value="PE">Pernambuco</option>
+                  <option value="PI">Piauí</option>
+                  <option value="RJ">Rio de Janeiro</option>
+                  <option value="RN">Rio Grande do Norte</option>
+                  <option value="RS">Rio Grande do Sul</option>
+                  <option value="RO">Rondônia</option>
+                  <option value="RR">Roraima</option>
+                  <option value="SC">Santa Catarina</option>
+                  <option value="SP">São Paulo</option>
+                  <option value="SE">Sergipe</option>
+                  <option value="TO">Tocantins</option>
+                </select>
+              </div>
+
+
+              <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+                <label for="mainPhone">Telefone residêncial*</label>
+                <input type="text" [(ngModel)]="mainPhone" [required]="true" name="phonemain" [textMask]="{mask: phoneMask}" class="form__block__control"
+                  autocomplete="off" />
+              </div>
+
+              <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+                <label for="phone">Telefone comercial</label>
+                <input type="text" [(ngModel)]="phone" name="phonecommercial" [textMask]="{mask: phoneMask}" class="form__block__control"
+                  autocomplete="off">
+              </div>
+
+              <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+                <label for="mobile">Celular</label>
+                <input type="text" [(ngModel)]="mobile" name="celphone" [textMask]="{mask: phoneMask}" class="form__block__control"
+                  autocomplete="off">
+              </div>
+
+            <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+              <button type="submit" [disabled]="!formModal.valid" class="rkbt rkbt--one button">SALVAR</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+</div>

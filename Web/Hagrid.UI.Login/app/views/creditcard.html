@@ -1,0 +1,169 @@
+﻿<div ng-show="isLoaded" ng-init="init()" class="credit-card">
+
+    <div class="col-md-6 col-xs-12">
+        <div class="row center-row" style="">
+            <div class="box-login">
+                <div class="text-center alert" role="alert" ng-class="messageClass" ng-show="visibleMessage">
+                    {{message}}
+                </div>
+                <div class="logo-hagrid" ng-controller="appInfoController" ng-init="init()">
+                    <img src="{{ infoApp.Logo || '/content/images/logo/logo-hagrid.gif' }}" />
+                </div>
+                <div class="panel panel-default panel-login">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Fazer login usando o Hagrid</h3>
+                    </div>
+                    <div class="panel-body login">
+                        <form novalidate name="creditCardForm" role="form" ng-submit="creditCardForm.$valid && save()">
+
+                            <div class="form-group">
+                                <h4>{{ phrase }}</h4><br>
+
+                                <div ng-class="{ 'has-error' : creditCardForm.store_name.$touched &amp;&amp; creditCardForm.store_name.$invalid }">
+                                    <h5>Nome da loja:</h5>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                        <input type="text" class="form-control" placeholder="Nome da loja"
+                                               name="name_store"
+                                               autocomplete="off"
+                                               ng-model="creditcard.store_name"
+                                               ng-required="true">
+                                    </div>
+                                    <div ng-show="creditCardForm.store_name.$touched" ng-messages="creditCardForm.store_name.$error" role="alert">
+                                        <p ng-message="required" class="help-block">Nome da loja não pode estar em branco.</p>
+                                    </div>
+                                </div>
+
+                                <div ng-class="{ 'has-error' : creditCardForm.cnpj.$touched &amp;&amp; creditCardForm.cnpj.$invalid }">
+                                    <h5>CNPJ:</h5>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                        <input type="text" class="form-control" placeholder="CNPJ"
+                                               name="cnpj"
+                                               minlength="11"
+                                               maxlength="14"
+                                               autocomplete="off"
+                                               ng-model="creditcard.cnpj"
+                                               ng-required="true"
+                                               numbers-only>
+                                    </div>
+                                    <div ng-show="creditCardForm.cnpj.$touched" ng-messages="creditCardForm.cnpj.$error" role="alert">
+                                        <p ng-message="required" class="help-block">CNPJ da loja não pode estar em branco.</p>
+                                    </div>
+                                </div>
+
+
+                                <div ng-class="{ 'has-error' : creditCardForm.number.$touched &amp;&amp; creditCardForm.number.$invalid }">
+                                    <h5>Número do cartão:</h5>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                        <input id="credit-card-number" type="text" class="form-control" placeholder="0000 0000 0000 0000"
+                                               maxlength="16"
+                                               minlength="13"
+                                               name="number"
+                                               autocomplete="off"
+                                               ng-blur="validateCreditCard(this)"
+                                               ng-model="creditcard.number"
+                                               ng-required="true"
+                                               numbers-only>
+
+                                    </div>
+                                    <div ng-show="creditCardForm.number.$touched" ng-messages="creditCardForm.number.$error" role="alert">
+                                        <p ng-message="required" class="help-block">Número do cartão não pode estar em branco.</p>
+                                    </div>
+                                    <p class="help-block" ng-if="invalidCreditCardBrand != ''">{{invalidCreditCardBrand}}</p>
+                                </div>
+                                <div ng-class="{ 'has-error' : creditCardForm.holder.$touched &amp;&amp; creditCardForm.holder.$invalid }">
+                                    <h5>Nome do portador:</h5>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                        <input type="text" class="form-control" placeholder="Nome do portador"
+                                               name="holder"
+                                               autocomplete="off"
+                                               ng-model="creditcard.holder"
+                                               ng-required="true">
+                                    </div>
+                                    <div ng-show="creditCardForm.holder.$touched" ng-messages="creditCardForm.holder.$error" role="alert">
+                                        <p ng-message="required" class="help-block">Nome do portador não pode estar em branco.</p>
+                                    </div>
+                                </div>
+                                <div ng-class="{ 'has-error' : creditCardForm.expiration_date.$touched &amp;&amp; creditCardForm.expiration_date.$invalid }">
+                                    <h5>Data de Validade:</h5>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                <input type="text" class="form-control" placeholder="MM/AAAA"
+                                                       maxlength="7"
+                                                       name="expiration_date"
+                                                       autocomplete="off"
+                                                       ng-model="creditcard.expiration_date"
+                                                       ng-required="true"
+                                                       mask='?99/9999'>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-show="creditCardForm.expiration_date.$touched" ng-messages="creditCardForm.expiration_date.$error" role="alert">
+                                        <p ng-message="required" class="help-block">Data de validade não pode estar em branco.</p>
+                                    </div>
+                                </div>
+                                <div ng-class="{ 'has-error' : creditCardForm.security_code.$touched &amp;&amp; creditCardForm.security_code.$invalid }">
+                                    <h5>Código de Segurança:</h5>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                                <input type="text" class="form-control" placeholder="123"
+                                                       minlength="3"
+                                                       maxlength="4"
+                                                       name="security_code"
+                                                       autocomplete="off"
+                                                       ng-model="creditcard.security_code"
+                                                       ng-required="true"
+                                                       numbers-only>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-show="creditCardForm.security_code.$touched" ng-messages="creditCardForm.security_code.$error" role="alert">
+                                        <p ng-message="required" class="help-block">Código de segurança não pode estar em branco.</p>
+                                    </div>
+                                </div>
+                                <div ng-class="{ 'has-error' : creditCardForm.document.$touched &amp;&amp; creditCardForm.document.$invalid }">
+                                    <h5>CPF / CNPJ do titular:</h5>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                        <input type="text" class="form-control" placeholder="CPF / CNPJ do titular do Cartão"
+                                               minlength="11"
+                                               maxlength="14"
+                                               name="document"
+                                               autocomplete="off"
+                                               ng-model="creditcard.document"
+                                               ng-required="true"
+                                               numbers-only>
+                                    </div>
+                                    <div ng-show="creditCardForm.document.$touched" ng-messages="creditCardForm.document.$error" role="alert">
+                                        <p ng-message="required" class="help-block">O CPF / CNPJ do titular não pode estar em branco.</p>
+                                    </div>
+                                </div>
+                                <br />
+                                <div>
+                                    <button class="btn btn-lg btn-primary pull-right"
+                                            type="submit"
+                                            ng-loading-button
+                                            ng-submit-validation="creditCardForm" title="Preencha os campos para alterar o cartão de credito">
+                                        Alterar cartão
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="panel-footer">
+                        <p class="copyright">Hagrid. {{ '' | currentyear }} © Todos os direitos reservados.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-info></app-info>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+@import "src/assets/scss/import.scss";
+
+.box{
+    @include e("register") {
+        @include e("info") {
+            &:first-of-type {
+                width: 100%;
+            }
+        }
+    
+    
+        @include e("text") {
+            @include fonte($second-font, normal, 12px, $color-gray-dark);
+    
+            margin-right: 10px;
+        }
+    
+    
+        @include e("result") {
+            @include fonte($second-font, normal, 12px, $color-gray);
+    
+            margin-right: 10px;
+        }
+    }
+}

@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html ng-app="accountsApp" ng-strict-di>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+    <meta name="description" content="Hagrid" />
+    <meta name="author" content="Robson Darcineli Pedroso." />
+
+    <title>Hagrid</title>
+
+    <link rel="stylesheet" href="/content/css/plugins.min.css" />
+    <link rel="stylesheet" href="/content/css/accounts.min.css" />
+
+    <link rel="shortcut icon" href="content/images/favicon.ico" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+</head>
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top hidden">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                </button>
+                <a class="navbar-brand" href="http://www.hagrid.com.br">Hagrid</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#/password/recovery/test-token">Password Recovery</a></li>
+                    <li><a href="#/password/change/test-token">Change Password</a></li>
+                    <li><a href="#/notfound">Not Found</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div ng-view></div>
+    </div>
+
+    <script src="/content/js/plugins.min.js"></script>
+    <script src="/content/js/accounts.min.js"></script>
+
+    <div id="ssltrust">
+        <param id="ssltrust_preload" value="true" />
+    </div>
+    <script type="text/javascript" src="//s3-sa-east-1.amazonaws.com/selo.trustsign.com/ssltrust.js"></script>
+</body>
+</html>

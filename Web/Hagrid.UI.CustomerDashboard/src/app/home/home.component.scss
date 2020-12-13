@@ -1,0 +1,108 @@
+@import "src/assets/scss/import.scss";
+
+.home{
+    @include animate(fadeIn, 0s);
+    @include e('header'){
+        @include flexbox(column, nowrap, center, center, center);
+        background-image: url('../../assets/img/homebg.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        min-height: 500px;
+
+        @media #{$res-xs} {
+            min-height: 300px;
+        }
+        @media #{$res-sm} {
+            min-height: 350px;
+        }
+        @media #{$res-md} {
+            min-height: 400px;
+        }
+            
+        .wrapper{
+            text-align: center;
+        }
+
+        @include e('title'){
+            @include fonte($second-font, 400, 75px, #FFF);
+            @include transition;
+            margin-top: 0px;
+
+            @media #{$res-xs} {
+                font-size: 40px;
+            }
+            @media #{$res-sm} {
+                font-size: 60px;
+            }
+            @media #{$res-md} {
+                font-size: 75px;
+            }
+        }
+
+        @include e('desc'){
+            @include fonte($second-font, 400, 28px, #FFF);
+
+            @media #{$res-xs} {
+                font-size: 16px;
+            }
+            @media #{$res-sm} {
+                font-size: 20px;
+            }
+            @media #{$res-md} {
+                font-size: 25px;
+            }
+        }
+
+    }
+
+    @include e('content'){
+
+        @include e('title'){
+            @include fonte($second-font, 400, 28px, #696969);
+            text-align: center;
+            margin: 50px 0px;
+            width: 100%;
+        }
+
+    }
+
+    .cardgroup{
+        width: 100%;
+        @include flexbox(row, wrap, space-between, flex-start, flex-start);
+
+        @include e('card'){
+            @include transition;
+            @include box-sizing;
+            text-align: center;
+            padding: 25px;
+            width: calc(100% / 3);
+            cursor: default;
+
+            @media #{$res-xs}, #{$res-sm} {
+                width: 100%
+            }
+
+
+            &:hover {
+                background-color: #e2e2e2;
+                > img{
+                    @include animate('flip', 0s);
+                }
+            }
+
+            @include e('title'){
+                @include fonte($second-font, 400, 20px, #696969);
+            }
+
+            @include e('desc'){
+                @include fonte($second-font, 400, 14px, #696969);
+            }
+            
+
+        }
+
+    }
+
+
+}

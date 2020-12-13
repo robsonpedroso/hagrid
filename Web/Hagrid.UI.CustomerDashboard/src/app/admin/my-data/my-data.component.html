@@ -1,0 +1,221 @@
+<div class="mydata">
+  <div class="wrapper">
+    <div class="mydata__menu   grid xl_1 lg_1 md_2 sm_12 xs_12 hide">
+      <a class="mydata__menu__link mydata__menu__link--conta" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="[ '/meus-dados']">CONTA</a>
+      <a class="mydata__menu__link mydata__menu__link--seguranca" routerLinkActive="active" [routerLink]="[ '/meus-dados/seguranca']">SEGURANÇA</a>
+      <a class="mydata__menu__link mydata__menu__link--pagamentos" routerLinkActive="active" [routerLink]="[ '/meus-dados/pagamentos']">PAGAMENTOS</a>
+    </div>
+    <div class="mydata__content grid xl_12 lg_12 md_10 sm_12 xs_12">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="is_loaded" style="display: none;">
+  <div class="row center-block">
+    <div class="col-md-8 order-md-1 mx-auto">
+      <h4 class="mb-3">Meus Dados</h4>
+      <form class="needs-validation" #form="ngForm" (ngSubmit)="update()">
+        <div class="form-group mb-3">
+          <label>Email:</label>
+          <input type="email" [(ngModel)]="myData.email" class="form-control" validate="email" name="email" #email="ngModel"
+            placeholder="seuemail@exemplo.com.br" />
+          <show-errors [control]="email"></show-errors>
+        </div>
+        <div class="mb-3">
+          <label for="document">Documento:
+            <span class="text-muted"></span>
+          </label>
+          <input type="text" [(ngModel)]="myData.document" disabled class="form-control" name="document" #document="ngModel"
+            validate="document" [textMask]="{mask: documentMask}" />
+          <show-errors [control]="document"></show-errors>
+        </div>
+        <!--PF-->
+        <div class="row" *ngIf="isPerson">
+          <div class="col-md-6 mb-3">
+            <label for="firstName">Nome:</label>
+            <input type="text" [(ngModel)]="myData.customer.first_name" class="form-control" name="first_name"
+              #first_name="ngModel" validate="nameValidate" />
+            <show-errors [control]="first_name"></show-errors>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="lastName">Sobrenome:</label>
+            <input type="text" [(ngModel)]="myData.customer.last_name" class="form-control" name="last_name" #last_name="ngModel"
+              validate="lastNameValidate" />
+            <show-errors [control]="last_name"></show-errors>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="document">RG:
+              <span class="text-muted"></span>
+            </label>
+            <input type="text" [(ngModel)]="myData.customer.rg" class="form-control" name="rg" onlyNumbersAndLetters />
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="birth_date">Data de Nascimento:
+              <span class="text-muted"></span>
+            </label>
+            <mat-form-field>
+              <input class="form-control" matInput [matDatepicker]="picker1" validate="birthday" placeholder="Escolha a data"
+                [(ngModel)]="myData.customer.birth_date" #date="ngModel" name="birth_date">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+            <show-errors [control]="date"></show-errors>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="country">Sexo:</label>
+            <select [(ngModel)]="myData.customer.gender" class="custom-select d-block w-100" name="gender" #gender="ngModel" >
+              <option value="">Selecione...</option>
+              <option value="M">Masculino</option>
+              <option value="F">Feminino</option>
+            </select>
+            <show-errors [control]="gender"></show-errors>
+          </div>
+        </div>
+
+        <!--Company-->
+        <div class="row" *ngIf="!isPerson">
+          <div class="col-md-6 mb-3">
+            <label for="CompanyName">Razão Social:</label>
+            <input type="text" [(ngModel)]="myData.customer.company_name" class="form-control" name="company_name"
+              #company_name="ngModel" validate="namePJValidate" />
+            <show-errors [control]="company_name"></show-errors>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="TradeName">Nome Fantasia:</label>
+            <input type="text" [(ngModel)]="myData.customer.name" class="form-control" name="name" #name="ngModel"
+              validate="fantasyNameValidate" />
+            <show-errors [control]="name"></show-errors>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="im">Inscrição Municipal:</label>
+            <input type="text" [(ngModel)]="myData.customer.im" class="form-control" name="im" />
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="im">Inscrição Estadual:</label>
+            <input type="text" [(ngModel)]="myData.customer.ie" class="form-control" name="ie" />
+          </div>
+          <div class="col-md-4 mt-4 custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="ie">
+            <label class="custom-control-label" for="ie">Isento</label>
+          </div>
+        </div>
+
+        <hr class="mb-4">
+
+        <h4 class="mb-3">Endereço Principal</h4>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="zip">CEP:</label>
+            <input type="text" [(ngModel)]="address.zip_code" class="form-control" name="zip_code" placeholder="00000-000"
+              autocomplete="off" (blur)="getAddressByZipCode()" [textMask]="{mask: zipCodeMask}" />
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="number">Número:</label>
+            <input type="text" [(ngModel)]="address.number" class="form-control" name="number" validate="addressNumber"
+              #number="ngModel" />
+            <show-errors [control]="number"></show-errors>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="state">Estado:</label>
+            <select class="custom-select d-block w-100" name="state" [(ngModel)]="address.state">
+              <option *ngFor="let state of states" [value]="state.id">{{state.id}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="address">Logradouro:</label>
+          <input type="text" [(ngModel)]="address.street" class="form-control" name="street" validate="address" #street="ngModel" />
+          <show-errors [control]="street"></show-errors>
+        </div>
+        <div class="mb-3">
+          <label for="complement">Complemento:</label>
+          <input type="text" [(ngModel)]="address.complement" class="form-control" name="complement" />
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="district">Bairro:</label>
+            <input type="text" [(ngModel)]="address.district" class="form-control" name="district" validate="addressDistrict"
+              #district="ngModel" />
+            <show-errors [control]="district"></show-errors>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="city">Cidade:</label>
+            <input type="text" [(ngModel)]="address.city" class="form-control" name="city" validate="city" #city="ngModel" />
+            <show-errors [control]="city"></show-errors>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="address">Telefone Residencial:</label>
+            <input type="text" [(ngModel)]="contact_phone" #_contact_phone="ngModel" class="form-control" name="contact_phone"
+              placeholder="(00) 0000-0000" [textMask]="{mask: phoneMask}" validate="phone" />
+            <show-errors [control]="_contact_phone"></show-errors>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="address">Telefone Comercial:</label>
+            <input type="text" [(ngModel)]="commercial_phone" #_comercial_phone="ngModel" validate="phoneNotRequired"
+              class="form-control" name="commercial_phone" [textMask]="{mask: phoneMask}" placeholder="(00) 0000-0000" />
+            <show-errors [control]="_comercial_phone"></show-errors>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="address">Telefone Celular:</label>
+            <input type="text" [(ngModel)]="mobile_phone" #_mobile_phone="ngModel" validate="phoneNotRequired" class="form-control"
+              name="mobile_phone" [textMask]="{mask: phoneMask}" placeholder="(00) 0000-0000" />
+            <show-errors [control]="_mobile_phone"></show-errors>
+          </div>
+        </div>
+        <hr class="mb-12">
+        <button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="!form.valid">Salvar</button>
+
+        <hr class="mb-12">
+      </form>
+
+      <button class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#myModal">Alterar Senha</button>
+
+
+      <!--Modal-->
+      <section>
+        <form #formModal="ngForm">
+          <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <input type="password" [(ngModel)]="password" class="form-control" name="password" #_password="ngModel"
+                        placeholder="Senha atual" validate="currentPassword" />
+                      <show-errors [control]="_password"></show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group">
+                      <input type="password" [(ngModel)]="new_password" class="form-control" name="new_password"
+                        #_new_password="ngModel" placeholder="Nova senha" validate="newPassword" />
+                      <show-errors [control]="_new_password"></show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group">
+                      <input type="password" [(ngModel)]="confirm_password" class="form-control" name="confirm_password"
+                        #_confirm_password="ngModel" placeholder="Confirmação da nova senha" validate="confirmPassword" />
+                      <show-errors [control]="_confirm_password"></show-errors>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-default" data-dismiss="modal" [disabled]="!formModal.valid"
+                    (click)="changePassword(formModal);">Salvar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+</div>

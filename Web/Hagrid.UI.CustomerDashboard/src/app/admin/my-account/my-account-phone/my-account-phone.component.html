@@ -1,0 +1,34 @@
+<div class="box" *ngIf="isLoad">
+  <div class="box__header">
+    <span class="box__header__title">Telefone</span>
+    <a [routerLink]="['address-add']" class="box__header__add"></a>
+  </div>
+
+  <div class="box__cont box__phone" *ngIf="account.customer != null">
+    <div *ngFor="let phone of addressContact.phones">
+      <div class="box__phone__info">
+        <span class="box__phone__text">{{ phone.phone_type }}</span>
+        <span class="box__phone__text">({{ phone.ddd }}) {{ phone.number }}</span>
+        <span class="box__phone__text box__phone__text--desc">
+          Telefone {{ phone.phone_type.toLowerCase() }}, Principal
+        </span>
+      </div>
+
+      <div class="box__phone__sep"></div>
+    </div>
+  </div>
+
+  <div class="box__cont box__phone" *ngIf="account.customer == null">
+    <div class="box__phone__info">
+      <span>Sem informações de consumidor</span>
+    </div>
+  </div>
+
+  <div class="box__footer" *ngIf="account.customer != null">
+    <span class="box__footer__info">
+    </span>
+    <div class="box__footer__action">
+      <a [routerLink]="['address-adm']" class="box__footer__button">Gerenciar</a>
+    </div>
+  </div>
+</div>

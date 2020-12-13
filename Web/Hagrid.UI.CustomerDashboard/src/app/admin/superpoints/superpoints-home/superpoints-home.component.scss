@@ -1,0 +1,422 @@
+@import "src/assets/scss/import.scss";
+.points {
+    @include animate(fadeIn, 0s);
+    @include flexbox(row, wrap, space-between, flex-start, flex-start);
+    padding: 20px;
+
+    @media #{$res-xs}, #{$res-sm} {
+        padding: 10px;
+    }
+
+    @include e("col") {
+        @include m("second") {
+            > .dash__box {
+                padding: 0px;
+
+                > .dash__box__title {
+                    padding: 15px 15px 0px 15px;
+                    margin-bottom: 0px;
+                }
+            }
+        }
+    }
+
+
+    @media #{$res-xs}, #{$res-sm} {
+        @include e("col") {
+            @include m("first") {
+                @include order(2);
+            }
+
+
+            @include m("second") {
+                @include order(1);
+            }
+        }
+    }
+
+    &.wrapper {
+        @media #{$res-xs}, #{$res-sm} {
+            padding: 10px;
+        }
+    }
+
+    @include e("box") {
+        @include transition;
+        @include box-sizing;
+        @include border-radius(10px);
+        @include box-shadow(0, 0.25rem, 0.75rem, rgba(0, 0, 0, 0.05));
+        padding: 15px;
+        background: #FFF;
+        width: 100%;
+        @include e("title") {
+            @include flexbox(row, wrap, space-between, flex-start, flex-start);
+            margin-bottom: 15px;
+            @include m('points'){
+                margin-bottom: 0px;
+            }
+        }
+
+        @include m('col'){
+            margin-bottom: 30px;
+        }
+
+        @include e("content") {
+            @include box-sizing;
+            width: 100%;
+            padding-left: 15px;
+
+            @include m('dates'){
+                @include flexbox(row, nowrap, space-between, flex-start, flex-start);
+            }
+
+            @include m('radio'){
+                @include flexbox(row, wrap, flex-start, flex-start, flex-start);
+                .form-check-label{
+                    margin-right: 10px;
+                }
+            }
+
+            @include m('bt'){
+                padding-top: 15px;
+            }
+
+        }
+
+
+        @include e("subtitle") {
+            @include fonte($second-font, bold, 13px, $color-gray);
+        }
+
+
+        @include e("text") {
+            @include fonte($second-font, normal, 12px, $color-gray-dark);
+            @include box-sizing;
+            display: block;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+
+        @include e("link") {
+            @include fonte($second-font, normal, 13px, $color-gray);
+            @include transition;
+            display: block;
+            width: 100%;
+            margin-bottom: 5px;
+
+            &:hover {
+                @include fonte($second-font, normal, 13px, $color-gray-dark);
+            }
+        }
+
+
+    }
+
+
+    @include e("title") {
+        @include fonte($second-font, bold, 16px, $color-gray);
+        @include m('points'){
+            margin-bottom: 0px;
+        }
+
+    }
+
+
+    @include e("details") {
+        @include transition;
+        @include fonte($second-font, bold, 16px, $color-red);
+        @include flexbox(row, wrap, space-between, center, center);
+
+        &:after {
+            @include set-icon($fa-var-caret-right, 20px, 900, $color-red);
+            @include transition;
+
+            margin-left: 3px;
+            line-height: normal;
+            display: none;
+        }
+
+        &:hover {
+            color: $color-red-dark;
+            text-decoration: none;
+
+            &:after {
+                color: $color-red-dark;
+                margin-left: 8px;
+            }
+        }
+    }
+
+
+    @include e("cards") {
+        margin: 0;
+        padding: 0;
+
+        @include e("item") {
+            @include flexbox(row, wrap, flex-start, center, center);
+
+            list-style: none;
+            margin-bottom: 10px;
+
+            @include e("img") {
+                margin-right: 10px;
+            }
+
+
+            @include e("text") {
+                @include fonte($second-font, bold, 13px, $color-gray);
+            }
+        }
+    }
+}
+
+.dlist {
+    @include transition;
+
+    overflow: hidden;
+    padding: 15px 15px 15px 15px;
+
+    @include e("item") {
+        @include animate(fadeIn, 0s);
+        @include box-sizing;
+        @include border-radius(5px);
+        @include transition;
+
+        background: #f4f4f4;
+        padding: 10px;
+        width: 100%;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+
+        &.remove {
+            @include animate(fadeOutRight, 0s);
+        }
+
+        @include e("cont") {
+            @include flexbox(row, wrap, flex-start, center, center);
+
+            &.active + .dtail {
+                @include animate(fadeIn, 0s);
+
+                display: flex;
+            }
+        }
+
+
+        @include e("date") {
+            @include fonte($second-font, normal, 16px, $color-gray);
+
+            margin-right: 20px;
+        }
+
+
+        @include e("desc") {
+            @include e("text") {
+                @include fonte($second-font, normal, 13px, $color-gray);
+
+                display: block;
+                width: 100%;
+            }
+
+
+            @include e("type") {
+                @include fonte($second-font, normal, 13px, #a4a4a4);
+
+                width: 100%;
+            }
+        }
+
+
+        @include e("value") {
+            margin-left: auto;
+        }
+
+
+        &.odd {
+            background-color: #FFF;
+        }
+
+        &:before {
+            @include transition;
+        }
+
+        &:hover {
+            background-color: #dfdfdf;
+        }
+
+        &:hover,
+        & > .active {
+            &:before {
+                content: "";
+                width: 4px;
+                height: 100%;
+                position: absolute;
+                left: 0px;
+                top: 0;
+                background-color: $color-red;
+            }
+        }
+    }
+
+
+    .dtail {
+        @include flexbox(row, wrap, space-between, flex-start, flex-start);
+        @include box-sizing;
+        @include border-radius(0);
+
+        cursor: text;
+        display: none;
+        padding: 10px;
+        border: 1px solid #CCC;
+        background-color: #FFF;
+        width: 100%;
+        margin-top: 5px;
+
+        @include e("box") {}
+
+
+        @include e("title") {
+            @include fonte($second-font, bold, 14px, $color-gray-dark);
+        }
+
+
+        @include e("cont") {
+            @include box-sizing;
+
+            width: 100%;
+            padding-left: 15px;
+        }
+
+
+        @include e("desc") {
+            @include fonte($second-font, 400, 13px, $color-gray);
+        }
+
+
+        @include e("txt") {
+            @include fonte($second-font, bold, 13px, $color-gray-dark);
+        }
+
+
+        @include e("table") {
+            margin-bottom: 0px;
+
+            .tb_r {
+                text-align: right;
+            }
+
+            thead {
+                th {
+                    @include fonte($second-font, bold, 13px, $color-gray);
+                }
+            }
+
+            tbody {
+                td {
+                    @include fonte($second-font, normal, 13px, $color-gray);
+                }
+
+                th {
+                    @include fonte($second-font, bold, 13px, $color-gray);
+                }
+            }
+
+            @include e("print") {
+                @include flexbox(row, wrap, flex-end, center, center);
+                @include fonte($second-font, bold, 14px, $color-red);
+                @include border-radius(5px);
+                @include transition;
+
+                background-color: #ececec;
+                padding: 5px 10px;
+                float: right;
+
+                &:before {
+                    @include transition;
+                    @include set-icon($fa-var-print, 25px, 900, $color-gray);
+
+                    margin-right: 10px;
+                }
+
+                &:hover {
+                    background-color: $color-red;
+                    text-decoration: none;
+                    color: #FFF;
+
+                    &:before {
+                        color: #FFF;
+                    }
+                }
+            }
+        }
+    }
+
+    @include e("options") {
+        @include flexbox(row, wrap, space-between, center, center);
+        @include box-sizing;
+
+        padding: 15px;
+        width: 100%;
+        border-top: 1px solid $color-gray-light;
+
+        @include e("show") {
+            @include fonte($second-font, normal, 13px, #8d8d8d);
+
+            @include e("number") {
+                @include fonte($second-font, bold, 13px, #8d8d8d);
+            }
+
+
+            @media #{$res-xs}, #{$res-sm} {
+                width: 100%;
+                text-align: center;
+                margin: 10px 0px;
+            }
+        }
+
+
+        @include e("buttons") {
+            @media #{$res-xs}, #{$res-sm} {
+                width: 100%;
+
+                @include flexbox(row, wrap, center, center, center);
+            }
+        }
+
+
+        @include e("bt") {
+            @include animate(fadeIn, 0s);
+            @include fonte($second-font, normal, 13px, #a4a4a4);
+            @include box-sizing;
+            @include border-radius;
+            @include transition;
+
+            border: 0px;
+            background-color: #f4f4f4;
+            cursor: pointer;
+            padding: 6px 15px;
+
+            &:hover {
+                background-color: #bbbbbb;
+                color: #3f3f3f;
+            }
+
+            @media #{$res-xs}, #{$res-sm} {
+                padding: 10px 15px;
+                font-size: 16px;
+            }
+
+            @media #{$res-xs} {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+
+            @media #{$res-sm} {
+                margin: 10px;
+                width: calc(50% - 20px);
+            }
+        }
+    }
+}

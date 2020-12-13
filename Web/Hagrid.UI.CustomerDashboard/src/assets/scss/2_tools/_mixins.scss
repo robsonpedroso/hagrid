@@ -1,0 +1,395 @@
+@mixin border-radius($radius: 5px) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  -o-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin opacity($opacity: 1) {
+  -webkit-opacity: $opacity;
+  -moz-opacity: $opacity;
+  -ms-opacity: $opacity;
+  -o-opacity: $opacity;
+  opacity: $opacity;
+}
+
+@mixin radiustl($radius: 5px) {
+  -webkit-border-top-left-radius: $radius;
+  -moz-border-top-left-radius: $radius;
+  -ms-border-top-left-radius: $radius;
+  -o-border-top-left-radius: $radius;
+  border-top-left-radius: $radius;
+}
+
+@mixin radiustr($radius: 5px) {
+  -webkit-border-top-right-radius: $radius;
+  -moz-border-top-right-radius: $radius;
+  -ms-border-top-right-radius: $radius;
+  -o-border-top-right-radius: $radius;
+  border-top-right-radius: $radius;
+}
+
+@mixin radiusbl($radius: 5px) {
+  -webkit-border-bottom-left-radius: $radius;
+  -moz-border-bottom-left-radius: $radius;
+  -ms-border-bottom-left-radius: $radius;
+  -o-border-bottom-left-radius: $radius;
+  border-bottom-left-radius: $radius;
+}
+
+@mixin radiusbr($radius: 5px) {
+  -webkit-border-bottom-right-radius: $radius;
+  -moz-border-bottom-right-radius: $radius;
+  -ms-border-bottom-right-radius: $radius;
+  -o-border-bottom-right-radius: $radius;
+  border-bottom-right-radius: $radius;
+}
+
+@mixin linear-gradient($direction, $color-stops...) {
+  background: nth(nth($color-stops, 1), 1);
+  background: -webkit-linear-gradient(legacy-direction($direction), $color-stops);
+  background: linear-gradient($direction, $color-stops);
+}
+
+@mixin imgbt($img-name, $img-type, $img-w, $img-h) {
+  width: $img-w + px;
+  height: $img-h + px;
+  background: url("#{$img-url}/"+$img-name+"."+$img-type);
+  background: {
+    repeat: no-repeat;
+    color: transparent;
+  }
+  padding: 0px;
+  border: 0px;
+  text-indent: -999999px;
+  font-size: 0px;
+  color: transparent;
+}
+
+@mixin bgimg($img) {
+  background: url("#{$img-url}/"+$img);
+}
+
+@mixin bgimage($img) {
+  background-image: url("#{$img-url}/"+$img);
+}
+
+@mixin bgimgpay($img) {
+  background: url("#{$img-url}/payicons/"+$img+".png");
+}
+
+@mixin fonte($font-family: $font-def,
+$font-weight: "normal",
+$font-size: 12px,
+$font-color: #000) {
+  font-family: $font-family;
+  font-weight: $font-weight;
+  font-size: $font-size;
+  color: $font-color;
+}
+
+@mixin box-shadow($top:0px,
+$left:0px,
+$blur: 5px,
+$color: #000,
+$inset: false) {
+  @if $inset {
+    -webkit-box-shadow: inset $top $left $blur $color;
+    -moz-box-shadow: inset $top $left $blur $color;
+    box-shadow: inset $top $left $blur $color;
+  }
+  @else {
+    -webkit-box-shadow: $top $left $blur $color;
+    -moz-box-shadow: $top $left $blur $color;
+    box-shadow: $top $left $blur $color;
+  }
+}
+
+@mixin text-shadow($horizOffset,
+$vertOffset,
+$blur,
+$color) {
+  -webkit-text-shadow: $horizOffset $vertOffset $blur $color;
+  -moz-text-shadow: $horizOffset $vertOffset $blur $color;
+  -ms-text-shadow: $horizOffset $vertOffset $blur $color;
+  /* IE 10+ */
+  -o-text-shadow: $horizOffset $vertOffset $blur $color;
+  text-shadow: $horizOffset $vertOffset $blur $color;
+}
+
+@mixin flexbox($fb-direction, $fb-wrap, $fb-justify, $fb-align-items, $fb-align-content) {
+  //display: flex or inline-flex */
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -webkit-flex;
+  display: flex; 
+  
+  //flex-direction: row | row-reverse | column | column-reverse;
+  -webkit-flex-direction: $fb-direction;
+  -moz-flex-direction: $fb-direction;
+  -ms-flex-direction: $fb-direction;
+  -o-flex-direction: $fb-direction;
+  flex-direction: $fb-direction;
+  //flex-wrap: nowrap | wrap | wrap-reverse;
+  -webkit-flex-wrap: $fb-wrap;
+  -moz-flex-wrap: $fb-wrap;
+  -ms-flex-wrap: $fb-wrap;
+  -o-flex-wrap: $fb-wrap;
+  flex-wrap: $fb-wrap; //justify-content: flex-start | flex-end | center | space-between | space-around;
+  -webkit-justify-content: $fb-justify;
+  -moz-justify-content: $fb-justify;
+  -ms-justify-content: $fb-justify;
+  -o-justify-content: $fb-justify;
+  justify-content: $fb-justify; //align-items: flex-start | flex-end | center | baseline | stretch;
+  -webkit-align-items: $fb-align-items;
+  -moz-align-items: $fb-align-items;
+  -ms-align-items: $fb-align-items;
+  -o-align-items: $fb-align-items;
+  align-items: $fb-align-items; //align-content: flex-start | flex-end | center | space-between | space-around | stretch;
+  -webkit-align-content: $fb-align-content;
+  -moz-align-content: $fb-align-content;
+  -ms-align-content: $fb-align-content;
+  -o-align-content: $fb-align-content;
+  align-content: $fb-align-content;
+}
+
+@mixin order($order) {
+  -webkit-order: $order;
+  -moz-order: $order;
+  -ms-order: $order;
+  -o-order: $order;
+  order: $order;
+}
+
+@mixin filter($filter-type,
+$filter-amount) {
+  -webkit-filter: $filter-type+unquote('(#{$filter-amount})');
+  -moz-filter: $filter-type+unquote('(#{$filter-amount})');
+  -ms-filter: $filter-type+unquote('(#{$filter-amount})');
+  -o-filter: $filter-type+unquote('(#{$filter-amount})');
+  filter: $filter-type+unquote('(#{$filter-amount})');
+}
+
+@mixin select-arrow($img,
+$img-w,
+$arrow-percent) {
+  @include bgimg($img);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-repeat: no-repeat;
+  background-position: $arrow-percent center;
+  background-color: #FFF;
+  background-size: $img-w;
+  padding-right: $img-w + 10;
+  &::-ms-expand {
+    display: none;
+  }
+}
+
+@mixin grayscale($value) {
+  -webkit-filter: #{"grayscale(#{$value})"};
+ -moz-filter: #{"grayscale(#{$value})"};
+ filter:#{"grayscale(#{$value})"};
+
+}
+
+@mixin set-icon($content: $fa-var-smile,
+$size: 20px,
+$weigth: 900,
+$color: #000,
+$brand: "") {
+  @if($brand !="") {
+    font-family: "Font Awesome 5 Brands";
+  }
+  @else {
+    font-family: "Font Awesome 5 Free";
+  }
+  background: none;
+  content: $content;
+  font-size: $size;
+  font-weight: $weigth;
+  color: $color;
+  text-indent: 0;
+}
+
+@mixin transition($property: all,
+$duration: .3s,
+$ease: linear) {
+  -webkit-transition: $property $duration $ease;
+  -moz-transition: $property $duration $ease;
+  -o-transition: $property $duration $ease;
+  transition: $property $duration $ease;
+}
+
+@mixin display-grid() {
+  display: grid;
+  -ms-display: grid;
+}
+
+@mixin grid-gap($gridGap) {
+  grid-gap: $gridGap;
+}
+
+@mixin grid-row($init,
+$end:null) {
+  @if($end) {
+    grid-row : #{$init + " / " + $end};
+    -ms-grid-row : #{$init + " - " + $end};
+  }
+  @else {
+    grid-row: $init;
+    -ms-grid-row: $init;
+  }
+}
+
+@mixin grid-column($init,
+$end:null) {
+  @if($end) {
+    grid-column: #{$init + " / " + $end};
+    -ms-grid-column : #{$init + " - " + $end};
+  }
+  @else {
+    grid-column: $init;
+    -ms-grid-column: $init;
+  }
+}
+
+@mixin content-columns($columnCount,
+$columnGap: $gridGutterWidth) {
+  -webkit-column-count: $columnCount;
+  -moz-column-count: $columnCount;
+  column-count: $columnCount;
+  -webkit-column-gap: $columnGap;
+  -moz-column-gap: $columnGap;
+  column-gap: $columnGap;
+}
+
+@mixin font-size($sizeValue: 1.6) {
+  font-size: ($sizeValue * 10) + px;
+  font-size: $sizeValue + rem;
+}
+
+// generic transform
+@mixin transform($transforms) {
+  -moz-transform: $transforms;
+  -o-transform: $transforms;
+  -ms-transform: $transforms;
+  -webkit-transform: $transforms;
+  transform: $transforms;
+}
+
+// rotate
+@mixin rotate ($deg) {
+  @include transform(rotate(#{$deg}deg));
+}
+
+// scale
+@mixin scale($scale) {
+  @include transform(scale($scale));
+}
+
+// translate
+@mixin translate ($x,
+$y) {
+  @include transform(translate($x,
+  $y));
+}
+
+// skew
+@mixin skew ($x,$y) {
+  @include transform(skew(#{$x}deg,
+  #{$y}deg));
+}
+
+//transform origin
+@mixin transform-origin ($origin) {
+  moz-transform-origin: $origin;
+  -o-transform-origin: $origin;
+  -ms-transform-origin: $origin;
+  -webkit-transform-origin: $origin;
+  transform-origin: $origin;
+}
+
+@mixin remove-shadow(){
+  -webkit-box-shadow:0 0 0 transparent;
+  -moz-box-shadow:0 0 0 transparent;
+  box-shadow:0 0 0 transparent;
+}
+@mixin remove-textshadow(){
+  -webkit-text-shadow: none;
+  -moz-text-shadow: none;
+  -ms-text-shadow: none;
+  -o-text-shadow: none;
+  text-shadow: none;
+}
+
+@mixin box-sizing( $type: border-box ) {
+  -webkit-box-sizing: $type;
+  -moz-box-sizing: $type;
+  -o-box-sizing: $type;
+  -ms-box-sizing: $type;
+  box-sizing: $type;
+}
+
+
+@mixin e($element) {
+  &__#{$element} {
+    @content;
+  }
+}
+
+@mixin m($element) {
+  &--#{$element} {
+    @content;
+  }
+}
+
+@mixin animate($type: fadeIn, $delay: 1s) {
+  @extend %animated;
+  @extend %#{$type};
+  -webkit-animation-delay: $delay;
+  animation-delay: $delay;
+}
+
+
+/// Replace `$search` with `$replace` in `$string`
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+  
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+  
+  @return $string;
+}
+
+@mixin createGrid($prefix, $mediaquery) {
+    $i: 1;
+
+    @media #{$mediaquery} {
+        @while $i < 13 {
+            .#{$prefix}_#{str-replace(#{$i}, ".", "")} {
+                $calc: 100% / 12;
+                $result: $i * $calc;
+
+                width: #{$result};
+            }
+
+            $i: $i + 0.5;
+        }
+    }
+}
+
+
+@mixin center-cont(){
+  -webkit-display: flex;
+  -moz-display: flex;
+  -ms-display: flex;
+  -o-display: flex;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}

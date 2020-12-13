@@ -1,0 +1,79 @@
+<div class="overpanel">
+
+  <div class="overpanel__container">
+
+    <span [routerLink]="['/meus-dados']" class="overpanel__close"></span>
+
+
+    <main class="gerais  grid xl_8 lg_8 md_10 sm_12 xs_12">
+      <h1 class="title">Dados Gerais</h1>
+      <div class="form">
+        <div class="form__group">
+          <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+            <input (ngModel)="account.code" type="hidden" placeholder="AccountCode" value="">
+          </div>
+          <div *ngIf="account.customer?.type.toLowerCase() == 'person'">
+            <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+              <span class="form__block__msg">Nome:</span>
+              <input class="form__block__control" data-val="true" id="firstname" name="firstname" [(ngModel)]="account.customer.first_name"
+                type="text" placeholder="Nome" value="">
+            </div>
+            <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+              <span class="form__block__msg">Sobrenome:</span>
+              <input class="form__block__control" data-val="true" id="lastname" name="lastname" [(ngModel)]="account.customer.last_name"
+                type="text" placeholder="Sobrenome" value="">
+            </div>
+            <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+              <span class="form__block__msg">Género:</span>
+              <select class="form__block__control" [(ngModel)]="account.customer.gender">
+                <option value="" selected>Selecione...</option>
+                <option value="F">Feminino</option>
+                <option value="M">Masculino</option>
+              </select>
+            </div>
+            <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+              <span class="form__block__msg">Documento:</span>
+              <input class="form__block__control" data-val="true" id="document" mask="000.000.000-00" readonly name="document"
+                disabled [(ngModel)]="account.customer.cpf" type="text" placeholder="Documento" value="">
+            </div>
+            <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+              <span class="form__block__msg">Data de nascimento:</span>
+              <input class="form__block__control" [matDatepicker]="picker1" readonly disabled [ngModel]="account.customer.birth_date">
+          </div>
+          </div>
+          <div *ngIf="account.customer?.type.toLowerCase() == 'company'">
+            <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+              <span class="form__block__msg">Razão Social:</span>
+              <input class="form__block__control" data-val="true" id="companyname" name="companyname" [(ngModel)]="account.customer.company_name"
+                type="text" placeholder="Razão Social" value="">
+            </div>
+            <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+              <span class="form__block__msg">Nome Fantasia:</span>
+              <input class="form__block__control" data-val="true" id="tradename" name="tradename" [(ngModel)]="account.customer.trade_name"
+                type="text" placeholder="Nome Fantasia" value="">
+            </div>
+            <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+              <span class="form__block__msg">Documento:</span>
+              <input class="form__block__control" data-val="true" id="document" mask="00.000.000/00000-00" readonly
+                disabled name="document" [(ngModel)]="account.customer.cnpj" type="text" placeholder="Documento" value="">
+            </div>
+            <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+              <span class="form__block__msg">IE:</span>
+              <input class="form__block__control" data-val="true" id="ie" name="ie" [(ngModel)]="account.customer.ie"
+                type="text" placeholder="IE" value="">
+            </div>
+            <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+              <span class="form__block__msg">IM:</span>
+              <input class="form__block__control" data-val="true" id="im" name="im" [(ngModel)]="account.customer.im"
+                type="text" placeholder="IM" value="">
+            </div>
+          </div>
+
+          <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+            <button type="submit" (click)="save()" class="rkbt rkbt--one button">SALVAR</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+﻿<div ng-init="init()">
+    <div class="col-md-6 col-xs-12">
+        <div class="row center-row ">
+            <div class="box-login">
+                <div class="text-center alert" role="alert" ng-class="messageClass" ng-show="visibleMessage">
+                    {{message}}
+                </div>
+                <div class="logo-hagrid" ng-controller="appInfoController" ng-init="init()">
+                    <img src="{{ infoApp.Logo || '/content/images/logo/logo-hagrid.gif' }}" />
+                </div>
+                <div class="panel panel-default panel-request-recovery">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Recuperar sua senha do Hagrid</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form name="smsRecoveryForm" role="form" ng-submit="smsRecoveryForm.$valid && submit()">
+                            <div class="form-group" ng-class="{ 'has-error' : smsRecoveryForm.document.$touched && smsRecoveryForm.document.$invalid }">
+                                <input type="text" name="document" id="document" mask="99999999999?9?9?9" class="form-control" placeholder="Informe seu documento" clean="true" autocomplete="off"
+                                       ng-model="document" pattner="(^\d{11}$)|(^\d{14}$)" max="14" min="11" maxlength="14">
+                                <div ng-show="smsRecoveryForm.document.$touched" ng-messages="smsRecoveryForm.document.$error" role="alert">
+                                    <p ng-message="required" class="help-block">Seu documento não pode estar em branco.</p>
+                                </div>
+                            </div>
+                            <div class="text-center font_bold_large p-b-10">
+                                <span>OU</span>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error' : smsRecoveryForm.email.$touched && smsRecoveryForm.email.$invalid }">
+                                <input type="email" name="email" class="form-control" placeholder="Informe seu e-mail" autocomplete="off"
+                                       ng-model="email">
+                                <div ng-show="smsRecoveryForm.email.$touched" ng-messages="smsRecoveryForm.email.$error" role="alert">
+                                    <p ng-message="required" class="help-block">Seu e-mail não pode estar em branco.</p>
+                                </div>
+                            </div>
+                            <div>
+                                <button class="btn btn-lg btn-primary pull-right" ng-loading-button ng-submit-validation="smsRecoveryForm" type="submit">Solicitar Recuperação por SMS</button>
+                            </div>
+                            <button id="login_lost_btn" ng-click="login()" type="button" class="btn btn-link pull-right mt-10 md--15">Voltar para login</button>
+                        </form>
+                    </div>
+                    <div class="panel-footer">
+                        <p class="copyright">Hagrid. {{ '' | currentyear }} © Todos os direitos reservados.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-info></app-info>
+</div>

@@ -1,0 +1,1 @@
+UPDATE [dbo].[THApplication] SET [MemberType_Application] = 0 WHERE Name_Application = 'Hagrid-UI-Login'

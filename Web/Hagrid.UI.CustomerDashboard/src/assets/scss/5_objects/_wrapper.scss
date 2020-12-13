@@ -1,0 +1,61 @@
+.wrapper {
+  @extend %box-sizing;
+  @include transition;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+}
+
+.rk-row {
+  @include box-sizing;
+  width: 100%;
+  
+  @media #{$res-lg}, #{$res-xl}{
+    padding: 0px 30px;
+  }
+
+  @include m('main') {
+    @include transition;
+    background-color: #F2F2F2;
+    position: relative;
+    
+  }
+}
+
+
+.rk-col{
+  @include m('left'){
+      @include flexbox(row, wrap, flex-start, center, center);
+  }
+
+  @include m('right'){
+      @include flexbox(row, wrap, flex-end, center, center);
+  }
+}
+
+
+.rk-container{
+  min-height: calc(100vh - 170px);
+}
+
+.main{
+    @include transition;
+    @include flexbox(row, wrap, space-between, flex-start, flex-start);
+
+    @media #{$res-xs} {
+      width: 100%;
+    }
+    @media #{$res-sm} {
+      width: 100%;
+    }
+    @media #{$res-md} {
+      width: calc(70% - 20px);
+    }
+    @media #{$res-lg} {
+      width: calc(70% - 20px);
+    }
+    @media #{$res-xl} {
+      width: calc(70% - 20px);
+    }
+}
+

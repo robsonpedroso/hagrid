@@ -1,0 +1,88 @@
+<div class="overpanel">
+
+  <div class="overpanel__container">
+
+    <span [routerLink]="['/meus-cartoes']" class="overpanel__close"></span>
+
+
+    <main class="add grid xl_8 lg_8 md_10 sm_12 xs_12">
+      <h1 class="title">Inserção de cartão de crédito</h1>
+      <form data-rkp="form" (ngSubmit)="saveCreditCard()" #form_creditcard="ngForm">
+        <div class="form">
+          <div class="form__group">
+
+            <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+              <input placeholder="Número do cartão de crédito" type="text" name="creditcard" [(ngModel)]="credit_card.card_number"
+                #creditcard="ngModel" onlyNumbers validate="creditcard" (blur)="getBrand()" maxlength="16" id="cc-number"
+                class="form__block__control" data-rkp="card-number" autocomplete="off">
+              <span [ngClass]="credit_card.brand_icon" class="form__block__card" aria-hidden="true"></span>
+              <show-errors [control]="creditcard"></show-errors>
+            </div>
+
+            <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+              <input placeholder="Nome do portador" type="text" name="holder_name" [(ngModel)]="credit_card.holder_name"
+                #holder_name="ngModel" validate="creditcardHolderName" class="form__block__control" id="cc-name"
+                data-rkp="card-holder-name" autocomplete="off">
+              <small class="text-muted">Nome completo como aparece no cartão</small>
+              <show-errors [control]="holder_name"></show-errors>
+            </div>
+
+            <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+              <input placeholder="Documento do titular" type="text" name="holder_document" [(ngModel)]="credit_card.holder_document"
+                #holder_document="ngModel" validate="document" [textMask]="{mask: documentMask}" class="form__block__control"
+                id="cc-document" data-rkp="card-holder-document" autocomplete="off">
+              <small class="text-muted">CPF ou CNPJ</small>
+              <show-errors [control]="holder_document"></show-errors>
+            </div>
+
+            <div class="form__block grid xl_4 lg_12 md_12 sm_12 xs_12">
+              <input placeholder="Mês" type="text" name="expiration_month" [(ngModel)]="credit_card.expiration_month"
+                #expiration_month="ngModel" validate="creditcardMonth" onlyNumbers maxlength="2" data-rkp="card-expiration-month"
+                class="form__block__control" id="month-expiration" autocomplete="off">
+              <show-errors [control]="expiration_month"></show-errors>
+            </div>
+
+            <div class="form__block grid xl_4 lg_12 md_12 sm_12 xs_12">
+              <input placeholder="Ano" type="text" name="expiration_year" [(ngModel)]="credit_card.expiration_year"
+                #expiration_year="ngModel" validate="creditcardYear" onlyNumbers maxlength="4" class="form__block__control" id="year-expiration"
+                data-rkp="card-expiration-year" autocomplete="off">
+              <show-errors [control]="expiration_year"></show-errors>
+            </div>
+
+            <div class="form__block grid xl_4 lg_12 md_12 sm_12 xs_12">
+              <input placeholder="CVV" type="text" name="cvv" [(ngModel)]="credit_card.cvv" #cvv="ngModel" validate="creditcardCvv"
+                onlyNumbers maxlength="4" class="form__block__control" id="cc-cvv" data-rkp="card-cvv" autocomplete="off">
+              <show-errors [control]="cvv"></show-errors>
+            </div>
+
+
+            <div class="form__block grid xl_12 lg_12 md_12 sm_12 xs_12">
+              <button type="submit" [disabled]="!form_creditcard.valid" class="rkbt rkbt--one button">SALVAR</button>
+            </div>
+
+
+          </div>
+
+
+
+        </div>
+      </form>
+    </main>
+
+  </div>
+
+
+
+</div>
+
+<script type="text/javascript">
+  (function (window, document) {
+    if (!!window["RPay"]) return;
+
+    var head = document.getElementsByTagName("head")[0];
+    var script = document.createElement("script");
+    script.async = 1;
+    script.src = "{{urlPaymentsJS}}";
+    head.parentNode.appendChild(script);
+  })(window, document)
+</script>

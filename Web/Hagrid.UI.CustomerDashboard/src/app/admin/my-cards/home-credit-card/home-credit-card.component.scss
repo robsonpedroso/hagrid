@@ -1,0 +1,296 @@
+@import "src/assets/scss/import.scss";
+
+.cards {
+    @include flexbox(row, wrap, flex-start, inherit, flex-start);
+    @include transition;
+    @include animate(fadeIn, 0s);
+    padding: 20px;
+
+    @media #{$res-xs}, #{$res-sm} {
+        padding: 10px;
+    }
+
+    .gird {
+        padding: 15px;
+    }
+
+    @include e("desc") {
+        width: 100%;
+        display: block;
+    }
+
+    @include e("master") {
+        @include flexbox(row, wrap, flex-start, inherit, flex-start);
+        @include transition;
+        width: 100%;
+        display: none;
+        &.active{
+            @include animate(bounceInLeft, 0s);
+            display: flex;
+        }
+        &.inactive{
+            @include animate(bounceOutLeft, 0s);
+            display: flex;
+        }
+        &.zero{
+            display: flex;
+            height: 0px;
+            min-height: 0px;
+        }
+    }
+
+
+    .cardcont {
+        @include box-sizing;
+
+        padding: 10px;
+    }
+
+    .card {
+        @include flexbox(column, nowrap, space-between, center, center);
+        @include box-sizing;
+        @include border-radius(10px);
+        @include transition;
+
+        background-image: url("../../../../assets/img/cardbg.jpg");
+        background-size: cover;
+        height: 170px;
+        width: 100%;
+
+        @media #{$res-xs}, #{$res-sm} {
+            height: 130px;
+        }
+
+        @include m("master") {
+            min-height: 190px;
+        }
+
+
+        @include m("add") {
+            @include flexbox(column, nowrap, center, center, center);
+
+            text-align: center;
+            background: $color-gray-dark;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+
+
+        @include e("icon") {
+            font-size: 35px;
+            color: #FFF;
+
+            @media #{$res-xs}, #{$res-sm} {
+                font-size: 27px;
+            }
+        }
+
+
+        @include e("add") {
+            @include fonte($second-font, bold, 22px, #FFF);
+
+            @media #{$res-xs}, #{$res-sm} {
+                font-size: 16px;
+            }
+        }
+
+
+        @include e("number") {
+            @include e("text") {
+                @include fonte($second-font, bold, 20px, $color-gray);
+
+                @include m("first") {
+                    @media #{$res-xs}, #{$res-sm} {
+                        display: none;
+                    }
+                }
+
+
+                @include m("last") {}
+            }
+        }
+
+        @include e('icon'){
+
+            @include m('visa'){
+                background-image: url('../../../../assets/img/cards/big/visa.png');
+            }
+
+            @include m('master'){
+                background-image: url('../../../../assets/img/cards/big/master.png');
+            }
+
+            @include m('amex'){
+                background-image: url('../../../../assets/img/cards/big/amex.png');
+            }
+
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center right;
+            display: block;
+            width: 50px;
+            height: 35px;
+        }
+
+        @include e("edit"){
+            @include box-sizing;
+            width: 100%;
+            padding: 10px;
+            text-align: right;
+            > a{
+                cursor: pointer;
+                &:hover{
+                    text-decoration: none;
+                }
+            }
+            .fas:before,{
+                font-size: 25px;
+                text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);
+                color: #FFF;
+                text-decoration: none;
+            }
+        }
+
+        @include e("flag"){
+            @include flexbox(row, nowrap, flex-end, center, center);
+            @include box-sizing;
+            width: 100%;
+            padding: 10px;
+            text-align: right;
+        }
+
+
+        @include e('info'){
+            display: block;
+            @include e('title'){
+                @include fonte($second-font, bold, 16px, $color-gray-dark);
+                display: block;
+            }
+
+            @include e('text'){
+                @include fonte($second-font, normal, 14px, $color-gray-dark);
+                display: block;
+                margin-left: 10px;
+            }
+
+        }
+
+    }
+
+    @include e("mail") {
+        @include e("info") {
+            @include flexbox(column, nowrap, flex-start, flex-start, center);
+
+            margin-left: 10px;
+        }
+
+
+        @include e("address") {
+            @include fonte($second-font, normal, 18px, $color-gray-dark);
+        }
+
+
+        @include e("type") {
+            @include fonte($second-font, normal, 14px, $color-gray);
+        }
+    }
+
+
+    @include e("address") {
+        @include e("info") {
+            @include fonte($second-font, normal, 12px, $color-gray-dark);
+
+            width: 100%;
+            display: block;
+        }
+
+
+        @include e("type") {
+            @include fonte($second-font, normal, 11px, $color-gray);
+
+            margin: 5px 0px;
+            display: block;
+        }
+    }
+
+
+    @include e("phone") {
+        @include e("info") {
+            &:first-of-type {
+                width: 100%;
+            }
+        }
+
+
+        @include e("sep") {
+            width: 100%;
+            height: 1px;
+            background-color: #ebebeb;
+            margin: 10px 0px;
+        }
+
+
+        @include e("text") {
+            @include fonte($second-font, normal, 12px, $color-gray-dark);
+            @include m("desc") {
+                @include fonte($second-font, normal, 12px, $color-gray);
+
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+
+
+    @include e("register") {
+        @include e("info") {
+            &:first-of-type {
+                width: 100%;
+            }
+        }
+
+
+        @include e("text") {
+            @include fonte($second-font, normal, 12px, $color-gray-dark);
+            margin-right: 10px;
+        }
+
+
+        @include e("result") {
+            @include fonte($second-font, normal, 12px, $color-gray);
+            margin-right: 10px;
+        }
+    }
+
+  @include e('icon'){
+
+    @include m('visa'){
+        background-image: url('../../../../assets/img/cards/big/visa.png');
+    }
+
+    @include m('master'){
+        background-image: url('../../../../assets/img/cards/big/master.png');
+    }
+
+    @include m('amex'){
+        background-image: url('../../../../assets/img/cards/big/amex.png');
+    }
+
+    @include m('diners'){
+        background-image: url('../../../../assets/img/cards/big/diners.png');
+    }
+
+    @include m('hipercard'){
+      background-image: url('../../../../assets/img/cards/big/hipercard.png');
+    }
+
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center right;
+    display: block;
+    width: 50px;
+    height: 35px;
+  }
+}

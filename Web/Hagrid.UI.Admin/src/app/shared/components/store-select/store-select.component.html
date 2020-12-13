@@ -1,0 +1,12 @@
+<div class="col-lg-3">
+		<div class="form-group">
+			<label>Loja</label>
+			<ng-select name="selectStore" #selectStore
+				(typed)="getStores($event)"
+				(data)="setStore($event)"
+				[multiple]="false"
+				[allowClear]="true"
+				placeholder="Procurar a Loja...">
+			</ng-select>
+		</div>
+	</div>

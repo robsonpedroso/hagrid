@@ -1,0 +1,41 @@
+﻿<div ng-init="init()">
+    <div class="col-md-6 col-xs-12">
+        <div class="row center-row ">
+            <div class="box-login">
+                <div class="text-center alert" role="alert" ng-class="messageClass" ng-show="visibleMessage">
+                    {{message}}
+                </div>
+                <div class="logo-hagrid" ng-controller="appInfoController" ng-init="init()">
+                    <img src="{{ infoApp.Logo || '/content/images/logo/logo-hagrid.gif' }}" />
+                </div>
+                <div class="panel panel-default panel-request-recovery">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Recuperar sua senha do Hagrid</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form novalidate name="requestRecoveryForm" role="form" ng-submit="requestRecoveryForm.$valid && doRequestRecovery()">
+                            <div class="form-group" ng-class="{ 'has-error' : loginForm.user.$touched && loginForm.user.$invalid }">
+                                <input ng-pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/" name="email" class="form-control" placeholder="Informe seu e-mail" autocomplete="off"
+                                       ng-model="email"
+                                       ng-required="true" />
+                                <div ng-show="requestRecoveryForm.email.$touched" ng-messages="requestRecoveryForm.email.$error || requestRecoveryForm.email.$invalid" role="alert">
+                                    <p ng-message="required" class="help-block">E-mail não informado</p>
+                                    <p ng-message="pattern" class="help-block">E-mail inválido</p>
+                                </div>
+                            </div>
+                            <div>
+                                <button class="btn btn-lg btn-primary pull-right" ng-loading-button ng-submit-validation="requestRecoveryForm" type="submit" title="Preencha seu e-mail para fazer a recuperação">Recuperar senha</button>
+                            </div>
+                            <button id="login_lost_btn" ng-click="login()" type="button" class="btn btn-link pull-left mt-10 md--15">Voltar para login</button>
+                            <button id="login_lost_btn" ng-click="lostAccount()" type="button" class="btn btn-link pull-left mt-10 md--15">Não tenho mais acesso ao e-mail</button>
+                        </form>
+                    </div>
+                    <div class="panel-footer">
+                        <p class="copyright">Hagrid. {{ '' | currentyear }} © Todos os direitos reservados.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-info></app-info>
+</div>

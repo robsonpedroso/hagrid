@@ -1,0 +1,26 @@
+.button{
+    @include flexbox(row, nowrap, center, center, center);
+    @include transition;
+    @include box-sizing;
+    @include border-radius(50px);
+    @include fonte($second-font, 600, 24px, #ffffff);
+    margin: 0px auto;
+    background-color: #BE0000;
+    padding: 12px 35px;
+    border: 0px;
+    line-height: unset;
+    cursor: pointer;
+    &:hover{
+        background-color: #960000;
+    }
+
+    &:after{
+        @include set-icon($fa-var-chevron-right, 24px, 900, #FFF);
+        margin-left: 10px;
+    }
+
+    &:disabled{
+        @include opacity(.5);
+        background-color: #CCC;
+    }
+}

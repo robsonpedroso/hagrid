@@ -1,0 +1,39 @@
+<legend>
+	<i class="fa fa-copy"></i> Metadados</legend>
+<div class="col-lg-12">
+	<div class="row">
+		<div class="form-group" *ngFor="let metadata of metadatas">
+			<div class="checkbox header" *ngIf="metadata.attributes.is_check">
+				<label>
+					<input [name]="metadata.attributes.name" [type]="metadata.attributes.type" [placeholder]="metadata.attributes.placehold"
+					 [class]="metadata.attributes.class" [(ngModel)]="metadata.value" [checked]="metadata.value" (change)="metadata.value = $event.target.checked"
+					/> {{ metadata.name }}
+				</label>
+			</div>
+
+			<div *ngIf="!metadata.attributes.is_check && !metadata.attributes.is_json">
+				<label>{{ metadata.name }}</label>
+				<div class="input-group">
+					<div class="input-group-addon">
+						<i class="fa {{ metadata.attributes.icon }}"></i>
+					</div>
+
+					<input [name]="metadata.attributes.name" [type]="metadata.attributes.type" [class]="metadata.attributes.class" [(ngModel)]="metadata.value"
+					 *ngIf="!metadata.attributes.mask">
+
+					<input [name]="metadata.attributes.name" [type]="metadata.attributes.type" [class]="metadata.attributes.class" [(ngModel)]="metadata.value"
+					 [mask]="metadata.attributes.mask" *ngIf="metadata.attributes.mask">
+				</div>
+			</div>
+
+			<div *ngIf="metadata.attributes.is_json">
+				<label>{{ metadata.name }}</label>
+				<json-editor [(ngModel)]="metadata.value" [config]="{mode: 'code', statusBar: false}" [schema]="metadata.validator.schema"></json-editor>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<button type="button" class="btn btn-success pull-right" (click)="saveMetadata()">
+			<i class="fa fa-save"></i> Salvar metadados</button>
+	</div>
+</div>

@@ -1,0 +1,20 @@
+<div class="wrapper">
+
+    <ng-progress></ng-progress>
+
+    <jaspero-confirmations [defaultSettings]="confirmation_options"></jaspero-confirmations>
+
+    <simple-notifications [options]="notification_options"></simple-notifications>
+
+    <app-master-header></app-master-header>
+
+    <app-master-menu></app-master-menu>
+
+    <div class="content-wrapper">
+        <router-outlet></router-outlet>
+    </div>
+
+    <app-master-footer></app-master-footer>
+
+    <div class="control-sidebar-bg"></div>
+</div>

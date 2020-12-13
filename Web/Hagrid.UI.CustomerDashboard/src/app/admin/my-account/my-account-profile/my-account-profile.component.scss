@@ -1,0 +1,29 @@
+@import "src/assets/scss/import.scss";
+
+.box{
+    @include e('profile'){
+
+        @include flexbox(row, wrap, flex-start, center, center);
+
+        @include e('info'){
+            @include flexbox(column, nowrap, flex-start, flex-start, center);
+            margin-left: 10px;
+        }
+
+        @include e('img'){
+            max-width: 85px;
+            &:hover{
+                @include animate(pulse, 0s);
+            }
+        }
+
+        @include e('name'){
+            @include fonte($second-font, normal, 14px, $color-gray-dark);
+        }
+
+        @include e('since'){
+            @include fonte($second-font, normal, 12px, $color-gray);
+        }
+        
+    }
+}

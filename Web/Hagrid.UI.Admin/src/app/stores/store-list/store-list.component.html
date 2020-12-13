@@ -1,0 +1,113 @@
+<div [hidden]="!is_loaded">
+    <section class="content-header">
+        <h1>
+            Consulta de Lojas
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active">
+                <i class="fa fa-shopping-cart"></i> Lojas</li>
+        </ol>
+    </section>
+
+    <section class="content">
+
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <div class="row">
+                    <form #f="ngForm" (ngSubmit)="filter()">
+                        <div class="col-lg-12">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label>Código</label>
+                                    <input type="search" mask="AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA" placeholder="Código da loja" class="form-control" name="code" [(ngModel)]="filters.code" [required]="!filters.term && !filters.document ? true : null"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label>Nome</label>
+                                    <input type="search" placeholder="Nome da loja" class="form-control" name="name" [(ngModel)]="filters.term" [required]="!filters.code && !filters.document ? true : null"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label>CNPJ</label>
+                                    <input type="search" mask="00.000.000/0000-00" placeholder="CNPJ da loja" class="form-control" name="document" [(ngModel)]="filters.document" [required]="!filters.code && !filters.term ? true : null"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label class="hidden-xs show">&nbsp;</label>
+                                    <button type="submit" [disabled]="!f.valid" class="btn btn-primary m-t-23">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                        <span class="hidden-xs">Filtrar</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <div class="row">
+                    <div *ngIf="stores.total_result > 0; else notFind">
+                        <div class="col-lg-6 col-md-8" *ngFor="let item of stores.items | paginate: { itemsPerPage: 10, currentPage: p, totalItems: stores.total_result }" >
+                            <div class="box box-widget widget-user-2 ">
+                                <div class="widget-user-header bg-gray rk-list-store">
+                                    <div class="col-xs-3 col-md-4 div-store-logo hidden-xs">
+                                        <img class="store-logo" [src]="item.logo || ''" onError="this.src='assets/img/default-logo.png'" />
+                                    </div>
+                                    <div class="add-ellipsis ng-binding h4" style="font-size: 30px;">
+                                        <strong>{{ item.name }}</strong>
+                                    </div>
+                                    <div class="widget-user-desc">
+                                        <b>Código:</b>
+                                        <span>{{ item.code }}</span>
+                                    </div>
+                                    <div class="widget-user-desc">
+                                        <b>CNPJ:</b>
+                                        <span>{{ item.cnpj || '---' | document }}</span>
+                                    </div>
+                                </div>
+                                <div class="box-footer no-padding" style="border: solid 1px #dcdcdc;">
+                                    <ul class="nav nav-stacked">
+                                        <li class="p-t-10 p-r-10 p-b-10">
+                                            <div class="form-group">
+                                                <div class="pull-right">
+                                                    <a [routerLink]="['/stores', item.code]" class="btn btn-primary m-b-5">
+                                                        <span>Detalhes</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+						</div>
+						<div class="row col-lg-12 col-md-12">
+							<pagination-controls (pageChange)="getPage($event)"
+								previousLabel="Anterior"
+								 nextLabel="Próxima"
+								 autoHide="stores?.total_result > 10">
+							</pagination-controls>
+						</div>
+                    </div>
+                    <ng-template #notFind>
+                        <div class="col-sm-12">
+                            <p class="text-center">
+                                Nenhuma loja encontrada!
+                                <br>
+                            </p>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>

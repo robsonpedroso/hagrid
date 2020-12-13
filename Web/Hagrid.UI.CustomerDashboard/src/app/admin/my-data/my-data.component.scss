@@ -1,0 +1,102 @@
+@import "src/assets/scss/import.scss";
+
+.mydata {
+    @include animate(fadeIn, 0s);
+
+    width: 100%;
+    height: auto;
+    min-height: calc(100vh - #{$footer-diff});
+
+    .wrapper {
+        @include flexbox(row, wrap, space-between, inherit, flex-start);
+        height: auto;
+        min-height: calc(100vh - #{$footer-diff});
+    }
+
+    @include e("title") {
+        @include fonte($second-font, 400, 26px, $color-gray-dark);
+        width: 100%;
+        display: block;
+    }
+
+    @include e("content") {
+        @include transition;
+        height: auto;
+        min-height: 100%;
+        padding: 20px;
+        @media #{$res-xs}, #{$res-sm} {
+            padding: 10px;
+        }
+    }
+
+
+    @include e("menu") {
+        background-color: #FFF;
+        height: auto;
+        min-height: 100%;
+        text-align: center;
+
+        @media #{$res-xs}, #{$res-sm} {
+            @include flexbox(row, nowrap, center, center, center);
+        }
+
+        @include e("link") {
+            @include flexbox(column, nowrap, space-between, center, center);
+            @include fonte($second-font, 400, 12px, $color-gray);
+            @include transition;
+            position: relative;
+            margin-bottom: 15px;
+
+            @media #{$res-xs}, #{$res-sm} {
+                margin: 15px;
+            }
+
+            @include m("conta") {
+                &:before {
+                    @include set-icon($fa-var-user, 20px, 900, $color-gray-dark);
+                }
+            }
+
+
+            @include m("seguranca") {
+                &:before {
+                    @include set-icon($fa-var-lock, 20px, 900, $color-gray-dark);
+                }
+            }
+
+
+            @include m("pagamentos") {
+                &:before {
+                    @include set-icon($fa-var-dollar-sign, 20px, 900, $color-gray-dark);
+                }
+            }
+
+
+            &:before {
+                @include border-radius(100%);
+                @include center-cont;
+                width: 60px;
+                height: 60px;
+                background: #FFF;
+                margin-bottom: 3px;
+            }
+
+            &:hover,
+            &.active {
+                color: $color-red-dark;
+                text-decoration: none;
+
+                &:before {
+                    color: #FFF;
+                    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#bf0000+0,de3d00+100 */
+                    background: rgb(191, 0, 0); /* Old browsers */
+                    background: -moz-linear-gradient(45deg, rgba(191, 0, 0, 1) 0%, rgba(222, 61, 0, 1) 100%); /* FF3.6-15 */
+                    background: -webkit-linear-gradient(45deg, rgba(191, 0, 0, 1) 0%, rgba(222, 61, 0, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+                    background: linear-gradient(45deg, rgba(191, 0, 0, 1) 0%, rgba(222, 61, 0, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bf0000', endColorstr='#de3d00',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+                }
+            }
+
+        }
+    }
+}

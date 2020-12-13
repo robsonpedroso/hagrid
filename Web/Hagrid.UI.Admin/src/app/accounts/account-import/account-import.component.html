@@ -1,0 +1,934 @@
+<div>
+	<section class="content-header">
+		<h1>
+			Importação de usuários
+		</h1>
+		<ol class="breadcrumb">
+			<li class="active">
+				<i class="fa fa-refresh"></i> Importação</li>
+		</ol>
+	</section>
+
+	<section class="content">
+		<div class="box box-info">
+			<div class="box-header with-border">
+				<div class="row">
+					<form #f="ngForm" (ngSubmit)="filter()">
+						<div class="col-lg-12">
+							<div class="col-lg-5">
+								<div class="form-group">
+									<label>Loja</label>
+									<ng-select #selectStore [allowClear]="true" (typed)="getStores($event)"
+										(data)="setStore($event)" placeholder="Procurar a Loja...">
+									</ng-select>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div *ngIf="store.code; else notFind">
+			<div class="box box-info">
+				<div class="box-header with-border">
+					<h3 class="box-title">Status das importações</h3>
+					<div class="row m-t-10">
+						<div class="col-lg-12">
+							<table class="table table-bordered table-striped tableResp"
+								*ngIf="requisitions.list.length > 0; else notRequisitations"
+								style="overflow: auto!important;">
+								<thead>
+									<tr>
+										<th class="text-center">Data</th>
+										<th class="text-center">Tipo</th>
+										<th class="text-center">Status</th>
+										<th class="text-center" colspan="3">Ações</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let item of requisitions.list | orderBy:'save_date':false | paginate: {
+                                        id: 'requisitions_pagination',
+                                        itemsPerPage: 10,
+                                        currentPage: currentPage
+                                    }">
+										<td data-title="" class="hidden">
+											<span>{{ item.code }}</span>
+										</td>
+										<td data-title="Data" class="text-center v-align-center">
+											<span>{{ item.save_date | date:'dd/MM/yyyy HH:mm' }}</span>
+										</td>
+										<td data-title="Tipo" class="text-center v-align-center">
+											<span
+												class="label label-{{ item.type_requisition.toLowerCase() }}">{{ item.type_description }}</span>
+											<span class="f-s-10" *ngIf="item.type_requisition == typeImport.Internal">
+												<p>
+													<br />
+													<label>Ambiente:</label> {{item.likedserver}} <br />
+													<label>Banco de dados:</label> {{item.database}}
+												</p>
+											</span>
+										</td>
+										<td data-title="Status" class="text-center v-align-center">
+											<span
+												class="label label-{{ item.status_description.toLowerCase() }}">{{ item.status_description }}</span>
+										</td>
+										<td data-title="" class="text-center v-align-center">
+											<span>
+												<span *ngIf="item.status == 3">
+													<button class="btn btn-link" (click)="downloadCsv(item.code)">
+														<i class="fa fa-cloud-download" aria-hidden="true"
+															data-toggle="tooltip" data-placement="right" title=""
+															data-original-title=" Download Csv dos erros"></i>
+													</button>
+												</span>
+												<span *ngIf="item.status != 3">---</span>
+											</span>
+										</td>
+										<td data-title="" class="text-center v-align-center">
+											<span *ngIf="item.type_requisition == typeImport.External">
+												<a href="{{item.url}}" class="btn btn-link" download>
+													<i class="fa fa-download" aria-hidden="true" data-toggle="tooltip"
+														data-placement="right" title=""
+														data-original-title=" Efetuar o download do arquivo de importação"></i>
+												</a>
+											</span>
+											<span *ngIf="item.type_requisition == typeImport.Internal">---</span>
+										</td>
+										<td data-title="" class="text-center v-align-center">
+											<span *ngIf="item.status == 0 && currentImportPermission?.Remove">
+												<button class="btn btn-link" (click)="cancel(item.code)">
+													<i class="fa fa-ban" aria-hidden="true" data-toggle="tooltip"
+														data-placement="right" title=""
+														data-original-title=" Cancelar requisição de importação"></i>
+												</button>
+											</span>
+											<span *ngIf="item.status != 0">---</span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="data-tables-paginate text-center" *ngIf="requisitions.list.length >= 10">
+								<pagination-controls id="requisitions_pagination" (pageChange)="currentPage = $event"
+									previousLabel="" nextLabel=""></pagination-controls>
+							</div>
+							<ng-template #notRequisitations>
+								<div class="box-header">
+									<div class="col-sm-12">
+										<p class="text-center">
+											Você não tem solicitações de importação!
+											<br />
+										</p>
+									</div>
+								</div>
+							</ng-template>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="box box-info" *ngIf="currentImportPermission?.Insert">
+				<div class="box-header with-border">
+					<h3 class="box-title">Nova importação</h3>
+					<div class="row m-t-10">
+						<div class="col-lg-12">
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label>Tipo de importação</label>
+									<i class="fa fa-fw fa-question-circle fa-lg" aria-hidden="true"
+										data-toggle="tooltip" data-placement="right" title=""
+										data-original-title=" Tipo de importação de usuários, Interna para clientes que já são da Hagrid e Externo para cliente de outras plataformas!"></i>
+									<select class="form-control" [ngModel]="typeImportSelected"
+										(change)="changeTypeImport($event.target.value)">
+										<option value="{{typeImport.Internal}}">Importação - Interna</option>
+										<option value="{{typeImport.External}}">Importação - Externa</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Region import box internal -->
+					<div class="row m-t-10" *ngIf="typeImportSelected == typeImport.Internal">
+						<div class="box-header m-l-5">
+							<h3 class="box-title">Importação interna</h3>
+						</div>
+						<div class="col-lg-12">
+							<div class="col-lg-12">
+								<div class="col-lg-4">
+									<label>Ambiente da loja</label>
+									<i class="fa fa-fw fa-question-circle fa-lg" aria-hidden="true"
+										data-toggle="tooltip" data-placement="right" title=""
+										data-original-title=" Ambiente (Linked Server Name) da loja configurada no EC. É possível encontrar essa informação no Query!"></i>
+									<div class="input-group">
+										<span class="input-group-addon">
+											<i class="fa fa-server"></i>
+										</span>
+										<input type="search" placeholder="Ambiente da loja" class="form-control"
+											[(ngModel)]="requisitions.internal.likedserver" />
+									</div>
+								</div>
+								<div class="col-lg-4">
+									<label>Banco de dados da loja</label>
+									<i class="fa fa-fw fa-question-circle fa-lg" aria-hidden="true"
+										data-toggle="tooltip" data-placement="right" title=""
+										data-original-title=" Banco de dados da loja no EC. É possível encontrar essa informação no Query!"></i>
+									<div class="input-group">
+										<span class="input-group-addon">
+											<i class="fa fa-database"></i>
+										</span>
+										<input type="search" placeholder="Banco de dados da loja" class="form-control"
+											[(ngModel)]="requisitions.internal.database" />
+									</div>
+								</div>
+								<div class="col-lg-4">
+									<label class="show">&nbsp;</label>
+									<button type="button" class="btn btn-primary m-t-23"
+										[disabled]="!requisitions.internal.database" (click)="saveDBRequisition()">
+										<span class="fa fa-upload"></span>
+										<span class="hidden-xs">Solicitar importação</span>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Region import box external -->
+					<div class="row m-t-10" *ngIf="typeImportSelected == typeImport.External">
+						<div class="box-header m-l-5">
+							<h3 class="box-title">Importação externa</h3>
+						</div>
+						<div class="col-lg-12">
+							<div class="col-lg-8">
+								<div class="form-group">
+									<label>Upload</label>
+									<i class="fa fa-fw fa-question-circle fa-lg" aria-hidden="true"
+										data-toggle="tooltip" data-placement="right" title=""
+										data-original-title=" As extensões aceitas devem ser : .txt separado por tabulação"></i>
+
+									<!-- Drag and drop file here-->
+									<div (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)"
+										onclick="file_upload.click();" (drop)="onDrop($event)"
+										class="box-dragdrop-dotted" aria-hidden="true" data-toggle="tooltip"
+										data-placement="top" title=""
+										data-original-title="Arraste seu arquivo aqui ou clique para carregar!">
+										<input style="display:none" type="file" id="file_upload"
+											(change)="onDrop($event)" accept=".txt" />
+										<span>
+											<i class="fa fa-download v-align-center f-s-50"></i>
+										</span>
+									</div>
+
+									<div class="box-info-dotted">
+										<span>Tamanho máximo permitido: 20MB</span>
+										<br />
+										<span>Extensão aceita: .txt (separado por tabulação)</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label>Ajuda:</label>
+									<div class="m-t-10">
+										<button type="button" class="btn btn-primary" data-toggle="modal"
+											data-target="#modal-file-format">
+											Formato do arquivo
+										</button>
+									</div>
+									<div class="m-t-10">
+										<a href="/admin/assets/fileimport/FileImportExemple.txt" class="btn btn-primary"
+											download="ExemploImportacao.txt">
+											Arquivo de exemplo
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<ng-template #notFind>
+			<div class="box box-info">
+				<div class="box-header with-border">
+					<div class="col-sm-12">
+						<p class="text-center">
+							Para mais informações, selecione a loja
+							<br />
+						</p>
+					</div>
+				</div>
+			</div>
+		</ng-template>
+	</section>
+
+	<section>
+		<bs-modal #viewErrors>
+			<bs-modal-header [showDismiss]="true">
+				<h4 class="modal-title">Visualizar erro</h4>
+			</bs-modal-header>
+			<bs-modal-body>
+				<div class="enabled_scroll">
+					<table class="table table-bordered table-striped tableResp">
+						<thead>
+							<tr>
+								<th class="text-center">Linha</th>
+								<th class="text-center">Nome</th>
+								<th class="text-center">E-mail</th>
+								<th class="text-center">Mensagem</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="text-center" *ngFor="let item of requisitions.listErrors | orderBy:'line'">
+								<td data-title="Linha">{{ item.line }}</td>
+								<td data-title="Nome">{{ item.name }}</td>
+								<td data-title="E-mail">{{ item.email }}</td>
+								<td data-title="Mensagem">
+									<span *ngFor="let message of item.messages">{{ message }}
+										<br />
+									</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</bs-modal-body>
+			<bs-modal-footer>
+				<button type="button" class="btn btn-primary" (click)="modal.close()">Ok</button>
+			</bs-modal-footer>
+		</bs-modal>
+	</section>
+
+	<section>
+		<!--Modal for file sample-->
+		<div class="modal fade" id="modal-file-format" style="display: none;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<h4 class="modal-title">Definição do Arquivo</h4>
+					</div>
+					<div class="row m-l-0 m-r-0">
+						<div class="col-lg-12">
+							<ul>
+								<li>
+									<b>Formato</b> - separado por tabulação</li>
+								<li>
+									<b>Extensão</b> - texto (.txt)</li>
+								<li>
+									<b>Campos</b>
+									<ul>
+										<li>Posibilidade de incluir até 5 (cinco) endereços.</li>
+										<li>Apenas um Endereço é obrigatório os demais são opcionais e só serão
+											validados se
+											estiverem com o campo CEP preenchido.</li>
+
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="row m-l-0 m-r-10 m-l-10 enabled_scroll">
+						<div class="col-lg-12">
+							<div class="table-responsive">
+								<table class="table table-striped table-condensed tableResp">
+									<tbody>
+										<thead>
+											<th> Campo </th>
+											<th> Tipo </th>
+											<th> Tamanho </th>
+											<th> Obirgatório? </th>
+											<th> Descrição</th>
+										</thead>
+										<tr>
+											<td data-title="Campo"> Tipo de Cadastro </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 2 </td>
+											<td data-title="Obirgatório?"> Sim </td>
+											<td data-title="Descrição"> PF ou PJ</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Nome / Razão Social </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 100 </td>
+											<td data-title="Obirgatório?"> Sim </td>
+											<td data-title="Descrição"> Nome para PF ou Razão Social para PJ</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Sobrenome / Nome Fantasia </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 100 </td>
+											<td data-title="Obirgatório?"> Sim </td>
+											<td data-title="Descrição"> Sobrenome para PF ou Nome fantasia para PJ</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> CPF / CNPJ </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 14 </td>
+											<td data-title="Obirgatório?"> Sim </td>
+											<td data-title="Descrição"> CPF para PF ou CNPJ para PJ. Apenas números</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Data Nascimento / IM </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 50 </td>
+											<td data-title="Obirgatório?"> Sim </td>
+											<td data-title="Descrição"> Data de nascimento para PF ou Inscrição Municipal para PJ</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Gênero / IE </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 50 </td>
+											<td data-title="Obirgatório?"> Sim </td>
+											<td data-title="Descrição"> Gênero para PF (M ou F) ou Inscrição Estadual para PJ</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> E-mail </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 100 </td>
+											<td data-title="Obirgatório?"> Sim </td>
+											<td data-title="Descrição"> E-mail</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> CEP </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 8 </td>
+											<td data-title="Obirgatório?"> Sim </td>
+											<td data-title="Descrição"> CEP do endereço principal. Apenas números</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Logradouro </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 150 </td>
+											<td data-title="Obirgatório?"> Sim </td>
+											<td data-title="Descrição"> Logradouro do endereço principal</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Número </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 50 </td>
+											<td data-title="Obirgatório?"> Sim </td>
+											<td data-title="Descrição"> Número do endereço principal</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Complemento </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 255 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> Complemento do endereço principal</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Tipo de Endereço </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 1 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> Tipo do endereço principal. 1 = Residencial, 2 = Comerical, 3 = Outros</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Estado </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 2 </td>
+											<td data-title="Obirgatório?"> Sim </td>
+											<td data-title="Descrição"> UF do Estado do endereço principal</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Bairro </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 100 </td>
+											<td data-title="Obirgatório?"> Sim </td>
+											<td data-title="Descrição"> Bairro do endereço principal</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Cidade </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 100 </td>
+											<td data-title="Obirgatório?"> SIm </td>
+											<td data-title="Descrição"> Cidade do endereço principal</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> DDD </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 2 </td>
+											<td data-title="Obirgatório?"> Sim </td>
+											<td data-title="Descrição"> DDD do telefone do endereço principal</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Telefone </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 9 </td>
+											<td data-title="Obirgatório?"> Sim </td>
+											<td data-title="Descrição"> Número do telefone do endereço principal. Apenas números</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> DDD </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 2 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> DDD do celular do endereço principal</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Celular </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 9 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> Número do celular do endereço principal. Apenas números</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> CEP </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 8 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> CEP do endereço de entrega 1. Apenas números</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Logradouro </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 150 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Logradouro do endereço de entrega 1</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Número </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 50 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Número do endereço de entrega 1</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Complemento </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 255 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> Complemento do endereço de entrega 1</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Tipo de Endereço </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 1 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> Tipo do endereço de entrega 1. 1 = Residencial, 2 = Comerical, 3 =Outros</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Estado </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 2 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> UF do Estado do endereço de entrega 1</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Bairro </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 100 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Bairro do endereço de entrega 1</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Cidade </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 100 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Cidade do endereço de entrega 1</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> DDD </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 2 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> DDD do telefone do endereço de entrega 1</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Telefone </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 9 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Número do telefone do endereço de entrega 1. Apenas números</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> DDD </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 2 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> DDD do celular do endereço de entrega 1</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Celular </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 9 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> Número do celular do endereço de entrega 1. Apenas números</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> CEP </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 8 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> CEP do endereço de entrega 2. Apenas números</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Logradouro </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 150 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Logradouro do endereço de entrega 2</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Número </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 50 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Número do endereço de entrega 2</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Complemento </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 255 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> Complemento do endereço de entrega 2</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Tipo de Endereço </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 1 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> Tipo do endereço de entrega 2. 1 = Residencial, 2 = Comerical, 3 =Outros</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Estado </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 2 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> UF do Estado do endereço de entrega 2</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Bairro </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 100 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Bairro do endereço de entrega 2</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Cidade </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 100 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Cidade do endereço de entrega 2</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> DDD </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 2 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> DDD do telefone do endereço de entrega 2</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Telefone </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 9 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Número do telefone do endereço de entrega 2. Apenas números</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> DDD </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 2 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> DDD do celular do endereço de entrega 2</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Celular </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 9 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> Número do celular do endereço de entrega 2. Apenas números</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> CEP </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 8 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> CEP do endereço de entrega 3. Apenas números</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Logradouro </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 150 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Logradouro do endereço de entrega 3</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Número </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 50 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Número do endereço de entrega 3</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Complemento </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 255 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> Complemento do endereço de entrega 3</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Tipo de Endereço </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 1 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> Tipo do endereço de entrega 3. 1 = Residencial, 2 = Comerical, 3 =Outros</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Estado </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 2 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> UF do Estado do endereço de entrega 3</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Bairro </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 100 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Bairro do endereço de entrega 3</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Cidade </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 100 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Cidade do endereço de entrega 3</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> DDD </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 2 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> DDD do telefone do endereço de entrega 3</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Telefone </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 9 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Número do telefone do endereço de entrega 3. Apenas números</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> DDD </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 2 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> DDD do celular do endereço de entrega 3</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Celular </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 9 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> Número do celular do endereço de entrega 3. Apenas números</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> CEP </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 8 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> CEP do endereço de entrega 4. Apenas números</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Logradouro </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 150 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Logradouro do endereço de entrega 4</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Número </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 50 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Número do endereço de entrega 4</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Complemento </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 255 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> Complemento do endereço de entrega 4</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Tipo de Endereço </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 1 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> Tipo do endereço de entrega 4. 1 = Residencial, 2 = Comerical, 3 =Outros</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Estado </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 2 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> UF do Estado do endereço de entrega 4</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Bairro </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 100 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Bairro do endereço de entrega 4</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Cidade </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 100 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Cidade do endereço de entrega 4</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> DDD </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 2 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> DDD do telefone do endereço de entrega 4</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Telefone </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 9 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Número do telefone do endereço de entrega 4. Apenas números</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> DDD </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 2 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> DDD do celular do endereço de entrega 4</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Celular </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 9 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> Número do celular do endereço de entrega 4. Apenas números</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> CEP </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 8 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> CEP do endereço de entrega 5. Apenas números</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Logradouro </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 150 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Logradouro do endereço de entrega 5</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Número </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 50 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Número do endereço de entrega 5</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Complemento </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 255 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> Complemento do endereço de entrega 5</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Tipo de Endereço </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 1 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> Tipo do endereço de entrega 5. 1 = Residencial, 2 = Comerical, 3 =Outros</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Estado </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 2 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> UF do Estado do endereço de entrega 5</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Bairro </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 100 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Bairro do endereço de entrega 5</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Cidade </td>
+											<td data-title="Tipo"> Texto </td>
+											<td data-title="Tamanho"> 100 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Cidade do endereço de entrega 5</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> DDD </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 2 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> DDD do telefone do endereço de entrega 5</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Telefone </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 9 </td>
+											<td data-title="Obirgatório?"> Não(*) </td>
+											<td data-title="Descrição"> Número do telefone do endereço de entrega 5. Apenas números</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> DDD </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 2 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> DDD do celular do endereço de entrega 5</td>
+										</tr>
+										<tr>
+											<td data-title="Campo"> Celular </td>
+											<td data-title="Tipo"> Numérico </td>
+											<td data-title="Tamanho"> 9 </td>
+											<td data-title="Obirgatório?"> Não </td>
+											<td data-title="Descrição"> Número do celular do endereço de entrega 5. Apenas números</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="row m-l-10 m-r-10">
+						<div class="col-lg-12">
+							<p>
+								<strong>Exemplo:</strong>
+							</p>
+
+							<div dir="ltr">
+								<pre>
+PF	Usuário	Teste 01	737.323.382-15	17/12/1986	F	usuario_cpf_teste_1@hagrid.com.br	05001-100	Av. Franscisco Matarazzo	1500	Torre New York 6 andar	1	SP	Agua Branca	São Paulo	11	999431230
+PF	Usuário	Teste 02	952.287.771-99	18/12/1986	F	usuario_cpf_teste_2@hagrid.com.br	05001-100	Av. Franscisco Matarazzo	1500	Torre New York 6 andar	1	SP	Agua Branca	São Paulo	11	999431231
+PF	Usuário	Teste 48	397.103.341-58	03/07/1983	M	usuario_cpf_teste_20@hagrid.com.br	38402-198	Av. Aírton Borges da Silva	740			MG	Distrito Industrial	Uberlândia	35	995767668			38402-178	R. Monteiro Lobato	15			MG	Minas Gerais	Minas Gerais	35	44444444			20021-180	Rua da Lapa	432			RJ	Centro	Rio de Janeiro	21	33333333			01031-900	Parque Anhangabaú	SN			SP	Centro	São Paulo	11	22222222			04634-042	Rua Ática	12			SP	Jardim Brasil	São Paulo	11	22222222
+PF	Usuário	Teste 49	913.518.444-23	04/07/1983	M	usuario_cpf_teste_20@hagrid.com.br	38402-198	Av. Aírton Borges da Silva	740			MG	Distrito Industrial	Uberlândia	35	995767669			38402-178	R. Monteiro Lobato	15			MG	Minas Gerais	Minas Gerais	35	44444444			20021-180	Rua da Lapa	432			RJ	Centro	Rio de Janeiro	21	33333333			01031-900	Parque Anhangabaú	SN			SP	Centro	São Paulo	11	22222222			04634-042	Rua Ática	12			SP	Jardim Brasil	São Paulo	11	22222222
+PJ	Empresa	Teste 50	13.236.812/0001-82	1234	ISENTO	empresa_cnpj_teste_50@hagrid.com.br	05001-100	Av. Franscisco Matarazzo	1500	Torre New York 6 andar		SP	Agua Branca	São Paulo	11	999431230
+PJ	Empresa	Teste 51	87.054.565/0001-30	1235	181.535.294.204	empresa_cnpj_teste_51@hagrid.com.br	05001-100	Av. Franscisco Matarazzo	1500	Torre New York 6 andar	1	SP	Agua Branca	São Paulo	11	999431231
+PJ	Empresa	Teste 97	04.137.715/0001-41	1281	181.535.294.250	empresa_cnpj_teste_97@hagrid.com.br	38402-198	Av. Aírton Borges da Silva	740		2	MG	Distrito Industrial	Uberlândia	35	995767668			38402-178	R. Monteiro Lobato	15			MG	Minas Gerais	Minas Gerais	35	44444444			20021-180	Rua da Lapa	432			RJ	Centro	Rio de Janeiro	21	33333333			01031-900	Parque Anhangabaú	SN		1	SP	Centro	São Paulo	11	22222222			04634-042	Rua Ática	12		1	SP	Jardim Brasil	São Paulo	11	22222222
+PJ	Empresa	Teste 98	29.633.528/0001-80	1282	181.535.294.251	empresa_cnpj_teste_98@hagrid.com.br	38402-198	Av. Aírton Borges da Silva	740			MG	Distrito Industrial	Uberlândia	35	995767669			38402-178	R. Monteiro Lobato	15			MG	Minas Gerais	Minas Gerais	35	44444444			20021-180	Rua da Lapa	432			RJ	Centro	Rio de Janeiro	21	33333333			01031-900	Parque Anhangabaú	SN		1	SP	Centro	São Paulo	11	22222222			04634-042	Rua Ática	12		1	SP	Jardim Brasil	São Paulo	11	22222222
+                                </pre>
+							</div>
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+
+	</section>
+</div>

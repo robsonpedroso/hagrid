@@ -1,0 +1,82 @@
+[get-transfer-token] / Roles = "Member"
+	Gera o transfer token
+	Salva o transfer token no banco
+	Retorna o código do transfer token (esse código é encriptado)
+
+
+[token]
+	grant_type = transfer_token
+	Pega o appStore do token (porem não usa)
+	Recupera o código do transfer token
+	Se não for nulo nem branco
+		Busca no banco o transfer token
+		Se encontrou o trasfer token (não veio nulo)
+			Chama o metodo novo AuthenticateTransferToken
+				Buscar o Account atraves do owner que esta gravado no trasfer token
+				Se não encontrou o Account
+					throw "User not found"
+				Se retornar o Account
+					Inclui o Account numa lista
+					Seta os serviços no AccountService 
+						lockedUpMemberPolicy;
+						lockMemberPolicy;
+						passwordPolicy;
+					Busca o applicaitonStore pelo client id da aplicação atual que veio no token
+					Chama o Authenticate passando a lista com o account e o applicationStore
+					Retorna o Account que veio do Authenticate
+			Recupera o account do AuthenticateTransferToken
+			Se retornar o Account
+				Gera o token de membro  [Criar o fluxo a parte]
+			Se não retornou o Account
+				Seta o erro no contexto com o titulo de "unauthorized" e mensagem de "tranfer_token unauthorized for this application."
+		Se não encontrou o Trasfer token
+			Seta o erro no contexto com o titulo de "invalid_transfer_token" e mensagem de "transfer_token is invalid."
+	Se estiver nulo o código to trasfer token
+		Seta o erro no contexto com o titulo de "missing_parameter" e mensagem de "transfer_token parameter is required for this grant_type."
+
+
+
+[Gera o token de membro] / GenerateMemberAccessToken
+	Se account não for nulo e nem branco
+		Verifica se o contexto enviado é do tipo OAuthGrantResourceOwnerCredentialsContext
+			pega o Clinetid
+			pega o Name
+			pega o scope
+		Se não e não vir com o nome preenchido
+			throw name is required.
+		Se não e clientid é nulo
+			throw clientId is required.
+		Se não e contexto ticket não for nulo
+			pega o scope do "contexto ticket claims" onde o "type" contem o "urn:oauth:scope seleciona" todos os "Value" e retorna a lista como string
+		Se não
+			Inicia o scope como list em branco
+		
+		Cria o identity ClaimsIdentity e as credenciais
+		Adiciona no identity o System = clientid
+		Adiciona no identity o Role = Member
+		Adiciona no identity o Sid = account code
+		
+		Seta no contexto MemberCode
+		Seta no contexto equires_password_change
+		Seta no contexto account com o DTO AccountToken passando o Account como parametro
+		
+		Se a account ApplicationStoreCollection não for nulo e ter appStore (appSto.Store for diferente de nulo e appSto.Store.Code for diferente de branco)
+			Pega as lojas do ApplicationStoreCollection
+			Seta no contexto o stores dando distinct no código
+			inclui no identity (ClaimsIdentity) o store code da primeira loja da lista
+			Se ApplicationStoreCollection não for nulo
+				Pega as lojas que não estão nulas, que não estão com o codigo em branco e que são isRakuten e que contem no Config.AdminApplications o nome da aplicação e retorna as lojas (select store) para a variavel adminStores
+			
+			Se a variavel adminStores não for nulo e contem mais de zero na lista
+				Seta o identity member_type como RKAdmin
+			Se não
+				Seta o identity member_type como Merchant
+		Se não
+			Seta o identity member_type como Customer
+		
+		Cria a lista de parametros
+		Cria as propriedades com a llista de parametros e seta o AllowRefresh como true
+		
+		Cria o ticket com o identity e as propriedades
+		Valida o ticket pelo contexto
+

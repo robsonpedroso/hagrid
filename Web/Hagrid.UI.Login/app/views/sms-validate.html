@@ -1,0 +1,44 @@
+﻿<div ng-init="init()">
+    <div class="col-md-6 col-xs-12">
+        <div class="row center-row ">
+            <div class="box-login">
+                <div class="text-center alert" role="alert" ng-class="messageClass" ng-show="visibleMessage">
+                    {{message}}
+                </div>
+                <div class="logo-hagrid" ng-controller="appInfoController" ng-init="init()">
+                    <img src="{{ infoApp.Logo || '/content/images/logo/logo-hagrid.gif' }}" />
+                </div>
+                <div class="panel panel-default panel-request-recovery">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Recuperar sua senha do Hagrid</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form name="smsValidateForm" role="form" ng-submit="smsValidateForm.$valid && submit()">
+                            <div class="form-group" ng-class="{ 'has-error' : smsValidateForm.code.$touched && smsValidateForm.code.$invalid }">
+                                <input type="text" name="code" class="form-control hagrid-validate-code" autocomplete="off"
+                                       placeholder="_ _ _ _ _ _"
+                                       mask="9 9 9 9 9 9"
+                                       clean="true"
+                                       ng-model="code"
+                                       ng-required="true">
+                                <div ng-show="smsValidateForm.code.$touched" ng-messages="smsValidateForm.code.$error" role="alert">
+                                    <p ng-message="required" class="help-block">Seu código não pode estar em branco.</p>
+                                </div>
+                            </div>
+                            <div>
+                                <button class="btn btn-lg btn-primary pull-right" ng-loading-button ng-submit-validation="smsValidateForm" type="submit">Validar código</button>
+                            </div>
+                        </form>
+                        <div>
+                            <button id="login_lost_btn" ng-click="newCode()" type="button" class="btn btn-link pull-right mt-10 md--15">Não recebeu? Clique aqui para enviar um novo código</button>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <p class="copyright">Hagrid. {{ '' | currentyear }} © Todos os direitos reservados.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-info></app-info>
+    </div>
+</div>
