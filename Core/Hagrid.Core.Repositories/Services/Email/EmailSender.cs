@@ -43,25 +43,7 @@ namespace Hagrid.Core.Infrastructure.Services.Email
 
             if (!accountsURL.IsNullOrWhiteSpace())
             {
-                var input = new 
-                {
-                    CamapaignSubtypeCode = account.CodeEmailTemplate.Value,
-                    To = new []
-                    {
-                        new  { Email = account.Email }
-                    },
-                    Data = new []
-                    {
-                        new { HashTag = "#email_account#", Value = account.Email },
-                        new 
-                        {
-                            HashTag = "#passwordrecovery_url#",
-                            Value = urlBack.IsNullOrWhiteSpace() ?
-                                string.Format("{0}/{1}/{2}", accountsURL, Properties.RecoveryPasswordLocation, tokenCode.EncodeURIComponent()) :
-                                string.Format("{0}/{1}/{2}?ub={3}", accountsURL, Properties.RecoveryPasswordLocation, tokenCode.EncodeURIComponent(), urlBack)
-                        }
-                    }
-                };
+                var input = new object();
 
                 try
                 {
@@ -84,27 +66,7 @@ namespace Hagrid.Core.Infrastructure.Services.Email
 
             if (!string.IsNullOrWhiteSpace(accountsURL))
             {
-                var input = new 
-                {
-                    CamapaignSubtypeCode = emailTemplateCode > 0 ? emailTemplateCode : (int)EnumCampaignSubtype.System_ForgotPasswordShopping,
-                    To = new []
-                    {
-                        new { Email = account.Email }
-                    },
-                    Data = new []
-                    {
-                        new { HashTag = "#name_store#", Value = store.Name },
-                        new { HashTag = "#logo_store#", Value = store.GetLogoURL() },
-                        new
-                        {
-                            HashTag = "#passwordrecovery_url#",
-                            Value = urlBack.IsNullOrWhiteSpace() ?
-                                string.Format("{0}/{1}/{2}", accountsURL, Properties.RecoveryPasswordLocation, tokenCode.EncodeURIComponent()) :
-                                string.Format("{0}/{1}/{2}?ub={3}", accountsURL, Properties.RecoveryPasswordLocation, tokenCode.EncodeURIComponent(), urlBack)
-                        }
-                    }
-                };
-
+                var input = new object();
 
                 try
                 {
@@ -127,13 +89,7 @@ namespace Hagrid.Core.Infrastructure.Services.Email
 
             if (!string.IsNullOrWhiteSpace(accountsURL))
             {
-                var input = new                 {
-                    CamapaignSubtypeCode = emailTemplateCode > 0 ? emailTemplateCode : (int)EnumCampaignSubtype.System_CustomerImportCreatePassword,
-                    To = new []
-                    {
-                        new { Email = customer.Email }
-                    }
-                };
+                var input = new object();
 
                 try
                 {
