@@ -301,17 +301,17 @@ namespace Hagrid.Core.Infrastructure.Repositories.EF.Migrations
                     ApplicationCode = "167658F7-57DA-47AC-A692-705F542D8593".AsGuid()
                 },
 
-                new ApplicationStore
-                {
-                    Code = "831151F4-FDCE-457A-9AE5-28E715C455EB".AsGuid(),
-                    ConfClient = "F71775EB-FF36-4FD7-95DB-D1BF9D4570CB".AsGuid(),
-                    ConfSecret = "E5C2C77E0F9C",
-                    JSClient = "04CCCF35-534D-4BF9-A146-53638C054180".AsGuid(),
-                    JSAllowedOrigins = "http://localhost:55777",
-                    Status = true,
-                    StoreCode = "D8671847-06AD-4FAC-BE37-321616969F4C".AsGuid(),
-                    ApplicationCode = "167658F7-57DA-47AC-A692-705F542D8593".AsGuid()
-                },
+                //new ApplicationStore
+                //{
+                //    Code = "831151F4-FDCE-457A-9AE5-28E715C455EB".AsGuid(),
+                //    ConfClient = "F71775EB-FF36-4FD7-95DB-D1BF9D4570CB".AsGuid(),
+                //    ConfSecret = "E5C2C77E0F9C",
+                //    JSClient = "04CCCF35-534D-4BF9-A146-53638C054180".AsGuid(),
+                //    JSAllowedOrigins = "http://localhost:55777",
+                //    Status = true,
+                //    StoreCode = "D8671847-06AD-4FAC-BE37-321616969F4C".AsGuid(),
+                //    ApplicationCode = "167658F7-57DA-47AC-A692-705F542D8593".AsGuid()
+                //},
 
                 new ApplicationStore
                 {

@@ -32,7 +32,7 @@ export class StoresService {
     }
 
     public createStore(store: any){
-      return this.http.post('/store/save-all-system/', store);
+      return this.http.post('/store/', store);
   }
 
     public getLinkEncripted(id: string, secretPhrase: string): Observable<any>{

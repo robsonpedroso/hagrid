@@ -10,7 +10,7 @@
 	</section>
 
 	<section class="content">
-		<form [formGroup]="formStore" #f="ngForm" (ngSubmit)="create()">
+		<form #f="ngForm" (ngSubmit)="create()">
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="box box-info col-md-6">
@@ -20,89 +20,45 @@
 							Dados cadastrais
 						</legend>
 						<div class="box-body">
-							<div class="form-group col-lg-6" [ngClass]="displayFieldCss('store_name')">
+							<div class="form-group col-lg-6" [ngClass]="displayFieldCss('store.name')">
 								<label>Nome da loja*</label>
-								<input type="text" placeholder="Nome da loja" class="form-control" name="store_name" formControlName="store_name" />
+								<input type="text" placeholder="Nome da loja" class="form-control" name="store_name" [(ngModel)]="store.name" />
 								<app-field-error-display [displayError]="isFieldValid('store_name')" errorMsg="Informe o nome da loja.">
-								</app-field-error-display>
-							</div>
-							<div formGroupName="marketplace" class="form-group col-lg-3" [ngClass]="displayFieldCss('marketplace.store_type')">
-								<label>Tipo de Loja*</label>
-								<select class="form-control" name="store_type" formControlName="store_type" required>
-									<option value="">Selecione...</option>
-									<option value="One">One</option>
-									<option value="Genesis">Genesis</option>
-									<option value="Classic">Classic</option>
-									<option value="Connector">Connector</option>
-									<option value="FlashStore">FlashStore</option>
-									<option value="ServicesOnly">ServicesOnly</option>
-								</select>
-								<app-field-error-display [displayError]="isFieldValid('marketplace.store_type')" errorMsg="Informe o tipo da loja.">
 								</app-field-error-display>
 							</div>
 						</div>
 						<div class="box-body">
 							<div class="form-group col-lg-6" [ngClass]="displayFieldCss('company_name')">
 								<label>Razão Social*</label>
-								<input type="text" formControlName="company_name" placeholder="Razão Social da empresa" class="form-control"
+								<input type="text" [(ngModel)]="store.company_name" placeholder="Razão Social da empresa" class="form-control"
 								 name="company_name" />
 								<app-field-error-display [displayError]="isFieldValid('company_name')" errorMsg="Informe a razão social.">
 								</app-field-error-display>
 							</div>
 							<div class="form-group col-lg-3" [ngClass]="displayFieldCss('cnpj')">
 								<label>CNPJ*</label>
-								<input type="text" mask="99.999.999/9999-99" placeholder="CNPJ" formControlName="cnpj" class="form-control"
+								<input type="text" mask="99.999.999/9999-99" placeholder="CNPJ" [(ngModel)]="store.cnpj" class="form-control"
 								 name="cnpj" />
 								<app-field-error-display [displayError]="isFieldValid('cnpj')" errorMsg="Informe o CNPJ.">
 								</app-field-error-display>
 							</div>
 							<div class="form-group col-lg-3">
 								<label>IE</label>
-								<input type="text" placeholder="IE" class="form-control" name="ie" formControlName="ie" />
-								<!--<app-field-error-display [displayError]="isFieldValid('ie')" errorMsg="Informe a Inscrição estadual.">
-								</app-field-error-display>-->
-							</div>
-						</div>
-						<div class="box-body">
-							<div class="form-group col-lg-6" [ngClass]="displayFieldCss('siteUrl')">
-								<label>URL*</label>
-								<input type="text" placeholder="Site URL" class="form-control" name="siteUrl" formControlName="siteUrl" />
-								<app-field-error-display [displayError]="isFieldValid('siteUrl')" errorMsg="Informe o site.">
-								</app-field-error-display>
-							</div>
-							<div class="form-group col-lg-6" [ngClass]="displayFieldCss('subdomain')">
-								<label>Subdominio ( GenMarket )*</label>
-								<input type="text" placeholder="Subdomínio" class="form-control" name="subdomain" formControlName="subdomain" />
-								<app-field-error-display [displayError]="isFieldValid('subdomain')" errorMsg="Informe o subdomínio.">
-								</app-field-error-display>
+								<input type="text" placeholder="IE" class="form-control" name="ie" [(ngModel)]="store.ie" />
 							</div>
 						</div>
 						<br>
 						<div class="box-default">
-							<legend>
-								<i class="fa fa-fw fa-user"></i>
-								Informações de contato
-							</legend>
-							<div class="box-body">
-								<div class="form-group col-lg-6" [ngClass]="displayFieldCss('user_name')">
-									<label>Nome*</label>
-									<input type="text" placeholder="Nome" class="form-control" name="user_name" formControlName="user_name" />
-									<app-field-error-display [displayError]="isFieldValid('user_name')" errorMsg="Informe o nome de contato">
-									</app-field-error-display>
-								</div>
-								<div class="form-group col-lg-6" [ngClass]="displayFieldCss('email')">
-									<label>E-mail*</label>
-									<input type="text" placeholder="E-mail" class="form-control" name="email" formControlName="email" required />
-									<app-field-error-display [displayError]="isFieldValid('email')" errorMsg="Informe um e-mail válido.">
-									</app-field-error-display>
-								</div>
-							</div>
-							<div formGroupName="store_address">
+							<div>
+								<legend>
+									<i class="fa fa-fw fa-user"></i>
+									Informações de contato
+								</legend>
 								<div class="box-body">
-									<div class="form-group col-lg-4" [ngClass]="displayFieldCss('store_address.phone_number')">
-										<label>Telefone*</label>
-										<telefone name="phone_number" formControlName="phone_number" placeholder="Telefone"></telefone>
-										<app-field-error-display [displayError]="isFieldValid('store_address.phone_number')" errorMsg="Informe o telefone.">
+									<div class="form-group col-lg-6" [ngClass]="displayFieldCss('user_name')">
+										<label>Nome*</label>
+										<input type="text" placeholder="Nome" class="form-control" name="user_name" [(ngModel)]="address.contact_name" />
+										<app-field-error-display [displayError]="isFieldValid('user_name')" errorMsg="Informe o nome de contato">
 										</app-field-error-display>
 									</div>
 								</div>
@@ -113,195 +69,55 @@
 										Endereço principal
 									</legend>
 									<div class="box-body">
-										<div class="form-group col-lg-3" [ngClass]="displayFieldCss('store_address.zip_code')">
+										<div class="form-group col-lg-3" [ngClass]="displayFieldCss('addresses.zip_code')">
 											<label>CEP*</label>
-											<input type="text" class="form-control" (keyup)="loadAddress()" name="zip_code" mask="99999-999"
-											 formControlName="zip_code" placeholder="CEP" />
-											<app-field-error-display [displayError]="isFieldValid('store_address.zip_code')" errorMsg="Informe o CEP.">
+											<input type="text" class="form-control" name="zip_code" mask="99999-999"
+											[(ngModel)]="address.zip_code" placeholder="CEP" />
+											<app-field-error-display [displayError]="isFieldValid('addresses.zip_code')" errorMsg="Informe o CEP.">
 											</app-field-error-display>
 										</div>
-										<div class="form-group col-lg-6" [ngClass]="displayFieldCss('store_address.street')">
+										<div class="form-group col-lg-6" [ngClass]="displayFieldCss('addresses.street')">
 											<label>Logradouro*</label>
-											<input type="text" class="form-control" name="street" formControlName="street" placeholder="Logradouro"
+											<input type="text" class="form-control" name="street" [(ngModel)]="address.street" placeholder="Logradouro"
 											 required />
-											<app-field-error-display [displayError]="isFieldValid('store_address.street')" errorMsg="Informe o logradouro.">
+											<app-field-error-display [displayError]="isFieldValid('addresses.street')" errorMsg="Informe o logradouro.">
 											</app-field-error-display>
 										</div>
-										<div class="form-group col-lg-3" [ngClass]="displayFieldCss('store_address.number')">
+										<div class="form-group col-lg-3" [ngClass]="displayFieldCss('addresses.number')">
 											<label>Número*</label>
-											<input type="number" class="form-control" name="number" formControlName="number" placeholder="Número" />
-											<app-field-error-display [displayError]="isFieldValid('store_address.number')" errorMsg="Informe o número.">
+											<input type="number" class="form-control" name="number" [(ngModel)]="address.number" placeholder="Número" />
+											<app-field-error-display [displayError]="isFieldValid('addresses.number')" errorMsg="Informe o número.">
 											</app-field-error-display>
 										</div>
 									</div>
 									<div class="box-body">
-										<div class="form-group col-lg-3" [ngClass]="displayFieldCss('store_address.district')">
+										<div class="form-group col-lg-3" [ngClass]="displayFieldCss('addresses.district')">
 											<label>Bairro*</label>
-											<input type="text" class="form-control" name="district" formControlName="district" placeholder="Bairro"
+											<input type="text" class="form-control" name="district" [(ngModel)]="address.district" placeholder="Bairro"
 											 required />
-											<app-field-error-display [displayError]="isFieldValid('store_address.district')" errorMsg="Informe o bairro.">
+											<app-field-error-display [displayError]="isFieldValid('addresses.district')" errorMsg="Informe o bairro.">
 											</app-field-error-display>
 										</div>
-										<div class="form-group col-lg-6" [ngClass]="displayFieldCss('store_address.city')">
+										<div class="form-group col-lg-6" [ngClass]="displayFieldCss('addresses.city')">
 											<label>Cidade*</label>
-											<input type="text" class="form-control" name="city" formControlName="city" placeholder="Cidade" required />
-											<app-field-error-display [displayError]="isFieldValid('store_address.city')" errorMsg="Informe a cidade.">
+											<input type="text" class="form-control" name="city" [(ngModel)]="address.city" placeholder="Cidade" required />
+											<app-field-error-display [displayError]="isFieldValid('addresses.city')" errorMsg="Informe a cidade.">
 											</app-field-error-display>
 										</div>
-										<div class="form-group col-lg-3" [ngClass]="displayFieldCss('store_address.state')">
+										<div class="form-group col-lg-3" [ngClass]="displayFieldCss('addresses.state')">
 											<label>Estado*</label>
-											<!--<select class="form-control" id="state" required formControlName="state">
-												<option *ngFor="let state of states" [ngValue]="state.id">{{ state.id }}</option>
-											</select>-->
-											<estados formControlName="state" id="state"></estados>
-											<app-field-error-display [displayError]="isFieldValid('store_address.state')" errorMsg="Informe o estado.">
+											<select class="form-control" name="state" id="state" required [(ngModel)]="address.state">
+												<option *ngFor="let state of states" [ngValue]="state">{{ state }}</option>
+											</select>
+											<app-field-error-display [displayError]="isFieldValid('addresses.state')" errorMsg="Informe o estado.">
 											</app-field-error-display>
 										</div>
 									</div>
 									<div class="box-body">
 										<div class="col-lg-4">
 											<label>Complemento</label>
-											<input type="text" class="form-control" name="complement" formControlName="complement" placeholder="Complemento" />
+											<input type="text" class="form-control" name="complement" [(ngModel)]="address.complement" placeholder="Complemento" />
 										</div>
-									</div>
-									<div class="box-body">
-										<div class="checkbox col-lg-6">
-											<label>
-												<input type="checkbox" name="checkboxLogistics" (click)="showBlockLog()" /> Endereço de postagem
-												dos produtos diferente do endereço principal
-											</label>
-											<i class="fa fa-fw fa-question-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="right"
-											 title="" data-original-title="Ao selecionar esta opção, será necessário preencher os campos abaixo com os dados de endereço de postagem e telefone."></i>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="box-default" *ngIf="checkboxLogistics">
-							<legend>
-								<i class="fa fa-fw fa-globe"></i>
-								Endereço de Postagem (GenLog)
-							</legend>
-							<div formGroupName="logistics">
-								<div formGroupName="postage_address">
-									<div class="box-body">
-										<div class="form-group col-lg-3" [ngClass]="displayFieldCss('logistics.postage_address.zip_code')">
-											<label>CEP*</label>
-											<input type="text" class="form-control" (keyup)="loadAddressLog()" name="zip_code" mask="99999-999"
-											 formControlName="zip_code" placeholder="CEP" />
-											<app-field-error-display [displayError]="isFieldValid('logistics.postage_address.zip_code')" errorMsg="Informe o CEP.">
-											</app-field-error-display>
-										</div>
-										<div class="form-group col-lg-6" [ngClass]="displayFieldCss('logistics.postage_address.street')">
-											<label>Logradouro*</label>
-											<input type="text" class="form-control" name="street" formControlName="street" placeholder="Logradouro" />
-											<app-field-error-display [displayError]="isFieldValid('logistics.postage_address.street')" errorMsg="Informe o logradouro.">
-											</app-field-error-display>
-										</div>
-										<div class="form-group col-lg-3" [ngClass]="displayFieldCss('logistics.postage_address.number')">
-											<label>Número*</label>
-											<input type="number" class="form-control" name="number" formControlName="number" placeholder="Número" />
-											<app-field-error-display [displayError]="isFieldValid('logistics.postage_address.number')" errorMsg="Informe o número.">
-											</app-field-error-display>
-										</div>
-									</div>
-									<div class="box-body">
-										<div class="form-group col-lg-3" [ngClass]="displayFieldCss('logistics.postage_address.district')">
-											<label>Bairro*</label>
-											<input type="text" class="form-control" name="district" formControlName="district" placeholder="Bairro" />
-											<app-field-error-display [displayError]="isFieldValid('logistics.postage_address.district')" errorMsg="Informe o bairro.">
-											</app-field-error-display>
-										</div>
-										<div class="form-group col-lg-6" [ngClass]="displayFieldCss('logistics.postage_address.city')">
-											<label>Cidade*</label>
-											<input type="text" class="form-control" name="city" formControlName="city" placeholder="Cidade" />
-											<app-field-error-display [displayError]="isFieldValid('logistics.postage_address.city')" errorMsg="Informe a cidade.">
-											</app-field-error-display>
-										</div>
-										<div class="col-lg-3">
-											<label>Estado*</label>
-											<!--<select class="form-control" id="state" required formControlName="state">
-												<option *ngFor="let state of states" [ngValue]="state.id">{{ state.id }}</option>
-											</select>-->
-											<estados formControlName="state"></estados>
-											<show-errors [control]="formStore.controls.logistics.controls.postage_address.controls.state"></show-errors>
-										</div>
-									</div>
-									<div class="box-body">
-										<div class="col-lg-3">
-											<label>Complemento</label>
-											<input type="text" class="form-control" name="complement" formControlName="complement" placeholder="Complemento" />
-										</div>
-										<div class="form-group col-lg-3" [ngClass]="displayFieldCss('logistics.postage_address.phone_number')">
-											<label>Telefone*</label>
-											<telefone name="phone_number" formControlName="phone_number" placeholder="Telefone"></telefone>
-											<app-field-error-display [displayError]="isFieldValid('logistics.postage_address.phone_number')" errorMsg="Informe o telefone.">
-											</app-field-error-display>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="box-default">
-							<legend>
-								<i class="fa fa-fw fa-user"></i>
-								Dados do GenReviews
-							</legend>
-							<div class="box-body">
-								<div formGroupName="reviews">
-									<div class="col-lg-6">
-										<label>E-mail de aprovação de avaliações</label>
-										<input type="text" placeholder="E-mail de aprovação" class="form-control" name="review_approval_email"
-										 formControlName="review_approval_email" />
-									</div>
-									<div class="col-lg-6">
-										<label>Nome de aprovação de avaliações</label>
-										<input type="text" placeholder="Nome de aprovação" class="form-control" name="review_approval_name"
-										 formControlName="review_approval_name" />
-									</div>
-								</div>
-							</div>
-						</div>
-						<br>
-						<div formGroupName="billing">
-							<div class="box-default">
-								<legend>
-									<i class="fa fa-fw fa-bank"></i>
-									Dados bancários
-								</legend>
-								<div class="box-body">
-									<div class="form-group col-lg-3" [ngClass]="displayFieldCss('billing.bank_name')">
-										<label>Nome Banco*</label>
-										<input type="text" tvalue="1" placeholder="Nome do banco" class="form-control" name="bank_name"
-										 formControlName="bank_name" />
-										<app-field-error-display [displayError]="isFieldValid('billing.bank_name')" errorMsg="Informe o nome do banco.">
-										</app-field-error-display>
-									</div>
-									<div class="form-group col-lg-2" [ngClass]="displayFieldCss('billing.bank_code')">
-										<label>Código do Banco*</label>
-										<input type="text" value="1" placeholder="Código do banco" class="form-control" name="bank_code"
-										 formControlName="bank_code" />
-										<app-field-error-display [displayError]="isFieldValid('billing.bank_code')" errorMsg="Informe o código do banco.">
-										</app-field-error-display>
-									</div>
-									<div class="form-group col-lg-2" [ngClass]="displayFieldCss('billing.branch_number')">
-										<label>Agência*</label>
-										<input type="text" value="1" placeholder="Agência" class="form-control" name="branch_number" formControlName="branch_number" />
-										<app-field-error-display [displayError]="isFieldValid('billing.branch_number')" errorMsg="Informe a agência.">
-										</app-field-error-display>
-									</div>
-									<div class="form-group col-lg-2" [ngClass]="displayFieldCss('billing.account_number')">
-										<label>Número da conta*</label>
-										<input type="text" value="1" placeholder="Conta" class="form-control" name="account_number" formControlName="account_number" />
-										<app-field-error-display [displayError]="isFieldValid('billing.account_number')" errorMsg="Informe a conta.">
-										</app-field-error-display>
-									</div>
-									<div class="form-group col-lg-3" [ngClass]="displayFieldCss('billing.finance_contact_name')">
-										<label>Contato Financeiro*</label>
-										<input type="text" value="1" placeholder="Contato financeiro" class="form-control" name="finance_contact_name"
-										 formControlName="finance_contact_name" />
-										<app-field-error-display [displayError]="isFieldValid('billing.finance_contact_name')" errorMsg="Informe o contato financeiro.">
-										</app-field-error-display>
 									</div>
 								</div>
 							</div>
@@ -316,12 +132,6 @@
 							</div>
 						</div>
 						<br>
-						<!--<div class="col-lg-12">
-							{{formStore.value | json}}
-						</div>
-						<div class="col-lg-12">
-							{{formStore.valid | json}}
-						</div>-->
 					</div>
 				</div>
 			</div>

@@ -81,22 +81,6 @@ namespace Hagrid.Core.Domain.DTO
             this.PhoneNumber3 = address.PhoneNumber3;
         }
 
-        public DO.StoreAddress Transfer()
-        {
-            return new DO.StoreAddress()
-            {
-                AddressIdentifier = this.AddressIdentifier,
-                ContactName = this.ContactName,
-                City = this.City,
-                Complement = this.Complement,
-                District = this.District,
-                Number = this.Number,
-                Street = this.Street,
-                ZipCode = this.ZipCode,
-                PhoneNumber1 = this.PhoneDdd1 + '-' + this.PhoneNumber1,
-            };
-        }
-
         public void Validate()
         {
             List<String> validationErros = new List<string>();

@@ -14,23 +14,14 @@ namespace Hagrid.Core.Domain.Entities
     public class Store : IEntity, IStatus, IIsValid
     {
         public Guid Code { get; set; }
-
         public String Name { get; set; }
-
         public String Cnpj { get; set; }
-
         public bool IsMain { get; set; }
-
         public ICollection<StoreAddress> Addresses { get; set; }
-
         public ICollection<StoreMetadata> Metadata { get; set; }
-
         public bool Status { get; set; }
-
         public DateTime SaveDate { get; set; }
-
         public DateTime UpdateDate { get; set; }
-
         public ICollection<ApplicationStore> ApplicationsStore { get; set; }
         public ICollection<Role> Roles { get; set; }
         public ICollection<StoreAccount> StoreAccounts { get; set; }
@@ -62,33 +53,7 @@ namespace Hagrid.Core.Domain.Entities
             this.UpdateDate = DateTime.Now;
 
             if (!store.Addresses.IsNull())
-            {
-                this.Addresses = new List<StoreAddress>();
-                store.Addresses.ForEach(address =>
-                {
-                    this.Addresses.Add(new StoreAddress()
-                    {
-                        AddressIdentifier = address.AddressIdentifier,
-                        City = address.City,
-                        Code = address.Code,
-                        Complement = address.Complement,
-                        ContactName = address.ContactName,
-                        District = address.District,
-                        Number = address.Number,
-                        PhoneNumber1 = !address.PhoneNumber1.ToNumber().ToString().IsNullOrWhiteSpace() ?
-                                        address.PhoneNumber1.ToNumber().ToString() :
-                                        address.Phone.ToNumber().ToString(),
-                        PhoneNumber2 = address.PhoneNumber2.ToNumber().ToString(),
-                        PhoneNumber3 = address.PhoneNumber3.ToNumber().ToString(),
-                        State = address.State,
-                        Status = true,
-                        Street = address.Street,
-                        ZipCode = address.ZipCode,
-                        SaveDate = DateTime.Now,
-                        UpdateDate = DateTime.Now
-                    });
-                });
-            }
+                this.Addresses = store.Addresses.Select(x => new StoreAddress(x)).ToList();
         }
 
         public bool IsValid()
@@ -102,32 +67,30 @@ namespace Hagrid.Core.Domain.Entities
             if (Name.IsNullOrWhiteSpace())
                 throw new ArgumentException("Nome de loja inválido");
 
-            if (Addresses.IsNull() || Addresses.Count == 0)
-                throw new ArgumentException("Nenhum endereço fornecido para a loja");
-
-            foreach (var address in Addresses)
+            foreach (var item in Addresses)
             {
-                if (address.ContactName.IsNullorEmpty())
+                if (item.IsNull())
+                    throw new ArgumentException("Nenhum endereço fornecido para a loja");
+
+                if (item.ContactName.IsNullorEmpty())
                     throw new ArgumentException("Endereço sem contato");
 
-                if (address.ZipCode.IsNullorEmpty())
+                if (item.ZipCode.IsNullorEmpty())
                     throw new ArgumentException("Endereço sem CEP");
 
-                if (address.Street.IsNullorEmpty())
+                if (item.Street.IsNullorEmpty())
                     throw new ArgumentException("Endereço sem logradouro");
 
-                if (address.Number.IsNullorEmpty())
+                if (item.Number.IsNullorEmpty())
                     throw new ArgumentException("Endereço sem número");
 
-                if (address.City.IsNullorEmpty())
+                if (item.City.IsNullorEmpty())
                     throw new ArgumentException("Endereço sem cidade");
 
-                if (address.State.IsNullorEmpty())
+                if (item.State.IsNullorEmpty())
                     throw new ArgumentException("Endereço sem estado");
-
-                if (address.PhoneNumber1.IsNullorEmpty())
-                    throw new ArgumentException("Endereço sem telefone principal");
             }
+
             return true;
         }
 

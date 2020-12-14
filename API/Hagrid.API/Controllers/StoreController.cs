@@ -131,6 +131,25 @@ namespace Hagrid.API.Controllers
         }
 
         [HttpPost]
+        [Route("")]
+        [JwtAuthorization(Roles = "Member", AppProperties = "member_type=MainAdmin")]
+        public IHttpActionResult Save(DTO.Store store)
+        {
+            try
+            {
+                return Ok(storeApp.Save(store));
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPost]
         [Route("upload/{code}")]
         public async Task<IHttpActionResult> UploadLogo(Guid code)
         {

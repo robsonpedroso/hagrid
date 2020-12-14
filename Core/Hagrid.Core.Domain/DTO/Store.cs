@@ -28,7 +28,7 @@ namespace Hagrid.Core.Domain.DTO
         [JsonProperty("applications")]
         public List<DTO.ApplicationStore> Applications { get; set; }
 
-        [JsonProperty("adresses")]
+        [JsonProperty("addresses")]
         public List<DTO.StoreAddress> Addresses { get; set; }
 
         [JsonProperty("metadata")]
@@ -36,9 +36,6 @@ namespace Hagrid.Core.Domain.DTO
 
         [JsonProperty("metadata_fields")]
         public object MetadataFields { get; set; }
-
-        [JsonProperty("is_synchronized")]
-        public bool? IsSynchronized { get; set; }
 
         public Store() { }
 
