@@ -28,6 +28,7 @@ export class AuthGuardService implements CanActivate {
 				this.sessionStorageService.store(AuthService.ACCOUNT_AUTH_KEY, response);
 
 				this.accountService.getRole().subscribe((r) => {
+					
 					this.sessionStorageService.store(Keys.StoragesRole, r);
 
 					let stateUrl = this.sessionStorageService.retrieve(AuthGuardService.STATE_KEY);
