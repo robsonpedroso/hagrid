@@ -38,7 +38,7 @@ namespace Hagrid.Infra.Providers.Base
         /// <returns>JObject with the current response</returns>
         protected JObject Get(string url, Dictionary<string, string> parameters = null)
         {
-            var request = new RestRequest(url, Method.GET);
+            var request = new RestRequest(url, Method.Get);
             request.AddHeader("Content-Type", "application/json");
 
             AddParametersToRequest(request, parameters);
@@ -60,7 +60,7 @@ namespace Hagrid.Infra.Providers.Base
         /// <returns>JObject with the current response</returns>
         protected JObject Put(string url, string jsonObjectToBeUpdated, Dictionary<string, string> parameters = null)
         {
-            var request = new RestRequest(url, Method.PUT);
+            var request = new RestRequest(url, Method.Put);
             request.AddHeader("Content-Type", "application/json");
 
             //Adding Body
@@ -85,7 +85,7 @@ namespace Hagrid.Infra.Providers.Base
         /// <returns>JObject with result</returns>
         protected JObject Post(string url, string bodyContent = null, Dictionary<string, string> parameters = null)
         {
-            var request = new RestRequest(url, Method.POST);
+            var request = new RestRequest(url, Method.Post);
             request.AddHeader("Content-Type", "application/json");
 
             AddParametersToRequest(request, parameters);

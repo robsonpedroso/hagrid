@@ -35,8 +35,8 @@
     <DocumentationFile>bin\Release\Hagrid.Infra.Utils.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="jose-jwt, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\jose-jwt.3.2.0\lib\net461\jose-jwt.dll</HintPath>
+    <Reference Include="jose-jwt, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\jose-jwt.4.0.0\lib\net472\jose-jwt.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">

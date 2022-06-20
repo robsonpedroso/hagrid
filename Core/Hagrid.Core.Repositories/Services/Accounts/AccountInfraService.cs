@@ -16,7 +16,7 @@ namespace Hagrid.Core.Infrastructure.Services.Accounts
         public DTO.AccountToken GetToken(string transfertoken, Guid clientId, string secret)
         {
             var client = new RestClient(Config.AccountApiBaseURL);
-            var request = new RestRequest("/token", Method.POST);
+            var request = new RestRequest("/token", Method.Post);
             client.Authenticator = new HttpBasicAuthenticator(clientId.ToString(), secret);
             client.AddDefaultHeader("Content-Type", "application/x-www-form-urlencoded");
             request.AddParameter("grant_type", "transfer_token");
@@ -40,7 +40,7 @@ namespace Hagrid.Core.Infrastructure.Services.Accounts
         public object GetChangePasswordToken(string token, Guid clientId, string secret)
         {
             var client = new RestClient(Config.AccountApiBaseURL);
-            var request = new RestRequest("/token", Method.POST);
+            var request = new RestRequest("/token", Method.Post);
             client.Authenticator = new HttpBasicAuthenticator(clientId.ToString(), secret);
             client.AddDefaultHeader("Content-Type", "application/x-www-form-urlencoded");
             request.AddParameter("grant_type", "change_password");
@@ -67,7 +67,7 @@ namespace Hagrid.Core.Infrastructure.Services.Accounts
             client.AddDefaultHeader("Authorization", string.Format("Bearer {0}", token));
             client.AddDefaultHeader("Content-Type", "application/x-www-form-urlencoded");
 
-            var request = new RestRequest("/member/password-change", Method.POST);
+            var request = new RestRequest("/member/password-change", Method.Post);
             request.AddParameter("password", password);
             request.AddParameter("password_new", newPassword);
 
